@@ -1,209 +1,1094 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Synth1 Recreation — Spectrogram Forensics</title>
-<style>
- html, body { background: #0d1117; color: #d6d6d6; }
- body { font-family: -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-        max-width: 1200px; margin: 2rem auto; padding: 0 1rem; line-height: 1.55; }
- a { color: #79b8ff; }
- table { border-collapse: collapse; width: 100%; font-size: 0.85rem; background: #161b22; }
- th, td { border: 1px solid #30363d; padding: 6px 8px; vertical-align: top; text-align: left; }
- th { background: #21262d; color: #e6e6e6; }
- tr:nth-child(even) td { background: #1c2128; }
- code { background: #21262d; color: #e3b341; padding: 1px 4px; border-radius: 3px; }
- img { border: 1px solid #30363d; border-radius: 4px; margin-bottom: 1.5rem; background: #000; }
- h1, h2, h3 { color: #f0f6fc; }
- h1 { border-bottom: 2px solid #30363d; padding-bottom: .3rem; }
- hr { border: none; border-top: 1px solid #30363d; }
- em { color: #8b949e; }
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Synth1 — A/B Audio Comparison Suite (Real VST vs. Reconstructed)</title>
+  <style>
+    :root {
+      --bg: #121316;
+      --card-bg: #1a1b20;
+      --card-border: #2c2d35;
+      --primary: #e04434;
+      --primary-hover: #f05444;
+      --accent-a: #f0a020;
+      --accent-b: #28f0d8;
+      --text: #e2e4e9;
+      --text-muted: #8b8f9e;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      padding: 24px;
+      line-height: 1.5;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    header {
+      margin-bottom: 28px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--card-border);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+    .title-group h1 {
+      font-size: 26px;
+      font-weight: 700;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .badge {
+      background: var(--primary);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .title-group p {
+      color: var(--text-muted);
+      font-size: 14px;
+      margin-top: 4px;
+    }
+    .stats-bar {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+    .stat-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 16px 20px;
+    }
+    .stat-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .stat-value {
+      font-size: 22px;
+      font-weight: 700;
+      color: #fff;
+      margin-top: 4px;
+      font-family: var(--font-mono);
+    }
+    .ab-legend {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      background: #17181d;
+      padding: 10px 18px;
+      border-radius: 6px;
+      font-size: 13px;
+      border: 1px solid var(--card-border);
+    }
+    .tag-a { color: var(--accent-a); font-weight: 700; display: inline-flex; align-items: center; gap: 6px; }
+    .tag-b { color: var(--accent-b); font-weight: 700; display: inline-flex; align-items: center; gap: 6px; }
+    .tag-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+    .tag-dot.a { background: var(--accent-a); }
+    .tag-dot.b { background: var(--accent-b); }
+    
+    .patch-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .patch-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 20px;
+      transition: border-color 0.15s ease;
+    }
+    .patch-card:hover {
+      border-color: #444654;
+    }
+    .patch-card.active {
+      border-color: var(--primary);
+    }
+    .patch-header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .patch-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .patch-id {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 13px;
+      background: #252630;
+      color: #28f0d8;
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+    .patch-name {
+      font-size: 18px;
+      font-weight: 600;
+      color: #fff;
+    }
+    .patch-cat {
+      font-size: 13px;
+      color: var(--text-muted);
+      background: #22232a;
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+    .metrics-pill-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+    }
+    .metric-pill {
+      background: #202128;
+      padding: 3px 9px;
+      border-radius: 4px;
+      border: 1px solid #2f303a;
+    }
+    .metric-pill span { color: #fff; font-weight: 600; }
+    
+    .player-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      background: #141519;
+      padding: 16px;
+      border-radius: 8px;
+    }
+    @media (max-width: 768px) {
+      .player-row { grid-template-columns: 1fr; }
+    }
+    .source-col {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .source-label {
+      font-size: 13px;
+      font-weight: 600;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    audio {
+      width: 100%;
+      height: 38px;
+      border-radius: 4px;
+    }
+    .switcher-row {
+      margin-top: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 12px;
+      border-top: 1px solid #252630;
+    }
+    .seamless-toggle {
+      background: #22242c;
+      border: 1px solid #363845;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.15s ease;
+    }
+    .seamless-toggle:hover {
+      background: #2d303b;
+      border-color: #555869;
+    }
+    .seamless-toggle.active-a {
+      border-color: var(--accent-a);
+      box-shadow: 0 0 10px rgba(240, 160, 32, 0.25);
+    }
+    .seamless-toggle.active-b {
+      border-color: var(--accent-b);
+      box-shadow: 0 0 10px rgba(40, 240, 216, 0.25);
+    }
+    .notes-tag {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+    .viz-block {
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px solid #252630;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .viz-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .wave-canvas {
+      width: 100%;
+      height: 120px;
+      display: block;
+      background: #0d0e11;
+      border: 1px solid #252630;
+      border-radius: 6px;
+    }
+    .spec-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    @media (max-width: 768px) {
+      .spec-grid { grid-template-columns: 1fr; }
+    }
+    .spec-cell {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 12px;
+    }
+    .spec-canvas {
+      width: 100%;
+      height: 140px;
+      display: block;
+      background: #0d0e11;
+      border: 1px solid #252630;
+      border-radius: 6px;
+    }
+    .viz-status {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+    }
+  </style>
 </head>
 <body>
-<h1>Spec12 forensics — VST (top) vs reconstructed engine (bottom)</h1>
-<p>Method: all 12 PNGs read, then measured from the WAVs in <code>~/www/summaries/audio</code>. Per note window (each 0.25 s, 120 ms after onset) I measured the highest harmonic within 60 and 80 dB of the window peak, the inharmonic peaks, the release decay times and the engine-only bursts above 15 kHz. Scripts are in the session scratchpad: <code>specforensics.py</code>, <code>f005.py</code>, <code>tails.py</code>.
-Notes are MIDI 48, 60, 64, 67, 72 (36, 43, 48, 55, 60 for 033 and 039), each 0.4 s with a 0.1 s gap.</p>
-<p><strong>Heatmap caveat:</strong> <code>render_spec12.py</code> sets <code>vmax = max − 80 dB</code>, so everything within 80 dB of the loudest bin is pegged yellow. "Height" in the image therefore means "harmonics within 80 dB of the peak", and a louder side does look taller. The ceilings below were measured per harmonic, not read off the colours.</p>
-<h2>Main finding: engine band-limited tables hold 27 harmonics for every note below 802 Hz</h2>
-<p><code>spec_osc.md §5.1</code> / <code>wavetable_gen.cpp:122</code> derive <code>harmonics[j] = 27.5·cos(j/36)</code>, a 27.5 → 15.5 range with thresholds 802 → 1423 Hz. As a result:
-- Every note below 802 Hz uses band 0, which has <strong>H = 27</strong>. The measured engine harmonic count stops at exactly 27 whenever the VST goes higher.
-- Every partial above 1423 Hz uses band 35, which has <strong>H = 15</strong>. That puts the partial's harmonics far above Nyquist, where they fold back (aliasing).</p>
-<p>The VST behaves like a pitch-dependent ladder, H ≈ 22050/f. In 101 it keeps 152 harmonics at C3 (Nyquist allows 168) and 74 at C4 (83 allowed). Patch 005's 6.68 kHz osc2 partial shows only harmonics 1–2.</p>
-<p>Conclusion: the decoded band law is wrong. My hypothesis is that <code>27.5</code> is A0 in Hz, not a harmonic count, and that the callee decoded as <code>cos</code> is really an exponential: something like thr_j = 27.5·2^(j/4), i.e. 36 bands at 3 semitones each spanning 9 octaves, with H_j = (int)(22050/thr_j). Two other signs point the same way: the <code>(int)thr &lt; 16 → break</code> guard and the <code>prevThr</code> de-duplication are dead code under the cos law.
-To verify: re-check the callee and constants in <code>FUN_18003cdf0</code>, then render one saw (filter open, no FX) at about 8 pitches through the VST and fit H(f).</p>
-<h2>Per patch</h2>
-<table>
-<thead>
-<tr>
-<th>Patch</th>
-<th>xcorr / null dB</th>
-<th>Side that reaches higher, and mechanism</th>
-<th>Other differences</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>001 brastring</td>
-<td>0.936 / −4.49</td>
-<td><strong>VST.</strong> C3 has 41 harmonics within 80 dB on the VST vs 27 on the engine. The flat engine ceilings at 3.6k, 7.2k, 9.0k, 10.7k and 14.3k Hz are 27·f0 for each note (<strong>band law</strong>). VST ceilings taper; the engine ones are brick walls.</td>
-<td>Engine-only full-band click at <strong>0.244 s</strong> (+18 dB above 15 kHz). Engine tail ends <strong>0.25 s early</strong> at −40, −60 and −80 dB (a parallel shift). Delay wet is 39.</td>
-</tr>
-<tr>
-<td>002 Piano</td>
-<td>0.984 / −8.11</td>
-<td>About equal: harmonics are filter-limited, 8–13 within 60 dB on both.</td>
-<td>Click at 0.244 s (+10 dB). Tail <strong>0.25 s short</strong> (delay wet 6). The VST has slightly more upper-band hash (inharmonic −75 vs −99 dB at C4).</td>
-</tr>
-<tr>
-<td>005 Rhodes</td>
-<td>0.874 / <strong>+2.64</strong></td>
-<td><strong>Engine, by aliasing.</strong> osc2 (shape 2, +55 semitones) puts a partial at ≈20.3·f0, i.e. 2.65, 5.3, 6.7, 8.0 and 10.6 kHz. The engine gives it the <strong>15-harmonic</strong> band, which folds: for the 6683 Hz partial, foldover lands at 44100−6·6683 ≈ 4002 Hz (seen at 4000), 88200−12·6683 ≈ 8004 (8000), 88200−13·6683 ≈ 1321 (1317), and also 2683, 9367 and 10683 Hz. The VST shows only 6683 and 13367 Hz. Engine is <strong>+6.2 dB RMS</strong> and peaks at 0.51 vs 0.275.</td>
-<td>+43 dB engine-only burst above 15 kHz at the 2.0 s onset. Tail 0.2 s short at −40 dB. Engine panel shows a near-zero notch at about 3.22 s before the echo resumes.</td>
-</tr>
-<tr>
-<td>017 Hammond</td>
-<td>0.973 / −6.67</td>
-<td>About equal; the engine has slightly more at C3 (32 vs 28 within 60 dB).</td>
-<td>Click at 0.244 s (+7 dB) even though delay wet is 0. Tiny engine-only onset click at 1.921 s, where the VST is digital silence. Tails identical.</td>
-</tr>
-<tr>
-<td>033 Acoustic Bass</td>
-<td>0.995 / −13.26</td>
-<td>About equal; filter-limited (≤ 25 harmonics).</td>
-<td>Tails identical. Small low-level differences only.</td>
-</tr>
-<tr>
-<td>039 Synth Bass 1</td>
-<td>1.000 / −31.03</td>
-<td><strong>VST, slightly.</strong> At C2 it has 32 harmonics within 80 dB vs 27 (band law). Visually the engine has flat ceilings while the VST's filter-envelope sweep is visible above 27·f0. Because those harmonics sit more than 60 dB down, the null is still −31 dB.</td>
-<td>This patch shows how much the band-law gap is exaggerated by the saturated heatmap.</td>
-</tr>
-<tr>
-<td>042 Viola</td>
-<td>0.966 / −6.11</td>
-<td><strong>VST.</strong> C3 has 34 harmonics vs 27 and E4 has 30 vs 27. The flat engine ceilings are again 27·f0.</td>
-<td>Tails nearly equal (delay wet 2).</td>
-</tr>
-<tr>
-<td>050 SlowStrings</td>
-<td>0.975 / −9.80</td>
-<td>About equal; filter-limited (≤ 24 harmonics).</td>
-<td>Tail <strong>0.15 s short</strong> (delay wet 20). Chorus differences are not separable here.</td>
-</tr>
-<tr>
-<td>057 Trumpet</td>
-<td>0.997 / −22.12</td>
-<td><strong>VST, by a lot.</strong> It has 85 / 47 / 40 / 34 harmonics within 80 dB vs <strong>27 at every note</strong> on the engine; VST attack sweeps reach about 21 kHz. Causes: the band law, plus <strong>osc2 hard sync</strong> (on). The engine's synced slave adds no sync harmonics past 27·f0, while the VST's sync discontinuities fill the band up to Nyquist.</td>
-<td>Tail <strong>0.2–0.65 s short</strong>, with a slower VST decay. VST attack spikes repeat between notes (likely delay echoes, wet 4); the engine panel lacks them.</td>
-</tr>
-<tr>
-<td>062 Brass1</td>
-<td>0.975 / −8.65</td>
-<td>About equal at C3–E4; the VST is higher at G4/C5 (15 vs 11–12 harmonics). The visible engine ceilings at 3.6k, 7.2k, 9.0k, 10.7k and 14.3k Hz are 27·f0 (band law).</td>
-<td>Tail <strong>0.4 s short</strong> (wet 7). The engine dry tail stops at about 2.95 s, then an echo resumes until 3.1 s (the black notch).</td>
-</tr>
-<tr>
-<td>081 Square lead</td>
-<td>0.972 / −6.40</td>
-<td><strong>VST.</strong> Harmonics within 80 dB are 39 / 31 / 29 vs 27 / 27 / 27. Flat engine ceilings are 27·f0.</td>
-<td>Tail <strong>0.1–0.25 s short</strong> (wet 29), with an engine notch at about 3.95 s and an echo after it. Delay repeats are visible in both panels. The VST has more inharmonic hash (−51 vs −58 dB).</td>
-</tr>
-<tr>
-<td>101 Sequence2</td>
-<td>0.900 / −2.71</td>
-<td><strong>VST.</strong> Every arp step reaches about 21 kHz, vs a flat 3.7k / 7.3k on the engine's low steps. At C3 the VST has 138 harmonics within 60 dB vs 65, and at C4 74 vs 55; they converge from E4 up. Arp notes break the f0 assumption, so treat the counts as approximate. Mechanism: band law.</td>
-<td>Engine zero gap of 18 ms at 2.62 s. Tail shorter at −40 dB (delay wet 68, feedback 0).</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Ruled out as the cause of the height differences:</strong> heatmap clipping on its own (the RMS levels match within 1 dB except 005), noise-generator bandwidth (no broadband engine excess), ladder self-oscillation (no isolated sustained engine peaks), and resampling (the high-band floor is identical in both renders).</p>
-<h2>Prioritised fixes</h2>
-<ol>
-<li><strong>Wavetable band law</strong> (<code>FUN_18003cdf0</code> → <code>compute_band_descriptors</code>, <code>wavetable_gen.cpp:122</code>). Replace the cos-derived 27.5 → 15 harmonic range with the real pitch ladder, H ≈ 22050/f per band. This closes the ceiling gap in 001, 039, 042, 057, 062, 081 and 101, and removes the aliasing in <strong>005</strong> (the worst patch, +2.64 dB), where a high osc2 partial currently gets 15 harmonics instead of 2–3.</li>
-<li><strong>Delay FX tail and the 0.244 s click</strong> (<code>core/fx/delay.*</code>). Every patch with delay wet &gt; 0 loses 0.1–0.65 s of tail (001, 002, 005, 050, 057, 062, 081, 101); patches with wet = 0 match exactly. 001 and 002 show a parallel 0.25 s shift, i.e. the engine is missing about one echo period. Check the wet level / dry-wet law (<code>preset.cpp</code> halves param 37), the feedback law, and whether FX processing stops when the voices end. The engine-only click at 0.244 s (001, 002, 017; present even at wet 0) suggests a discontinuity on the delay line's first wrap or uninitialised buffer data. Also confirm both renderers use 120 BPM, since the delay time is tempo-synced; both default to 120.</li>
-<li><strong>Osc2 hard sync</strong> (057, maybe 101). The engine's synced slave produces no harmonics above 27·f0. Even once fix 1 lands, check that sync resets produce the full discontinuity spectrum the VST shows, since its attacks reach about 21 kHz.</li>
-</ol>
-<h2>Addendum (2026-10-07, after re-reading all 12 PNGs)</h2>
-<p><strong>H27 brick wall, measured</strong> at C3/C2, level relative to the window peak:</p>
-<table>
-<thead>
-<tr>
-<th>Patch</th>
-<th>Side</th>
-<th>H26</th>
-<th>H27</th>
-<th>H28</th>
-<th>H30</th>
-<th>H34</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>042</td>
-<td>VST</td>
-<td>−67</td>
-<td>−68</td>
-<td>−71</td>
-<td>−75</td>
-<td>−79</td>
-</tr>
-<tr>
-<td>042</td>
-<td>engine</td>
-<td>−63</td>
-<td>−66</td>
-<td><strong>−101</strong></td>
-<td>−98</td>
-<td>−100</td>
-</tr>
-<tr>
-<td>001</td>
-<td>VST</td>
-<td>−59</td>
-<td>−60</td>
-<td>−63</td>
-<td>−66</td>
-<td>−70</td>
-</tr>
-<tr>
-<td>001</td>
-<td>engine</td>
-<td>−58</td>
-<td>−60</td>
-<td><strong>−86</strong></td>
-<td>−85</td>
-<td>−90</td>
-</tr>
-<tr>
-<td>039</td>
-<td>VST</td>
-<td>−71</td>
-<td>−73</td>
-<td>−74</td>
-<td>−76</td>
-<td>−82</td>
-</tr>
-<tr>
-<td>039</td>
-<td>engine</td>
-<td>−71</td>
-<td>−73</td>
-<td><strong>−102</strong></td>
-<td>−102</td>
-<td>−103</td>
-</tr>
-</tbody>
-</table>
-<p>The engine drops 25–35 dB between H27 and H28. The VST keeps rolling off smoothly, which is the shape of a pitch ladder.</p>
-<p><strong>Correction to 033:</strong> the band law is visible here too. Engine ceilings are flat at about 1.77k, 2.65k, 3.5k and 5.3k Hz, which is 27 × (65.4, 98, 131, 196) Hz. The VST ceilings are higher and slope with the filter envelope. The missing harmonics are more than 85 dB down, so the null (−13 dB) is unaffected.</p>
-<p>Within 70 dB of the peak, the harmonic counts match for 033, 039 and 042. In those patches the visible height gap lives entirely in the −70 to −80 dB zone that <code>vmax = max − 80</code> pegs to yellow, so the heatmap exaggerates it. 057 is a real gap within 70 dB: 70 harmonics vs 27.</p>
-<h2 id='gallery'>Spectrogram gallery + A/B audio (VST top / engine bottom, shared dB scale)</h2><h3>Patch 001</h3><img src='img/patch_001_vst_over_engine.png' style='max-width:100%'><div style='display:flex;gap:2rem;flex-wrap:wrap;margin-bottom:1.5rem'><div><div><b>Original VST (Wine)</b></div><audio controls preload='none' src='audio/patch_001_vst.wav'></audio></div><div><div><b>Reconstructed engine</b></div><audio controls preload='none' src='audio/patch_001_reconstructed.wav'></audio></div></div><h3>Patch 002</h3><img src='img/patch_002_vst_over_engine.png' style='max-width:100%'><div style='display:flex;gap:2rem;flex-wrap:wrap;margin-bottom:1.5rem'><div><div><b>Original VST (Wine)</b></div><audio controls preload='none' src='audio/patch_002_vst.wav'></audio></div><div><div><b>Reconstructed engine</b></div><audio controls preload='none' src='audio/patch_002_reconstructed.wav'></audio></div></div><h3>Patch 005</h3><img src='img/patch_005_vst_over_engine.png' style='max-width:100%'><div style='display:flex;gap:2rem;flex-wrap:wrap;margin-bottom:1.5rem'><div><div><b>Original VST (Wine)</b></div><audio controls preload='none' src='audio/patch_005_vst.wav'></audio></div><div><div><b>Reconstructed engine</b></div><audio controls preload='none' src='audio/patch_005_reconstructed.wav'></audio></div></div><h3>Patch 017</h3><img src='img/patch_017_vst_over_engine.png' style='max-width:100%'><div style='display:flex;gap:2rem;flex-wrap:wrap;margin-bottom:1.5rem'><div><div><b>Original VST (Wine)</b></div><audio controls preload='none' src='audio/patch_017_vst.wav'></audio></div><div><div><b>Reconstructed engine</b></div><audio controls preload='none' src='audio/patch_017_reconstructed.wav'></audio></div></div><h3>Patch 033</h3><img src='img/patch_033_vst_over_engine.png' style='max-width:100%'><div style='display:flex;gap:2rem;flex-wrap:wrap;margin-bottom:1.5rem'><div><div><b>Original VST (Wine)</b></div><audio controls preload='none' src='audio/patch_033_vst.wav'></audio></div><div><div><b>Reconstructed engine</b></div><audio controls preload='none' src='audio/patch_033_reconstructed.wav'></audio></div></div><h3>Patch 039</h3><img src='img/patch_039_vst_over_engine.png' style='max-width:100%'><div style='display:flex;gap:2rem;flex-wrap:wrap;margin-bottom:1.5rem'><div><div><b>Original VST (Wine)</b></div><audio controls preload='none' src='audio/patch_039_vst.wav'></audio></div><div><div><b>Reconstructed engine</b></div><audio controls preload='none' src='audio/patch_039_reconstructed.wav'></audio></div></div><h3>Patch 042</h3><img src='img/patch_042_vst_over_engine.png' style='max-width:100%'><div style='display:flex;gap:2rem;flex-wrap:wrap;margin-bottom:1.5rem'><div><div><b>Original VST (Wine)</b></div><audio controls preload='none' src='audio/patch_042_vst.wav'></audio></div><div><div><b>Reconstructed engine</b></div><audio controls preload='none' src='audio/patch_042_reconstructed.wav'></audio></div></div><h3>Patch 050</h3><img src='img/patch_050_vst_over_engine.png' style='max-width:100%'><div style='display:flex;gap:2rem;flex-wrap:wrap;margin-bottom:1.5rem'><div><div><b>Original VST (Wine)</b></div><audio controls preload='none' src='audio/patch_050_vst.wav'></audio></div><div><div><b>Reconstructed engine</b></div><audio controls preload='none' src='audio/patch_050_reconstructed.wav'></audio></div></div><h3>Patch 057</h3><img src='img/patch_057_vst_over_engine.png' style='max-width:100%'><div style='display:flex;gap:2rem;flex-wrap:wrap;margin-bottom:1.5rem'><div><div><b>Original VST (Wine)</b></div><audio controls preload='none' src='audio/patch_057_vst.wav'></audio></div><div><div><b>Reconstructed engine</b></div><audio controls preload='none' src='audio/patch_057_reconstructed.wav'></audio></div></div><h3>Patch 062</h3><img src='img/patch_062_vst_over_engine.png' style='max-width:100%'><div style='display:flex;gap:2rem;flex-wrap:wrap;margin-bottom:1.5rem'><div><div><b>Original VST (Wine)</b></div><audio controls preload='none' src='audio/patch_062_vst.wav'></audio></div><div><div><b>Reconstructed engine</b></div><audio controls preload='none' src='audio/patch_062_reconstructed.wav'></audio></div></div><h3>Patch 081</h3><img src='img/patch_081_vst_over_engine.png' style='max-width:100%'><div style='display:flex;gap:2rem;flex-wrap:wrap;margin-bottom:1.5rem'><div><div><b>Original VST (Wine)</b></div><audio controls preload='none' src='audio/patch_081_vst.wav'></audio></div><div><div><b>Reconstructed engine</b></div><audio controls preload='none' src='audio/patch_081_reconstructed.wav'></audio></div></div><h3>Patch 101</h3><img src='img/patch_101_vst_over_engine.png' style='max-width:100%'><div style='display:flex;gap:2rem;flex-wrap:wrap;margin-bottom:1.5rem'><div><div><b>Original VST (Wine)</b></div><audio controls preload='none' src='audio/patch_101_vst.wav'></audio></div><div><div><b>Reconstructed engine</b></div><audio controls preload='none' src='audio/patch_101_reconstructed.wav'></audio></div></div>
-<hr>
-<p><em>Synth1 VST reconstruction — forensic A/B report. Generated 2026-10-07.
-Top panel in every figure: original Synth1 VST rendered headless under Wine.
-Bottom panel: the reconstructed portable-synth C++ engine.
-Identical magma heatmap scale (shared vmin/vmax, vmax = peak &minus; 80 dB).</em></p>
+  <div class="container">
+    <header>
+      <div class="title-group">
+        <h1>Synth1 A/B Listening Suite <span class="badge">Verification</span></h1>
+        <p>Direct perceptual and quantitative comparisons between the original 32-bit Synth1 VST and the reconstructed C++ engine</p>
+      </div>
+      <div class="ab-legend">
+        <span class="tag-a"><span class="tag-dot a"></span> Source A: Original VST (Wine)</span>
+        <span class="tag-b"><span class="tag-dot b"></span> Source B: Reconstructed Engine</span>
+      </div>
+    </header>
+
+    <div class="stats-bar">
+      <div class="stat-card">
+        <div class="stat-label">Patches Tested</div>
+        <div class="stat-value">12</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Average Correlation</div>
+        <div class="stat-value">0.962</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Sample Rate / Block</div>
+        <div class="stat-value">44.1 kHz / 512</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Audio Errors (NaN/Inf)</div>
+        <div class="stat-value" style="color: #28f0d8;">0 (Clean)</div>
+      </div>
+    </div>
+
+    <div class="patch-grid">
+
+      <div class="patch-card" id="card-001" data-ref="audio/patch_001_vst.wav" data-eng="audio/patch_001_reconstructed.wav">
+        <div class="patch-header">
+          <div class="patch-meta">
+            <span class="patch-id">#001</span>
+            <span class="patch-name">Synth1 brastring</span>
+            <span class="patch-cat">Brass / Strings</span>
+          </div>
+          <div class="metrics-pill-group">
+            <div class="metric-pill">Corr: <span>0.936</span></div>
+            <div class="metric-pill">Null: <span>-4.49 dB</span></div>
+            <div class="metric-pill">STFT &Delta;: <span>0.47</span></div>
+            <div class="metric-pill">Peak A/B: <span>0.31 / 0.30</span></div>
+          </div>
+        </div>
+        <div class="player-row">
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-a"><span class="tag-dot a"></span> Original 32-bit VST (Source A)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.051</span>
+            </div>
+            <audio id="aud-a-001" controls preload="metadata" src="audio/patch_001_vst.wav"></audio>
+          </div>
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-b"><span class="tag-dot b"></span> Reconstructed Synth (Source B)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.055</span>
+            </div>
+            <audio id="aud-b-001" controls preload="metadata" src="audio/patch_001_reconstructed.wav"></audio>
+          </div>
+        </div>
+        <div class="viz-block">
+          <div class="viz-label">Waveform overlay <span class="tag-a"><span class="tag-dot a"></span>VST</span><span class="tag-b"><span class="tag-dot b"></span>Reconstructed</span><span class="viz-status" data-status-for="001">decoding audio for visualization...</span></div>
+          <canvas id="wave-001" class="wave-canvas"></canvas>
+          <div class="spec-grid">
+            <div class="spec-cell"><span class="tag-a"><span class="tag-dot a"></span> Spectrogram — VST</span><canvas id="spec-a-001" class="spec-canvas spec-a"></canvas></div>
+            <div class="spec-cell"><span class="tag-b"><span class="tag-dot b"></span> Spectrogram — Reconstructed</span><canvas id="spec-b-001" class="spec-canvas spec-b"></canvas></div>
+          </div>
+        </div>
+        <div class="switcher-row">
+          <button class="seamless-toggle" onclick="toggleAB('001')">
+            <span>&#8644; Seamless A/B Flip (Listen Mid-Playback)</span>
+          </button>
+          <div class="notes-tag">Test Phrase MIDI: [48,60,64,67,72]</div>
+        </div>
+      </div>
+
+      <div class="patch-card" id="card-002" data-ref="audio/patch_002_vst.wav" data-eng="audio/patch_002_reconstructed.wav">
+        <div class="patch-header">
+          <div class="patch-meta">
+            <span class="patch-id">#002</span>
+            <span class="patch-name">Piano</span>
+            <span class="patch-cat">Acoustic Keys</span>
+          </div>
+          <div class="metrics-pill-group">
+            <div class="metric-pill">Corr: <span>0.984</span></div>
+            <div class="metric-pill">Null: <span>-8.11 dB</span></div>
+            <div class="metric-pill">STFT &Delta;: <span>0.44</span></div>
+            <div class="metric-pill">Peak A/B: <span>0.35 / 0.35</span></div>
+          </div>
+        </div>
+        <div class="player-row">
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-a"><span class="tag-dot a"></span> Original 32-bit VST (Source A)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.061</span>
+            </div>
+            <audio id="aud-a-002" controls preload="metadata" src="audio/patch_002_vst.wav"></audio>
+          </div>
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-b"><span class="tag-dot b"></span> Reconstructed Synth (Source B)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.060</span>
+            </div>
+            <audio id="aud-b-002" controls preload="metadata" src="audio/patch_002_reconstructed.wav"></audio>
+          </div>
+        </div>
+        <div class="viz-block">
+          <div class="viz-label">Waveform overlay <span class="tag-a"><span class="tag-dot a"></span>VST</span><span class="tag-b"><span class="tag-dot b"></span>Reconstructed</span><span class="viz-status" data-status-for="002">decoding audio for visualization...</span></div>
+          <canvas id="wave-002" class="wave-canvas"></canvas>
+          <div class="spec-grid">
+            <div class="spec-cell"><span class="tag-a"><span class="tag-dot a"></span> Spectrogram — VST</span><canvas id="spec-a-002" class="spec-canvas spec-a"></canvas></div>
+            <div class="spec-cell"><span class="tag-b"><span class="tag-dot b"></span> Spectrogram — Reconstructed</span><canvas id="spec-b-002" class="spec-canvas spec-b"></canvas></div>
+          </div>
+        </div>
+        <div class="switcher-row">
+          <button class="seamless-toggle" onclick="toggleAB('002')">
+            <span>&#8644; Seamless A/B Flip (Listen Mid-Playback)</span>
+          </button>
+          <div class="notes-tag">Test Phrase MIDI: [48,60,64,67,72]</div>
+        </div>
+      </div>
+
+      <div class="patch-card" id="card-005" data-ref="audio/patch_005_vst.wav" data-eng="audio/patch_005_reconstructed.wav">
+        <div class="patch-header">
+          <div class="patch-meta">
+            <span class="patch-id">#005</span>
+            <span class="patch-name">Rhodes Piano</span>
+            <span class="patch-cat">Electric Piano</span>
+          </div>
+          <div class="metrics-pill-group">
+            <div class="metric-pill">Corr: <span>0.874</span></div>
+            <div class="metric-pill">Null: <span>2.64 dB</span></div>
+            <div class="metric-pill">STFT &Delta;: <span>0.65</span></div>
+            <div class="metric-pill">Peak A/B: <span>0.29 / 0.57</span></div>
+          </div>
+        </div>
+        <div class="player-row">
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-a"><span class="tag-dot a"></span> Original 32-bit VST (Source A)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.045</span>
+            </div>
+            <audio id="aud-a-005" controls preload="metadata" src="audio/patch_005_vst.wav"></audio>
+          </div>
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-b"><span class="tag-dot b"></span> Reconstructed Synth (Source B)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.092</span>
+            </div>
+            <audio id="aud-b-005" controls preload="metadata" src="audio/patch_005_reconstructed.wav"></audio>
+          </div>
+        </div>
+        <div class="viz-block">
+          <div class="viz-label">Waveform overlay <span class="tag-a"><span class="tag-dot a"></span>VST</span><span class="tag-b"><span class="tag-dot b"></span>Reconstructed</span><span class="viz-status" data-status-for="005">decoding audio for visualization...</span></div>
+          <canvas id="wave-005" class="wave-canvas"></canvas>
+          <div class="spec-grid">
+            <div class="spec-cell"><span class="tag-a"><span class="tag-dot a"></span> Spectrogram — VST</span><canvas id="spec-a-005" class="spec-canvas spec-a"></canvas></div>
+            <div class="spec-cell"><span class="tag-b"><span class="tag-dot b"></span> Spectrogram — Reconstructed</span><canvas id="spec-b-005" class="spec-canvas spec-b"></canvas></div>
+          </div>
+        </div>
+        <div class="switcher-row">
+          <button class="seamless-toggle" onclick="toggleAB('005')">
+            <span>&#8644; Seamless A/B Flip (Listen Mid-Playback)</span>
+          </button>
+          <div class="notes-tag">Test Phrase MIDI: [48,60,64,67,72]</div>
+        </div>
+      </div>
+
+      <div class="patch-card" id="card-017" data-ref="audio/patch_017_vst.wav" data-eng="audio/patch_017_reconstructed.wav">
+        <div class="patch-header">
+          <div class="patch-meta">
+            <span class="patch-id">#017</span>
+            <span class="patch-name">Hammond organ</span>
+            <span class="patch-cat">Organ</span>
+          </div>
+          <div class="metrics-pill-group">
+            <div class="metric-pill">Corr: <span>0.973</span></div>
+            <div class="metric-pill">Null: <span>-6.67 dB</span></div>
+            <div class="metric-pill">STFT &Delta;: <span>0.44</span></div>
+            <div class="metric-pill">Peak A/B: <span>0.19 / 0.18</span></div>
+          </div>
+        </div>
+        <div class="player-row">
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-a"><span class="tag-dot a"></span> Original 32-bit VST (Source A)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.023</span>
+            </div>
+            <audio id="aud-a-017" controls preload="metadata" src="audio/patch_017_vst.wav"></audio>
+          </div>
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-b"><span class="tag-dot b"></span> Reconstructed Synth (Source B)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.023</span>
+            </div>
+            <audio id="aud-b-017" controls preload="metadata" src="audio/patch_017_reconstructed.wav"></audio>
+          </div>
+        </div>
+        <div class="viz-block">
+          <div class="viz-label">Waveform overlay <span class="tag-a"><span class="tag-dot a"></span>VST</span><span class="tag-b"><span class="tag-dot b"></span>Reconstructed</span><span class="viz-status" data-status-for="017">decoding audio for visualization...</span></div>
+          <canvas id="wave-017" class="wave-canvas"></canvas>
+          <div class="spec-grid">
+            <div class="spec-cell"><span class="tag-a"><span class="tag-dot a"></span> Spectrogram — VST</span><canvas id="spec-a-017" class="spec-canvas spec-a"></canvas></div>
+            <div class="spec-cell"><span class="tag-b"><span class="tag-dot b"></span> Spectrogram — Reconstructed</span><canvas id="spec-b-017" class="spec-canvas spec-b"></canvas></div>
+          </div>
+        </div>
+        <div class="switcher-row">
+          <button class="seamless-toggle" onclick="toggleAB('017')">
+            <span>&#8644; Seamless A/B Flip (Listen Mid-Playback)</span>
+          </button>
+          <div class="notes-tag">Test Phrase MIDI: [48,60,64,67,72]</div>
+        </div>
+      </div>
+
+      <div class="patch-card" id="card-033" data-ref="audio/patch_033_vst.wav" data-eng="audio/patch_033_reconstructed.wav">
+        <div class="patch-header">
+          <div class="patch-meta">
+            <span class="patch-id">#033</span>
+            <span class="patch-name">Acoustic Bass</span>
+            <span class="patch-cat">Bass</span>
+          </div>
+          <div class="metrics-pill-group">
+            <div class="metric-pill">Corr: <span>0.995</span></div>
+            <div class="metric-pill">Null: <span>-13.26 dB</span></div>
+            <div class="metric-pill">STFT &Delta;: <span>0.51</span></div>
+            <div class="metric-pill">Peak A/B: <span>0.24 / 0.24</span></div>
+          </div>
+        </div>
+        <div class="player-row">
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-a"><span class="tag-dot a"></span> Original 32-bit VST (Source A)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.022</span>
+            </div>
+            <audio id="aud-a-033" controls preload="metadata" src="audio/patch_033_vst.wav"></audio>
+          </div>
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-b"><span class="tag-dot b"></span> Reconstructed Synth (Source B)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.022</span>
+            </div>
+            <audio id="aud-b-033" controls preload="metadata" src="audio/patch_033_reconstructed.wav"></audio>
+          </div>
+        </div>
+        <div class="viz-block">
+          <div class="viz-label">Waveform overlay <span class="tag-a"><span class="tag-dot a"></span>VST</span><span class="tag-b"><span class="tag-dot b"></span>Reconstructed</span><span class="viz-status" data-status-for="033">decoding audio for visualization...</span></div>
+          <canvas id="wave-033" class="wave-canvas"></canvas>
+          <div class="spec-grid">
+            <div class="spec-cell"><span class="tag-a"><span class="tag-dot a"></span> Spectrogram — VST</span><canvas id="spec-a-033" class="spec-canvas spec-a"></canvas></div>
+            <div class="spec-cell"><span class="tag-b"><span class="tag-dot b"></span> Spectrogram — Reconstructed</span><canvas id="spec-b-033" class="spec-canvas spec-b"></canvas></div>
+          </div>
+        </div>
+        <div class="switcher-row">
+          <button class="seamless-toggle" onclick="toggleAB('033')">
+            <span>&#8644; Seamless A/B Flip (Listen Mid-Playback)</span>
+          </button>
+          <div class="notes-tag">Test Phrase MIDI: [36,43,48,55,60]</div>
+        </div>
+      </div>
+
+      <div class="patch-card" id="card-039" data-ref="audio/patch_039_vst.wav" data-eng="audio/patch_039_reconstructed.wav">
+        <div class="patch-header">
+          <div class="patch-meta">
+            <span class="patch-id">#039</span>
+            <span class="patch-name">Synth Bass 1</span>
+            <span class="patch-cat">Synth Bass</span>
+          </div>
+          <div class="metrics-pill-group">
+            <div class="metric-pill">Corr: <span>1.000</span></div>
+            <div class="metric-pill">Null: <span>-31.03 dB</span></div>
+            <div class="metric-pill">STFT &Delta;: <span>0.57</span></div>
+            <div class="metric-pill">Peak A/B: <span>0.36 / 0.35</span></div>
+          </div>
+        </div>
+        <div class="player-row">
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-a"><span class="tag-dot a"></span> Original 32-bit VST (Source A)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.049</span>
+            </div>
+            <audio id="aud-a-039" controls preload="metadata" src="audio/patch_039_vst.wav"></audio>
+          </div>
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-b"><span class="tag-dot b"></span> Reconstructed Synth (Source B)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.049</span>
+            </div>
+            <audio id="aud-b-039" controls preload="metadata" src="audio/patch_039_reconstructed.wav"></audio>
+          </div>
+        </div>
+        <div class="viz-block">
+          <div class="viz-label">Waveform overlay <span class="tag-a"><span class="tag-dot a"></span>VST</span><span class="tag-b"><span class="tag-dot b"></span>Reconstructed</span><span class="viz-status" data-status-for="039">decoding audio for visualization...</span></div>
+          <canvas id="wave-039" class="wave-canvas"></canvas>
+          <div class="spec-grid">
+            <div class="spec-cell"><span class="tag-a"><span class="tag-dot a"></span> Spectrogram — VST</span><canvas id="spec-a-039" class="spec-canvas spec-a"></canvas></div>
+            <div class="spec-cell"><span class="tag-b"><span class="tag-dot b"></span> Spectrogram — Reconstructed</span><canvas id="spec-b-039" class="spec-canvas spec-b"></canvas></div>
+          </div>
+        </div>
+        <div class="switcher-row">
+          <button class="seamless-toggle" onclick="toggleAB('039')">
+            <span>&#8644; Seamless A/B Flip (Listen Mid-Playback)</span>
+          </button>
+          <div class="notes-tag">Test Phrase MIDI: [36,43,48,55,60]</div>
+        </div>
+      </div>
+
+      <div class="patch-card" id="card-042" data-ref="audio/patch_042_vst.wav" data-eng="audio/patch_042_reconstructed.wav">
+        <div class="patch-header">
+          <div class="patch-meta">
+            <span class="patch-id">#042</span>
+            <span class="patch-name">Viola</span>
+            <span class="patch-cat">Bowed Strings</span>
+          </div>
+          <div class="metrics-pill-group">
+            <div class="metric-pill">Corr: <span>0.966</span></div>
+            <div class="metric-pill">Null: <span>-6.11 dB</span></div>
+            <div class="metric-pill">STFT &Delta;: <span>0.65</span></div>
+            <div class="metric-pill">Peak A/B: <span>0.27 / 0.26</span></div>
+          </div>
+        </div>
+        <div class="player-row">
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-a"><span class="tag-dot a"></span> Original 32-bit VST (Source A)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.042</span>
+            </div>
+            <audio id="aud-a-042" controls preload="metadata" src="audio/patch_042_vst.wav"></audio>
+          </div>
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-b"><span class="tag-dot b"></span> Reconstructed Synth (Source B)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.046</span>
+            </div>
+            <audio id="aud-b-042" controls preload="metadata" src="audio/patch_042_reconstructed.wav"></audio>
+          </div>
+        </div>
+        <div class="viz-block">
+          <div class="viz-label">Waveform overlay <span class="tag-a"><span class="tag-dot a"></span>VST</span><span class="tag-b"><span class="tag-dot b"></span>Reconstructed</span><span class="viz-status" data-status-for="042">decoding audio for visualization...</span></div>
+          <canvas id="wave-042" class="wave-canvas"></canvas>
+          <div class="spec-grid">
+            <div class="spec-cell"><span class="tag-a"><span class="tag-dot a"></span> Spectrogram — VST</span><canvas id="spec-a-042" class="spec-canvas spec-a"></canvas></div>
+            <div class="spec-cell"><span class="tag-b"><span class="tag-dot b"></span> Spectrogram — Reconstructed</span><canvas id="spec-b-042" class="spec-canvas spec-b"></canvas></div>
+          </div>
+        </div>
+        <div class="switcher-row">
+          <button class="seamless-toggle" onclick="toggleAB('042')">
+            <span>&#8644; Seamless A/B Flip (Listen Mid-Playback)</span>
+          </button>
+          <div class="notes-tag">Test Phrase MIDI: [48,60,64,67,72]</div>
+        </div>
+      </div>
+
+      <div class="patch-card" id="card-050" data-ref="audio/patch_050_vst.wav" data-eng="audio/patch_050_reconstructed.wav">
+        <div class="patch-header">
+          <div class="patch-meta">
+            <span class="patch-id">#050</span>
+            <span class="patch-name">SlowStrings</span>
+            <span class="patch-cat">Analog Pad</span>
+          </div>
+          <div class="metrics-pill-group">
+            <div class="metric-pill">Corr: <span>0.975</span></div>
+            <div class="metric-pill">Null: <span>-9.80 dB</span></div>
+            <div class="metric-pill">STFT &Delta;: <span>0.55</span></div>
+            <div class="metric-pill">Peak A/B: <span>0.24 / 0.24</span></div>
+          </div>
+        </div>
+        <div class="player-row">
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-a"><span class="tag-dot a"></span> Original 32-bit VST (Source A)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.042</span>
+            </div>
+            <audio id="aud-a-050" controls preload="metadata" src="audio/patch_050_vst.wav"></audio>
+          </div>
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-b"><span class="tag-dot b"></span> Reconstructed Synth (Source B)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.041</span>
+            </div>
+            <audio id="aud-b-050" controls preload="metadata" src="audio/patch_050_reconstructed.wav"></audio>
+          </div>
+        </div>
+        <div class="viz-block">
+          <div class="viz-label">Waveform overlay <span class="tag-a"><span class="tag-dot a"></span>VST</span><span class="tag-b"><span class="tag-dot b"></span>Reconstructed</span><span class="viz-status" data-status-for="050">decoding audio for visualization...</span></div>
+          <canvas id="wave-050" class="wave-canvas"></canvas>
+          <div class="spec-grid">
+            <div class="spec-cell"><span class="tag-a"><span class="tag-dot a"></span> Spectrogram — VST</span><canvas id="spec-a-050" class="spec-canvas spec-a"></canvas></div>
+            <div class="spec-cell"><span class="tag-b"><span class="tag-dot b"></span> Spectrogram — Reconstructed</span><canvas id="spec-b-050" class="spec-canvas spec-b"></canvas></div>
+          </div>
+        </div>
+        <div class="switcher-row">
+          <button class="seamless-toggle" onclick="toggleAB('050')">
+            <span>&#8644; Seamless A/B Flip (Listen Mid-Playback)</span>
+          </button>
+          <div class="notes-tag">Test Phrase MIDI: [48,60,64,67,72]</div>
+        </div>
+      </div>
+
+      <div class="patch-card" id="card-057" data-ref="audio/patch_057_vst.wav" data-eng="audio/patch_057_reconstructed.wav">
+        <div class="patch-header">
+          <div class="patch-meta">
+            <span class="patch-id">#057</span>
+            <span class="patch-name">Trumpet</span>
+            <span class="patch-cat">Lead Brass</span>
+          </div>
+          <div class="metrics-pill-group">
+            <div class="metric-pill">Corr: <span>0.997</span></div>
+            <div class="metric-pill">Null: <span>-22.12 dB</span></div>
+            <div class="metric-pill">STFT &Delta;: <span>1.84</span></div>
+            <div class="metric-pill">Peak A/B: <span>0.27 / 0.26</span></div>
+          </div>
+        </div>
+        <div class="player-row">
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-a"><span class="tag-dot a"></span> Original 32-bit VST (Source A)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.045</span>
+            </div>
+            <audio id="aud-a-057" controls preload="metadata" src="audio/patch_057_vst.wav"></audio>
+          </div>
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-b"><span class="tag-dot b"></span> Reconstructed Synth (Source B)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.045</span>
+            </div>
+            <audio id="aud-b-057" controls preload="metadata" src="audio/patch_057_reconstructed.wav"></audio>
+          </div>
+        </div>
+        <div class="viz-block">
+          <div class="viz-label">Waveform overlay <span class="tag-a"><span class="tag-dot a"></span>VST</span><span class="tag-b"><span class="tag-dot b"></span>Reconstructed</span><span class="viz-status" data-status-for="057">decoding audio for visualization...</span></div>
+          <canvas id="wave-057" class="wave-canvas"></canvas>
+          <div class="spec-grid">
+            <div class="spec-cell"><span class="tag-a"><span class="tag-dot a"></span> Spectrogram — VST</span><canvas id="spec-a-057" class="spec-canvas spec-a"></canvas></div>
+            <div class="spec-cell"><span class="tag-b"><span class="tag-dot b"></span> Spectrogram — Reconstructed</span><canvas id="spec-b-057" class="spec-canvas spec-b"></canvas></div>
+          </div>
+        </div>
+        <div class="switcher-row">
+          <button class="seamless-toggle" onclick="toggleAB('057')">
+            <span>&#8644; Seamless A/B Flip (Listen Mid-Playback)</span>
+          </button>
+          <div class="notes-tag">Test Phrase MIDI: [48,60,64,67,72]</div>
+        </div>
+      </div>
+
+      <div class="patch-card" id="card-062" data-ref="audio/patch_062_vst.wav" data-eng="audio/patch_062_reconstructed.wav">
+        <div class="patch-header">
+          <div class="patch-meta">
+            <span class="patch-id">#062</span>
+            <span class="patch-name">Brass1</span>
+            <span class="patch-cat">Vintage Brass</span>
+          </div>
+          <div class="metrics-pill-group">
+            <div class="metric-pill">Corr: <span>0.975</span></div>
+            <div class="metric-pill">Null: <span>-8.65 dB</span></div>
+            <div class="metric-pill">STFT &Delta;: <span>0.62</span></div>
+            <div class="metric-pill">Peak A/B: <span>0.06 / 0.06</span></div>
+          </div>
+        </div>
+        <div class="player-row">
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-a"><span class="tag-dot a"></span> Original 32-bit VST (Source A)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.012</span>
+            </div>
+            <audio id="aud-a-062" controls preload="metadata" src="audio/patch_062_vst.wav"></audio>
+          </div>
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-b"><span class="tag-dot b"></span> Reconstructed Synth (Source B)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.013</span>
+            </div>
+            <audio id="aud-b-062" controls preload="metadata" src="audio/patch_062_reconstructed.wav"></audio>
+          </div>
+        </div>
+        <div class="viz-block">
+          <div class="viz-label">Waveform overlay <span class="tag-a"><span class="tag-dot a"></span>VST</span><span class="tag-b"><span class="tag-dot b"></span>Reconstructed</span><span class="viz-status" data-status-for="062">decoding audio for visualization...</span></div>
+          <canvas id="wave-062" class="wave-canvas"></canvas>
+          <div class="spec-grid">
+            <div class="spec-cell"><span class="tag-a"><span class="tag-dot a"></span> Spectrogram — VST</span><canvas id="spec-a-062" class="spec-canvas spec-a"></canvas></div>
+            <div class="spec-cell"><span class="tag-b"><span class="tag-dot b"></span> Spectrogram — Reconstructed</span><canvas id="spec-b-062" class="spec-canvas spec-b"></canvas></div>
+          </div>
+        </div>
+        <div class="switcher-row">
+          <button class="seamless-toggle" onclick="toggleAB('062')">
+            <span>&#8644; Seamless A/B Flip (Listen Mid-Playback)</span>
+          </button>
+          <div class="notes-tag">Test Phrase MIDI: [48,60,64,67,72]</div>
+        </div>
+      </div>
+
+      <div class="patch-card" id="card-081" data-ref="audio/patch_081_vst.wav" data-eng="audio/patch_081_reconstructed.wav">
+        <div class="patch-header">
+          <div class="patch-meta">
+            <span class="patch-id">#081</span>
+            <span class="patch-name">Square lead</span>
+            <span class="patch-cat">Synth Lead</span>
+          </div>
+          <div class="metrics-pill-group">
+            <div class="metric-pill">Corr: <span>0.972</span></div>
+            <div class="metric-pill">Null: <span>-6.40 dB</span></div>
+            <div class="metric-pill">STFT &Delta;: <span>0.46</span></div>
+            <div class="metric-pill">Peak A/B: <span>0.30 / 0.28</span></div>
+          </div>
+        </div>
+        <div class="player-row">
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-a"><span class="tag-dot a"></span> Original 32-bit VST (Source A)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.076</span>
+            </div>
+            <audio id="aud-a-081" controls preload="metadata" src="audio/patch_081_vst.wav"></audio>
+          </div>
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-b"><span class="tag-dot b"></span> Reconstructed Synth (Source B)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.079</span>
+            </div>
+            <audio id="aud-b-081" controls preload="metadata" src="audio/patch_081_reconstructed.wav"></audio>
+          </div>
+        </div>
+        <div class="viz-block">
+          <div class="viz-label">Waveform overlay <span class="tag-a"><span class="tag-dot a"></span>VST</span><span class="tag-b"><span class="tag-dot b"></span>Reconstructed</span><span class="viz-status" data-status-for="081">decoding audio for visualization...</span></div>
+          <canvas id="wave-081" class="wave-canvas"></canvas>
+          <div class="spec-grid">
+            <div class="spec-cell"><span class="tag-a"><span class="tag-dot a"></span> Spectrogram — VST</span><canvas id="spec-a-081" class="spec-canvas spec-a"></canvas></div>
+            <div class="spec-cell"><span class="tag-b"><span class="tag-dot b"></span> Spectrogram — Reconstructed</span><canvas id="spec-b-081" class="spec-canvas spec-b"></canvas></div>
+          </div>
+        </div>
+        <div class="switcher-row">
+          <button class="seamless-toggle" onclick="toggleAB('081')">
+            <span>&#8644; Seamless A/B Flip (Listen Mid-Playback)</span>
+          </button>
+          <div class="notes-tag">Test Phrase MIDI: [48,60,64,67,72]</div>
+        </div>
+      </div>
+
+      <div class="patch-card" id="card-101" data-ref="audio/patch_101_vst.wav" data-eng="audio/patch_101_reconstructed.wav">
+        <div class="patch-header">
+          <div class="patch-meta">
+            <span class="patch-id">#101</span>
+            <span class="patch-name">Sequence2</span>
+            <span class="patch-cat">Arpeggio / Sequence</span>
+          </div>
+          <div class="metrics-pill-group">
+            <div class="metric-pill">Corr: <span>0.900</span></div>
+            <div class="metric-pill">Null: <span>-2.71 dB</span></div>
+            <div class="metric-pill">STFT &Delta;: <span>0.93</span></div>
+            <div class="metric-pill">Peak A/B: <span>0.37 / 0.35</span></div>
+          </div>
+        </div>
+        <div class="player-row">
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-a"><span class="tag-dot a"></span> Original 32-bit VST (Source A)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.034</span>
+            </div>
+            <audio id="aud-a-101" controls preload="metadata" src="audio/patch_101_vst.wav"></audio>
+          </div>
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-b"><span class="tag-dot b"></span> Reconstructed Synth (Source B)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.032</span>
+            </div>
+            <audio id="aud-b-101" controls preload="metadata" src="audio/patch_101_reconstructed.wav"></audio>
+          </div>
+        </div>
+        <div class="viz-block">
+          <div class="viz-label">Waveform overlay <span class="tag-a"><span class="tag-dot a"></span>VST</span><span class="tag-b"><span class="tag-dot b"></span>Reconstructed</span><span class="viz-status" data-status-for="101">decoding audio for visualization...</span></div>
+          <canvas id="wave-101" class="wave-canvas"></canvas>
+          <div class="spec-grid">
+            <div class="spec-cell"><span class="tag-a"><span class="tag-dot a"></span> Spectrogram — VST</span><canvas id="spec-a-101" class="spec-canvas spec-a"></canvas></div>
+            <div class="spec-cell"><span class="tag-b"><span class="tag-dot b"></span> Spectrogram — Reconstructed</span><canvas id="spec-b-101" class="spec-canvas spec-b"></canvas></div>
+          </div>
+        </div>
+        <div class="switcher-row">
+          <button class="seamless-toggle" onclick="toggleAB('101')">
+            <span>&#8644; Seamless A/B Flip (Listen Mid-Playback)</span>
+          </button>
+          <div class="notes-tag">Test Phrase MIDI: [48,60,64,67,72]</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // Seamless A/B switcher function
+    function toggleAB(id) {
+      const a = document.getElementById('aud-a-' + id);
+      const b = document.getElementById('aud-b-' + id);
+      const btn = event.currentTarget;
+      
+      if (!a.paused) {
+        // A is playing -> flip to B seamlessly
+        const t = a.currentTime;
+        a.pause();
+        b.currentTime = t;
+        b.play();
+        btn.classList.remove('active-a');
+        btn.classList.add('active-b');
+      } else if (!b.paused) {
+        // B is playing -> flip to A seamlessly
+        const t = b.currentTime;
+        b.pause();
+        a.currentTime = t;
+        a.play();
+        btn.classList.remove('active-b');
+        btn.classList.add('active-a');
+      } else {
+        // Neither playing -> start A
+        a.play();
+        btn.classList.add('active-a');
+      }
+    }
+
+    // Stop other player when one starts manually
+    document.querySelectorAll('audio').forEach(aud => {
+      aud.addEventListener('play', (e) => {
+        document.querySelectorAll('audio').forEach(other => {
+          if (other !== e.target) other.pause();
+        });
+      });
+    });
+
+    // ---- Waveform overlay + spectrogram visualization (client-side decode + FFT) ----
+    (function () {
+      var A_RGB = [240, 160, 32];
+      var B_RGB = [40, 240, 216];
+      var actx = null;
+      function audioCtx() {
+        if (!actx) actx = new (window.AudioContext || window.webkitAudioContext)();
+        return actx;
+      }
+      var decodeCache = {};
+      function loadAudio(src) {
+        if (!decodeCache[src]) {
+          decodeCache[src] = fetch(src).then(function (r) {
+            if (!r.ok) throw new Error('HTTP ' + r.status + ' for ' + src);
+            return r.arrayBuffer();
+          }).then(function (b) {
+            return new Promise(function (res, rej) { audioCtx().decodeAudioData(b, res, rej); });
+          });
+        }
+        return decodeCache[src];
+      }
+      function toMono(buffer) {
+        var n = buffer.length, c = buffer.numberOfChannels, out = new Float32Array(n);
+        for (var ch = 0; ch < c; ch++) {
+          var d = buffer.getChannelData(ch);
+          for (var i = 0; i < n; i++) out[i] += d[i] / c;
+        }
+        return out;
+      }
+      function sizeCanvas(cv) {
+        var dpr = window.devicePixelRatio || 1;
+        var w = Math.min(1600, Math.max(8, Math.round(cv.clientWidth * dpr)));
+        var h = Math.max(8, Math.round(cv.clientHeight * dpr));
+        cv.width = w; cv.height = h;
+        return [w, h];
+      }
+      function drawWave(cv, aData, bData) {
+        var wh = sizeCanvas(cv), w = wh[0], h = wh[1], g = cv.getContext('2d'), mid = h / 2;
+        g.clearRect(0, 0, w, h);
+        g.strokeStyle = 'rgba(255,255,255,0.15)';
+        g.beginPath(); g.moveTo(0, mid); g.lineTo(w, mid); g.stroke();
+        var series = [[aData, A_RGB, 0.85], [bData, B_RGB, 0.55]];
+        series.forEach(function (s) {
+          var data = s[0], rgb = s[1], alpha = s[2];
+          g.fillStyle = 'rgba(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ',' + alpha + ')';
+          for (var x = 0; x < w; x++) {
+            var s0 = Math.floor(x * data.length / w);
+            var s1 = Math.max(s0 + 1, Math.floor((x + 1) * data.length / w));
+            var mn = 1, mx = -1;
+            for (var i = s0; i < s1 && i < data.length; i++) {
+              var v = data[i];
+              if (v < mn) mn = v;
+              if (v > mx) mx = v;
+            }
+            if (mn > mx) { mn = 0; mx = 0; }
+            var y1 = mid - mx * mid * 0.95, y2 = mid - mn * mid * 0.95;
+            g.fillRect(x, y1, 1, Math.max(1, y2 - y1));
+          }
+        });
+      }
+      function buildMagmaLut() {
+        var stops = [[0, 0, 4], [22, 11, 57], [66, 10, 104], [106, 23, 110], [147, 38, 103],
+                     [188, 55, 84], [221, 81, 58], [243, 120, 25], [252, 165, 10], [246, 215, 70], [252, 253, 191]];
+        var lut = new Uint8Array(256 * 3);
+        for (var i = 0; i < 256; i++) {
+          var t = i / 255 * (stops.length - 1);
+          var i0 = Math.min(stops.length - 2, Math.floor(t)), f = t - i0;
+          for (var k = 0; k < 3; k++) lut[i * 3 + k] = Math.round(stops[i0][k] + (stops[i0 + 1][k] - stops[i0][k]) * f);
+        }
+        return lut;
+      }
+      var MAGMA = buildMagmaLut();
+      // In-place iterative radix-2 Cooley-Tukey FFT (bit-reversal + butterflies).
+      function fftMagnitudes(re, im) {
+        var n = re.length;
+        for (var i = 1, j = 0; i < n; i++) {
+          var bit = n >> 1;
+          for (; j & bit; bit >>= 1) j ^= bit;
+          j ^= bit;
+          if (i < j) {
+            var t = re[i]; re[i] = re[j]; re[j] = t;
+            t = im[i]; im[i] = im[j]; im[j] = t;
+          }
+        }
+        for (var len = 2; len <= n; len <<= 1) {
+          var ang = -2 * Math.PI / len, wr = Math.cos(ang), wi = Math.sin(ang), half = len >> 1;
+          for (var i2 = 0; i2 < n; i2 += len) {
+            var cr = 1, ci = 0;
+            for (var k2 = 0; k2 < half; k2++) {
+              var ur = re[i2 + k2], ui = im[i2 + k2];
+              var ar = re[i2 + k2 + half], ai = im[i2 + k2 + half];
+              var vr = ar * cr - ai * ci, vi = ar * ci + ai * cr;
+              re[i2 + k2] = ur + vr; im[i2 + k2] = ui + vi;
+              re[i2 + k2 + half] = ur - vr; im[i2 + k2 + half] = ui - vi;
+              var ncr = cr * wr - ci * wi;
+              ci = cr * wi + ci * wr; cr = ncr;
+            }
+          }
+        }
+      }
+      function drawSpectrogram(cv, data) {
+        var wh = sizeCanvas(cv), w = wh[0], h = wh[1], g = cv.getContext('2d');
+        var N = 1024, half = N >> 1;
+        var win = new Float32Array(N);
+        for (var i = 0; i < N; i++) win[i] = 0.5 - 0.5 * Math.cos(2 * Math.PI * i / N);
+        var re = new Float32Array(N), im = new Float32Array(N);
+        var img = g.createImageData(w, h);
+        var binsPerRow = half / h;
+        for (var x = 0; x < w; x++) {
+          var start = Math.min(Math.max(0, Math.floor(x * Math.max(1, data.length - N) / w)), Math.max(0, data.length - N));
+          for (var i3 = 0; i3 < N; i3++) {
+            re[i3] = (start + i3 < data.length ? data[start + i3] : 0) * win[i3];
+            im[i3] = 0;
+          }
+          fftMagnitudes(re, im);
+          for (var y = 0; y < h; y++) {
+            var b0 = Math.floor(y * binsPerRow);
+            var b1 = Math.max(b0 + 1, Math.floor((y + 1) * binsPerRow));
+            var m = 0;
+            for (var b = b0; b < b1; b++) {
+              var p2 = re[b] * re[b] + im[b] * im[b];
+              if (p2 > m) m = p2;
+            }
+            var db = 10 * Math.log10(m + 1e-12);
+            var v2 = (db + 96) / 96;
+            v2 = v2 < 0 ? 0 : (v2 > 1 ? 1 : v2);
+            var li = ((v2 * 255) | 0) * 3;
+            var p = (((h - 1 - y) * w) + x) * 4;
+            img.data[p] = MAGMA[li]; img.data[p + 1] = MAGMA[li + 1]; img.data[p + 2] = MAGMA[li + 2]; img.data[p + 3] = 255;
+          }
+        }
+        g.putImageData(img, 0, 0);
+      }
+      function setStatus(card, text) {
+        var s = card.querySelector('.viz-status');
+        if (s) s.textContent = text;
+      }
+      function renderCardViz(card) {
+        setStatus(card, 'decoding audio for visualization...');
+        Promise.all([loadAudio(card.dataset.ref), loadAudio(card.dataset.eng)])
+          .then(function (bufs) {
+            var dA = toMono(bufs[0]), dB = toMono(bufs[1]);
+            drawWave(card.querySelector('.wave-canvas'), dA, dB);
+            drawSpectrogram(card.querySelector('.spec-a'), dA);
+            drawSpectrogram(card.querySelector('.spec-b'), dB);
+            setStatus(card, (bufs[0].duration).toFixed(1) + ' s · ' + bufs[0].sampleRate + ' Hz · 1024-pt FFT');
+          })
+          .catch(function (err) {
+            setStatus(card, 'visualization failed: ' + err.message);
+          });
+      }
+      var cards = Array.prototype.slice.call(document.querySelectorAll('.patch-card[data-ref]'));
+      cards.forEach(function (c) { c.dataset.vizRendered = '0'; });
+      function renderVisible() {
+        cards.forEach(function (c) {
+          if (c.dataset.vizRendered === '1') return;
+          var r = c.getBoundingClientRect();
+          if (r.bottom > -300 && r.top < window.innerHeight + 300) {
+            c.dataset.vizRendered = '1';
+            renderCardViz(c);
+          }
+        });
+      }
+      window.addEventListener('scroll', renderVisible, { passive: true });
+      window.addEventListener('resize', renderVisible);
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', renderVisible);
+      } else {
+        renderVisible();
+      }
+    })();
+  </script>
 </body>
 </html>
