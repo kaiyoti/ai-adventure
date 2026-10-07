@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Synth1 Recreation — Spectrogram Forensics</title>
+<style>
+ body { font-family: -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+        max-width: 1200px; margin: 2rem auto; padding: 0 1rem; line-height: 1.55; color:#1b1b1b; }
+ table { border-collapse: collapse; width: 100%; font-size: 0.85rem; }
+ th, td { border: 1px solid #ccc; padding: 6px 8px; vertical-align: top; text-align: left; }
+ th { background: #f0f0f0; }
+ code { background: #f4f4f4; padding: 1px 4px; border-radius: 3px; }
+ img { border: 1px solid #ddd; border-radius: 4px; margin-bottom: 1.5rem; }
+ h1 { border-bottom: 2px solid #333; padding-bottom: .3rem; }
+</style>
+</head>
+<body>
+<h1>Spec12 forensics — VST (top) vs reconstructed engine (bottom)</h1>
+<p>Method: all 12 PNGs read, then measured from the WAVs in <code>~/www/summaries/audio</code>. Per note window (each 0.25 s, 120 ms after onset) I measured the highest harmonic within 60 and 80 dB of the window peak, the inharmonic peaks, the release decay times and the engine-only bursts above 15 kHz. Scripts are in the session scratchpad: <code>specforensics.py</code>, <code>f005.py</code>, <code>tails.py</code>.
+Notes are MIDI 48, 60, 64, 67, 72 (36, 43, 48, 55, 60 for 033 and 039), each 0.4 s with a 0.1 s gap.</p>
+<p><strong>Heatmap caveat:</strong> <code>render_spec12.py</code> sets <code>vmax = max − 80 dB</code>, so everything within 80 dB of the loudest bin is pegged yellow. "Height" in the image therefore means "harmonics within 80 dB of the peak", and a louder side does look taller. The ceilings below were measured per harmonic, not read off the colours.</p>
+<h2>Main finding: engine band-limited tables hold 27 harmonics for every note below 802 Hz</h2>
+<p><code>spec_osc.md §5.1</code> / <code>wavetable_gen.cpp:122</code> derive <code>harmonics[j] = 27.5·cos(j/36)</code>, a 27.5 → 15.5 range with thresholds 802 → 1423 Hz. As a result:
+- Every note below 802 Hz uses band 0, which has <strong>H = 27</strong>. The measured engine harmonic count stops at exactly 27 whenever the VST goes higher.
+- Every partial above 1423 Hz uses band 35, which has <strong>H = 15</strong>. That puts the partial's harmonics far above Nyquist, where they fold back (aliasing).</p>
+<p>The VST behaves like a pitch-dependent ladder, H ≈ 22050/f. In 101 it keeps 152 harmonics at C3 (Nyquist allows 168) and 74 at C4 (83 allowed). Patch 005's 6.68 kHz osc2 partial shows only harmonics 1–2.</p>
+<p>Conclusion: the decoded band law is wrong. My hypothesis is that <code>27.5</code> is A0 in Hz, not a harmonic count, and that the callee decoded as <code>cos</code> is really an exponential: something like thr_j = 27.5·2^(j/4), i.e. 36 bands at 3 semitones each spanning 9 octaves, with H_j = (int)(22050/thr_j). Two other signs point the same way: the <code>(int)thr &lt; 16 → break</code> guard and the <code>prevThr</code> de-duplication are dead code under the cos law.
+To verify: re-check the callee and constants in <code>FUN_18003cdf0</code>, then render one saw (filter open, no FX) at about 8 pitches through the VST and fit H(f).</p>
+<h2>Per patch</h2>
+<table>
+<thead>
+<tr>
+<th>Patch</th>
+<th>xcorr / null dB</th>
+<th>Side that reaches higher, and mechanism</th>
+<th>Other differences</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>001 brastring</td>
+<td>0.936 / −4.49</td>
+<td><strong>VST.</strong> C3 has 41 harmonics within 80 dB on the VST vs 27 on the engine. The flat engine ceilings at 3.6k, 7.2k, 9.0k, 10.7k and 14.3k Hz are 27·f0 for each note (<strong>band law</strong>). VST ceilings taper; the engine ones are brick walls.</td>
+<td>Engine-only full-band click at <strong>0.244 s</strong> (+18 dB above 15 kHz). Engine tail ends <strong>0.25 s early</strong> at −40, −60 and −80 dB (a parallel shift). Delay wet is 39.</td>
+</tr>
+<tr>
+<td>002 Piano</td>
+<td>0.984 / −8.11</td>
+<td>About equal: harmonics are filter-limited, 8–13 within 60 dB on both.</td>
+<td>Click at 0.244 s (+10 dB). Tail <strong>0.25 s short</strong> (delay wet 6). The VST has slightly more upper-band hash (inharmonic −75 vs −99 dB at C4).</td>
+</tr>
+<tr>
+<td>005 Rhodes</td>
+<td>0.874 / <strong>+2.64</strong></td>
+<td><strong>Engine, by aliasing.</strong> osc2 (shape 2, +55 semitones) puts a partial at ≈20.3·f0, i.e. 2.65, 5.3, 6.7, 8.0 and 10.6 kHz. The engine gives it the <strong>15-harmonic</strong> band, which folds: for the 6683 Hz partial, foldover lands at 44100−6·6683 ≈ 4002 Hz (seen at 4000), 88200−12·6683 ≈ 8004 (8000), 88200−13·6683 ≈ 1321 (1317), and also 2683, 9367 and 10683 Hz. The VST shows only 6683 and 13367 Hz. Engine is <strong>+6.2 dB RMS</strong> and peaks at 0.51 vs 0.275.</td>
+<td>+43 dB engine-only burst above 15 kHz at the 2.0 s onset. Tail 0.2 s short at −40 dB. Engine panel shows a near-zero notch at about 3.22 s before the echo resumes.</td>
+</tr>
+<tr>
+<td>017 Hammond</td>
+<td>0.973 / −6.67</td>
+<td>About equal; the engine has slightly more at C3 (32 vs 28 within 60 dB).</td>
+<td>Click at 0.244 s (+7 dB) even though delay wet is 0. Tiny engine-only onset click at 1.921 s, where the VST is digital silence. Tails identical.</td>
+</tr>
+<tr>
+<td>033 Acoustic Bass</td>
+<td>0.995 / −13.26</td>
+<td>About equal; filter-limited (≤ 25 harmonics).</td>
+<td>Tails identical. Small low-level differences only.</td>
+</tr>
+<tr>
+<td>039 Synth Bass 1</td>
+<td>1.000 / −31.03</td>
+<td><strong>VST, slightly.</strong> At C2 it has 32 harmonics within 80 dB vs 27 (band law). Visually the engine has flat ceilings while the VST's filter-envelope sweep is visible above 27·f0. Because those harmonics sit more than 60 dB down, the null is still −31 dB.</td>
+<td>This patch shows how much the band-law gap is exaggerated by the saturated heatmap.</td>
+</tr>
+<tr>
+<td>042 Viola</td>
+<td>0.966 / −6.11</td>
+<td><strong>VST.</strong> C3 has 34 harmonics vs 27 and E4 has 30 vs 27. The flat engine ceilings are again 27·f0.</td>
+<td>Tails nearly equal (delay wet 2).</td>
+</tr>
+<tr>
+<td>050 SlowStrings</td>
+<td>0.975 / −9.80</td>
+<td>About equal; filter-limited (≤ 24 harmonics).</td>
+<td>Tail <strong>0.15 s short</strong> (delay wet 20). Chorus differences are not separable here.</td>
+</tr>
+<tr>
+<td>057 Trumpet</td>
+<td>0.997 / −22.12</td>
+<td><strong>VST, by a lot.</strong> It has 85 / 47 / 40 / 34 harmonics within 80 dB vs <strong>27 at every note</strong> on the engine; VST attack sweeps reach about 21 kHz. Causes: the band law, plus <strong>osc2 hard sync</strong> (on). The engine's synced slave adds no sync harmonics past 27·f0, while the VST's sync discontinuities fill the band up to Nyquist.</td>
+<td>Tail <strong>0.2–0.65 s short</strong>, with a slower VST decay. VST attack spikes repeat between notes (likely delay echoes, wet 4); the engine panel lacks them.</td>
+</tr>
+<tr>
+<td>062 Brass1</td>
+<td>0.975 / −8.65</td>
+<td>About equal at C3–E4; the VST is higher at G4/C5 (15 vs 11–12 harmonics). The visible engine ceilings at 3.6k, 7.2k, 9.0k, 10.7k and 14.3k Hz are 27·f0 (band law).</td>
+<td>Tail <strong>0.4 s short</strong> (wet 7). The engine dry tail stops at about 2.95 s, then an echo resumes until 3.1 s (the black notch).</td>
+</tr>
+<tr>
+<td>081 Square lead</td>
+<td>0.972 / −6.40</td>
+<td><strong>VST.</strong> Harmonics within 80 dB are 39 / 31 / 29 vs 27 / 27 / 27. Flat engine ceilings are 27·f0.</td>
+<td>Tail <strong>0.1–0.25 s short</strong> (wet 29), with an engine notch at about 3.95 s and an echo after it. Delay repeats are visible in both panels. The VST has more inharmonic hash (−51 vs −58 dB).</td>
+</tr>
+<tr>
+<td>101 Sequence2</td>
+<td>0.900 / −2.71</td>
+<td><strong>VST.</strong> Every arp step reaches about 21 kHz, vs a flat 3.7k / 7.3k on the engine's low steps. At C3 the VST has 138 harmonics within 60 dB vs 65, and at C4 74 vs 55; they converge from E4 up. Arp notes break the f0 assumption, so treat the counts as approximate. Mechanism: band law.</td>
+<td>Engine zero gap of 18 ms at 2.62 s. Tail shorter at −40 dB (delay wet 68, feedback 0).</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Ruled out as the cause of the height differences:</strong> heatmap clipping on its own (the RMS levels match within 1 dB except 005), noise-generator bandwidth (no broadband engine excess), ladder self-oscillation (no isolated sustained engine peaks), and resampling (the high-band floor is identical in both renders).</p>
+<h2>Prioritised fixes</h2>
+<ol>
+<li><strong>Wavetable band law</strong> (<code>FUN_18003cdf0</code> → <code>compute_band_descriptors</code>, <code>wavetable_gen.cpp:122</code>). Replace the cos-derived 27.5 → 15 harmonic range with the real pitch ladder, H ≈ 22050/f per band. This closes the ceiling gap in 001, 039, 042, 057, 062, 081 and 101, and removes the aliasing in <strong>005</strong> (the worst patch, +2.64 dB), where a high osc2 partial currently gets 15 harmonics instead of 2–3.</li>
+<li><strong>Delay FX tail and the 0.244 s click</strong> (<code>core/fx/delay.*</code>). Every patch with delay wet &gt; 0 loses 0.1–0.65 s of tail (001, 002, 005, 050, 057, 062, 081, 101); patches with wet = 0 match exactly. 001 and 002 show a parallel 0.25 s shift, i.e. the engine is missing about one echo period. Check the wet level / dry-wet law (<code>preset.cpp</code> halves param 37), the feedback law, and whether FX processing stops when the voices end. The engine-only click at 0.244 s (001, 002, 017; present even at wet 0) suggests a discontinuity on the delay line's first wrap or uninitialised buffer data. Also confirm both renderers use 120 BPM, since the delay time is tempo-synced; both default to 120.</li>
+<li><strong>Osc2 hard sync</strong> (057, maybe 101). The engine's synced slave produces no harmonics above 27·f0. Even once fix 1 lands, check that sync resets produce the full discontinuity spectrum the VST shows, since its attacks reach about 21 kHz.</li>
+</ol>
+<h2>Addendum (2026-10-07, after re-reading all 12 PNGs)</h2>
+<p><strong>H27 brick wall, measured</strong> at C3/C2, level relative to the window peak:</p>
+<table>
+<thead>
+<tr>
+<th>Patch</th>
+<th>Side</th>
+<th>H26</th>
+<th>H27</th>
+<th>H28</th>
+<th>H30</th>
+<th>H34</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>042</td>
+<td>VST</td>
+<td>−67</td>
+<td>−68</td>
+<td>−71</td>
+<td>−75</td>
+<td>−79</td>
+</tr>
+<tr>
+<td>042</td>
+<td>engine</td>
+<td>−63</td>
+<td>−66</td>
+<td><strong>−101</strong></td>
+<td>−98</td>
+<td>−100</td>
+</tr>
+<tr>
+<td>001</td>
+<td>VST</td>
+<td>−59</td>
+<td>−60</td>
+<td>−63</td>
+<td>−66</td>
+<td>−70</td>
+</tr>
+<tr>
+<td>001</td>
+<td>engine</td>
+<td>−58</td>
+<td>−60</td>
+<td><strong>−86</strong></td>
+<td>−85</td>
+<td>−90</td>
+</tr>
+<tr>
+<td>039</td>
+<td>VST</td>
+<td>−71</td>
+<td>−73</td>
+<td>−74</td>
+<td>−76</td>
+<td>−82</td>
+</tr>
+<tr>
+<td>039</td>
+<td>engine</td>
+<td>−71</td>
+<td>−73</td>
+<td><strong>−102</strong></td>
+<td>−102</td>
+<td>−103</td>
+</tr>
+</tbody>
+</table>
+<p>The engine drops 25–35 dB between H27 and H28. The VST keeps rolling off smoothly, which is the shape of a pitch ladder.</p>
+<p><strong>Correction to 033:</strong> the band law is visible here too. Engine ceilings are flat at about 1.77k, 2.65k, 3.5k and 5.3k Hz, which is 27 × (65.4, 98, 131, 196) Hz. The VST ceilings are higher and slope with the filter envelope. The missing harmonics are more than 85 dB down, so the null (−13 dB) is unaffected.</p>
+<p>Within 70 dB of the peak, the harmonic counts match for 033, 039 and 042. In those patches the visible height gap lives entirely in the −70 to −80 dB zone that <code>vmax = max − 80</code> pegs to yellow, so the heatmap exaggerates it. 057 is a real gap within 70 dB: 70 harmonics vs 27.</p>
+<h2 id='gallery'>Spectrogram gallery (VST top / engine bottom, shared dB scale)</h2><h3>Patch 001</h3><img src='img/patch_001_vst_over_engine.png' style='max-width:100%'><h3>Patch 002</h3><img src='img/patch_002_vst_over_engine.png' style='max-width:100%'><h3>Patch 005</h3><img src='img/patch_005_vst_over_engine.png' style='max-width:100%'><h3>Patch 017</h3><img src='img/patch_017_vst_over_engine.png' style='max-width:100%'><h3>Patch 033</h3><img src='img/patch_033_vst_over_engine.png' style='max-width:100%'><h3>Patch 039</h3><img src='img/patch_039_vst_over_engine.png' style='max-width:100%'><h3>Patch 042</h3><img src='img/patch_042_vst_over_engine.png' style='max-width:100%'><h3>Patch 050</h3><img src='img/patch_050_vst_over_engine.png' style='max-width:100%'><h3>Patch 057</h3><img src='img/patch_057_vst_over_engine.png' style='max-width:100%'><h3>Patch 062</h3><img src='img/patch_062_vst_over_engine.png' style='max-width:100%'><h3>Patch 081</h3><img src='img/patch_081_vst_over_engine.png' style='max-width:100%'><h3>Patch 101</h3><img src='img/patch_101_vst_over_engine.png' style='max-width:100%'>
+<hr>
+<p><em>Synth1 VST reconstruction — forensic A/B report. Generated 2026-10-07.
+Top panel in every figure: original Synth1 VST rendered headless under Wine.
+Bottom panel: the reconstructed portable-synth C++ engine.
+Identical magma heatmap scale (shared vmin/vmax, vmax = peak &minus; 80 dB).</em></p>
+</body>
+</html>
