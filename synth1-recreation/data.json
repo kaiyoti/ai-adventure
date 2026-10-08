@@ -29,7 +29,7 @@
     "ref_rms": 0.061,
     "eng_rms": 0.06,
     "lag": -1,
-    "stft_logmag": 0.3
+    "stft_logmag": 0.32
   },
   {
     "id": "005",
@@ -45,7 +45,7 @@
     "ref_rms": 0.045,
     "eng_rms": 0.092,
     "lag": 0,
-    "stft_logmag": 0.42
+    "stft_logmag": 0.43
   },
   {
     "id": "006",
@@ -221,7 +221,7 @@
     "ref_rms": 0.045,
     "eng_rms": 0.048,
     "lag": -4,
-    "stft_logmag": 0.34
+    "stft_logmag": 0.37
   },
   {
     "id": "057",
@@ -237,7 +237,7 @@
     "ref_rms": 0.045,
     "eng_rms": 0.045,
     "lag": 0,
-    "stft_logmag": 0.28
+    "stft_logmag": 0.29
   },
   {
     "id": "062",
@@ -262,14 +262,14 @@
     "notes": "48,60,64,67,72",
     "ref_file": "audio/patch_081_vst.wav",
     "eng_file": "audio/patch_081_reconstructed.wav",
-    "null_db": -6.29,
-    "corr": 0.977,
+    "null_db": -0.07,
+    "corr": 0.564,
     "ref_peak": 0.301,
-    "eng_peak": 0.304,
+    "eng_peak": 0.291,
     "ref_rms": 0.076,
-    "eng_rms": 0.08,
-    "lag": -7,
-    "stft_logmag": 0.21
+    "eng_rms": 0.077,
+    "lag": -228,
+    "stft_logmag": 0.28
   },
   {
     "id": "083",
@@ -278,14 +278,14 @@
     "notes": "48,60,64,67,72",
     "ref_file": "audio/patch_083_vst.wav",
     "eng_file": "audio/patch_083_reconstructed.wav",
-    "null_db": 2.48,
-    "corr": 0.153,
+    "null_db": -1.21,
+    "corr": 0.726,
     "ref_peak": 0.921,
-    "eng_peak": 0.875,
+    "eng_peak": 0.89,
     "ref_rms": 0.194,
-    "eng_rms": 0.197,
-    "lag": -51,
-    "stft_logmag": 0.39
+    "eng_rms": 0.196,
+    "lag": -10,
+    "stft_logmag": 0.32
   },
   {
     "id": "084",
@@ -294,14 +294,14 @@
     "notes": "48,60,64,67,72",
     "ref_file": "audio/patch_084_vst.wav",
     "eng_file": "audio/patch_084_reconstructed.wav",
-    "null_db": 2.32,
-    "corr": 0.242,
+    "null_db": 0.7,
+    "corr": 0.52,
     "ref_peak": 0.306,
-    "eng_peak": 0.353,
+    "eng_peak": 0.348,
     "ref_rms": 0.04,
     "eng_rms": 0.044,
-    "lag": -464,
-    "stft_logmag": 0.47
+    "lag": -9,
+    "stft_logmag": 0.37
   },
   {
     "id": "085",
@@ -310,14 +310,14 @@
     "notes": "48,60,64,67,72",
     "ref_file": "audio/patch_085_vst.wav",
     "eng_file": "audio/patch_085_reconstructed.wav",
-    "null_db": 8.0,
-    "corr": 0.215,
+    "null_db": 8.1,
+    "corr": 0.18,
     "ref_peak": 0.391,
-    "eng_peak": 1.044,
+    "eng_peak": 0.896,
     "ref_rms": 0.036,
     "eng_rms": 0.09,
-    "lag": -469,
-    "stft_logmag": 0.45
+    "lag": -16,
+    "stft_logmag": 0.53
   },
   {
     "id": "086",
@@ -326,14 +326,14 @@
     "notes": "48,60,64,67,72",
     "ref_file": "audio/patch_086_vst.wav",
     "eng_file": "audio/patch_086_reconstructed.wav",
-    "null_db": 0.84,
-    "corr": 0.523,
+    "null_db": 1.08,
+    "corr": 0.462,
     "ref_peak": 0.356,
-    "eng_peak": 0.427,
+    "eng_peak": 0.371,
     "ref_rms": 0.06,
-    "eng_rms": 0.069,
-    "lag": 15,
-    "stft_logmag": 0.26
+    "eng_rms": 0.066,
+    "lag": 212,
+    "stft_logmag": 0.32
   },
   {
     "id": "095",
@@ -342,14 +342,14 @@
     "notes": "48,60,64,67,72",
     "ref_file": "audio/patch_095_vst.wav",
     "eng_file": "audio/patch_095_reconstructed.wav",
-    "null_db": 2.91,
-    "corr": 0.314,
+    "null_db": -2.65,
+    "corr": 0.921,
     "ref_peak": 0.23,
-    "eng_peak": 0.3,
+    "eng_peak": 0.31,
     "ref_rms": 0.045,
-    "eng_rms": 0.057,
-    "lag": -345,
-    "stft_logmag": 0.55
+    "eng_rms": 0.053,
+    "lag": 0,
+    "stft_logmag": 0.34
   },
   {
     "id": "098",
@@ -365,7 +365,7 @@
     "ref_rms": 0.014,
     "eng_rms": 0.014,
     "lag": 0,
-    "stft_logmag": 0.38
+    "stft_logmag": 0.39
   },
   {
     "id": "101",
@@ -397,7 +397,7 @@
     "ref_rms": 0.056,
     "eng_rms": 0.068,
     "lag": 2,
-    "stft_logmag": 0.35
+    "stft_logmag": 0.34
   },
   {
     "id": "107",
@@ -423,13 +423,13 @@
     "ref_file": "audio/patch_111_vst.wav",
     "eng_file": "audio/patch_111_reconstructed.wav",
     "null_db": 4.13,
-    "corr": 0.042,
+    "corr": 0.038,
     "ref_peak": 0.807,
     "eng_peak": 0.987,
     "ref_rms": 0.02,
     "eng_rms": 0.025,
-    "lag": -159,
-    "stft_logmag": 0.66
+    "lag": -160,
+    "stft_logmag": 0.67
   },
   {
     "id": "117",
@@ -470,14 +470,14 @@
     "notes": "48,60,64,67,72",
     "ref_file": "audio/patch_124_vst.wav",
     "eng_file": "audio/patch_124_reconstructed.wav",
-    "null_db": 2.6,
-    "corr": 0.116,
+    "null_db": 1.81,
+    "corr": 0.258,
     "ref_peak": 0.34,
-    "eng_peak": 0.342,
+    "eng_peak": 0.356,
     "ref_rms": 0.048,
-    "eng_rms": 0.049,
-    "lag": 302,
-    "stft_logmag": 0.34
+    "eng_rms": 0.047,
+    "lag": 202,
+    "stft_logmag": 0.4
   },
   {
     "id": "126",
@@ -493,7 +493,7 @@
     "ref_rms": 0.048,
     "eng_rms": 0.047,
     "lag": -222,
-    "stft_logmag": 0.3
+    "stft_logmag": 0.31
   },
   {
     "id": "127",
@@ -509,6 +509,6 @@
     "ref_rms": 0.019,
     "eng_rms": 0.008,
     "lag": -31,
-    "stft_logmag": 0.54
+    "stft_logmag": 0.55
   }
 ]
