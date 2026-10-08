@@ -310,14 +310,14 @@
     "notes": "48,60,64,67,72",
     "ref_file": "audio/patch_085_vst.wav",
     "eng_file": "audio/patch_085_reconstructed.wav",
-    "null_db": 8.1,
-    "corr": 0.18,
+    "null_db": 3.45,
+    "corr": 0.181,
     "ref_peak": 0.391,
-    "eng_peak": 0.896,
+    "eng_peak": 0.456,
     "ref_rms": 0.036,
-    "eng_rms": 0.09,
+    "eng_rms": 0.046,
     "lag": -16,
-    "stft_logmag": 0.53
+    "stft_logmag": 0.42
   },
   {
     "id": "086",
