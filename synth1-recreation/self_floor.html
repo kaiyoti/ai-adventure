@@ -1,0 +1,286 @@
+<!DOCTYPE html><html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>Synth1 self-floor</title><style>
+body{font-family:system-ui,sans-serif;background:#1a1b26;color:#c0caf5;margin:2rem auto;max-width:1100px;padding:0 1rem}
+a{color:#7aa2f7}h1,h2,h3{color:#7dcfff}table{border-collapse:collapse;width:100%;font-size:.82rem}
+th,td{border:1px solid #3b4261;padding:4px 8px;text-align:left}th{background:#24283b}
+tr:nth-child(even){background:#20222e}code{background:#24283b;padding:1px 4px;border-radius:3px}
+pre{background:#24283b;padding:1rem;overflow-x:auto;border-radius:6px}
+</style></head><body><p><a href='index.html'>&larr; A/B suite</a></p><h1>Synth1 Self-Floor RNG Fairness Evaluation (Claude scoring v2)</h1>
+<ul>
+<li><strong>Evaluated Patches</strong>: 32/32</li>
+<li><strong>Unperturbed Bit-Exact Check</strong>: PASSED (32/32 identical)</li>
+<li><strong>STOCHASTIC Patches (27)</strong>: 001, 002, 005, 017, 042, 050, 062, 081, 101, 006, 012, 083, 084, 085, 086, 098, 105, 107, 111, 123, 124, 126, 127, 020, 025, 053, 095</li>
+<li><strong>DETERMINISTIC Patches (5)</strong>: 033, 039, 057, 117, 048</li>
+</ul>
+<h2>Summary Table</h2>
+<table>
+<thead>
+<tr>
+<th>Patch</th>
+<th>Name</th>
+<th>Category</th>
+<th>Classification</th>
+<th>F (worst rho)</th>
+<th>Slot Min Rhos [s1..s5]</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>001</td>
+<td>Synth1 brastring</td>
+<td>Brass / Strings</td>
+<td><strong>STOCHASTIC</strong></td>
+<td>0.6137</td>
+<td>[0.6663, 0.7497, 0.6137, 0.6197, 0.7285]</td>
+</tr>
+<tr>
+<td>002</td>
+<td>Piano</td>
+<td>Acoustic Keys</td>
+<td><strong>STOCHASTIC</strong></td>
+<td>0.9654</td>
+<td>[0.9976, 0.9910, 0.9916, 0.9856, 0.9654]</td>
+</tr>
+<tr>
+<td>005</td>
+<td>Rhodes Piano</td>
+<td>Electric Piano</td>
+<td><strong>STOCHASTIC</strong></td>
+<td>0.8073</td>
+<td>[0.8306, 0.8449, 0.8251, 0.8073, 0.8386]</td>
+</tr>
+<tr>
+<td>006</td>
+<td>Chorus Piano</td>
+<td>Electric Piano</td>
+<td><strong>STOCHASTIC</strong></td>
+<td>0.8073</td>
+<td>[0.8296, 0.8442, 0.8249, 0.8073, 0.8362]</td>
+</tr>
+<tr>
+<td>012</td>
+<td>Vibraphone</td>
+<td>Mallets</td>
+<td><strong>STOCHASTIC</strong></td>
+<td>0.9264</td>
+<td>[0.9518, 0.9382, 0.9264, 0.9525, 0.9349]</td>
+</tr>
+<tr>
+<td>017</td>
+<td>Hammond organ</td>
+<td>Organ</td>
+<td><strong>STOCHASTIC</strong></td>
+<td>0.9632</td>
+<td>[0.9887, 0.9724, 0.9840, 0.9798, 0.9632]</td>
+</tr>
+<tr>
+<td>020</td>
+<td>Church Organ</td>
+<td>Organ (family rep)</td>
+<td><strong>STOCHASTIC</strong></td>
+<td>0.3077</td>
+<td>[0.3077, 0.4294, 0.7175, 0.5329, 0.7200]</td>
+</tr>
+<tr>
+<td>025</td>
+<td>Accoustic Guitar</td>
+<td>Plucked Strings (family rep)</td>
+<td><strong>STOCHASTIC</strong></td>
+<td>0.9312</td>
+<td>[0.9982, 0.9748, 0.9734, 0.9785, 0.9312]</td>
+</tr>
+<tr>
+<td>033</td>
+<td>Acoustic Bass</td>
+<td>Bass</td>
+<td>DETERMINISTIC</td>
+<td>0.9982</td>
+<td>[0.9998, 0.9990, 0.9994, 0.9990, 0.9982]</td>
+</tr>
+<tr>
+<td>039</td>
+<td>Synth Bass 1</td>
+<td>Synth Bass</td>
+<td>DETERMINISTIC</td>
+<td>0.9996</td>
+<td>[0.9996, 1.0000, 1.0000, 1.0000, 1.0000]</td>
+</tr>
+<tr>
+<td>042</td>
+<td>Viola</td>
+<td>Bowed Strings</td>
+<td><strong>STOCHASTIC</strong></td>
+<td>0.9333</td>
+<td>[0.9911, 0.9863, 0.9728, 0.9694, 0.9333]</td>
+</tr>
+<tr>
+<td>048</td>
+<td>Timpani</td>
+<td>Percussion (family rep)</td>
+<td>DETERMINISTIC</td>
+<td>0.9990</td>
+<td>[0.9990, 1.0000, 1.0000, 1.0000, 1.0000]</td>
+</tr>
+<tr>
+<td>050</td>
+<td>SlowStrings</td>
+<td>Analog Pad</td>
+<td><strong>STOCHASTIC</strong></td>
+<td>0.9155</td>
+<td>[0.9763, 0.9155, 0.9880, 0.9894, 0.9864]</td>
+</tr>
+<tr>
+<td>053</td>
+<td>Choir</td>
+<td>Vocals (family rep)</td>
+<td><strong>STOCHASTIC</strong></td>
+<td>-0.0415</td>
+<td>[-0.0415, 0.8968, 0.5552, 0.7392, 0.5320]</td>
+</tr>
+<tr>
+<td>057</td>
+<td>Trumpet</td>
+<td>Lead Brass</td>
+<td>DETERMINISTIC</td>
+<td>0.9999</td>
+<td>[1.0000, 1.0000, 0.9999, 0.9999, 0.9999]</td>
+</tr>
+<tr>
+<td>062</td>
+<td>Brass1</td>
+<td>Vintage Brass</td>
+<td><strong>STOCHASTIC</strong></td>
+<td>0.8001</td>
+<td>[0.8001, 0.8369, 0.8860, 0.8370, 0.8759]</td>
+</tr>
+<tr>
+<td>081</td>
+<td>Square lead</td>
+<td>Synth Lead</td>
+<td><strong>STOCHASTIC</strong></td>
+<td>0.7308</td>
+<td>[0.9892, 0.9784, 0.8967, 0.7942, 0.7308]</td>
+</tr>
+<tr>
+<td>083</td>
+<td>Solo Lead</td>
+<td>Synth Lead</td>
+<td><strong>STOCHASTIC</strong></td>
+<td>0.5768</td>
+<td>[0.7067, 0.7872, 0.5768, 0.7142, 0.6113]</td>
+</tr>
+<tr>
+<td>084</td>
+<td>Sync lead</td>
+<td>Synth Lead</td>
+<td><strong>STOCHASTIC</strong></td>
+<td>0.7926</td>
+<td>[0.8787, 0.7926, 0.8385, 0.8141, 0.8142]</td>
+</tr>
+<tr>
+<td>085</td>
+<td>Sync lead 2</td>
+<td>Synth Lead</td>
+<td><strong>STOCHASTIC</strong></td>
+<td>0.5629</td>
+<td>[0.7694, 0.6544, 0.6284, 0.5629, 0.6480]</td>
+</tr>
+<tr>
+<td>086</td>
+<td>Brass lead</td>
+<td>Lead Brass</td>
+<td><strong>STOCHASTIC</strong></td>
+<td>0.6289</td>
+<td>[0.6525, 0.7777, 0.7940, 0.6289, 0.6779]</td>
+</tr>
+<tr>
+<td>095</td>
+<td>Cosmos</td>
+<td>Arpeggio / Sequence (family rep)</td>
+<td><strong>STOCHASTIC</strong></td>
+<td>0.1489</td>
+<td>[0.8940, 0.3881, 0.5010, 0.1489, 0.3637]</td>
+</tr>
+<tr>
+<td>098</td>
+<td>Behind the mask</td>
+<td>Synth FX</td>
+<td><strong>STOCHASTIC</strong></td>
+<td>0.8637</td>
+<td>[0.9952, 0.9780, 0.9504, 0.9342, 0.8637]</td>
+</tr>
+<tr>
+<td>101</td>
+<td>Sequence2</td>
+<td>Arpeggio / Sequence</td>
+<td><strong>STOCHASTIC</strong></td>
+<td>0.7794</td>
+<td>[0.9386, 0.8363, 0.8815, 0.7794, 0.8532]</td>
+</tr>
+<tr>
+<td>105</td>
+<td>Sitar</td>
+<td>Plucked Strings</td>
+<td><strong>STOCHASTIC</strong></td>
+<td>0.3870</td>
+<td>[0.4354, 0.4491, 0.4570, 0.3870, 0.4248]</td>
+</tr>
+<tr>
+<td>107</td>
+<td>Shami</td>
+<td>Plucked Strings</td>
+<td><strong>STOCHASTIC</strong></td>
+<td>0.1937</td>
+<td>[0.4588, 0.3077, 0.2736, 0.1937, 0.2584]</td>
+</tr>
+<tr>
+<td>111</td>
+<td>Sequence 4</td>
+<td>Arpeggio / Sequence</td>
+<td><strong>STOCHASTIC</strong></td>
+<td>0.0678</td>
+<td>[0.1503, 0.0678, 0.0827, 0.1163, 0.1276]</td>
+</tr>
+<tr>
+<td>117</td>
+<td>Perc1</td>
+<td>Percussion</td>
+<td>DETERMINISTIC</td>
+<td>0.9921</td>
+<td>[0.9955, 0.9994, 0.9997, 0.9961, 0.9921]</td>
+</tr>
+<tr>
+<td>123</td>
+<td>SpaceShip</td>
+<td>Synth FX</td>
+<td><strong>STOCHASTIC</strong></td>
+<td>-0.0738</td>
+<td>[0.0579, -0.0738, 0.0762, 0.0352, 0.0091]</td>
+</tr>
+<tr>
+<td>124</td>
+<td>Alien</td>
+<td>Synth FX</td>
+<td><strong>STOCHASTIC</strong></td>
+<td>0.0230</td>
+<td>[0.5116, 0.1185, 0.0230, 0.1456, 0.3401]</td>
+</tr>
+<tr>
+<td>126</td>
+<td>Machine Gun</td>
+<td>Percussion / FX</td>
+<td><strong>STOCHASTIC</strong></td>
+<td>0.2614</td>
+<td>[0.9973, 0.2614, 0.3574, 0.3860, 0.4159]</td>
+</tr>
+<tr>
+<td>127</td>
+<td>LaserGun</td>
+<td>Synth FX</td>
+<td><strong>STOCHASTIC</strong></td>
+<td>0.1714</td>
+<td>[0.5332, 0.2717, 0.1714, 0.2690, 0.2815]</td>
+</tr>
+</tbody>
+</table>
+<h2>Expected vs Actual Stochastic Patches</h2>
+<p>Expected: <code>111</code>, <code>123</code>, <code>124</code>, <code>085</code>, <code>095</code>, <code>098</code> (noise/arp/sequence patches).</p><p class='deploy-stamp' style='color:#8b8f9e;font-size:.85rem'>Deployed: 2026-10-08 05:02 UTC</p></body></html>
