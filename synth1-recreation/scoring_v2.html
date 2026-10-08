@@ -416,7 +416,7 @@ pre{background:#24283b;padding:1rem;overflow-x:auto;border-radius:6px}
 <p><strong>CLOSE+ 4/32 · IDENTICAL 2/32</strong></p>
 <p>Level-delta family (open, legion mixer): steady-window RMS eng-ref 105 +1.84, 107 +1.47, 086 +0.71, 083 +0.59, 084 +0.39, 081 -0.13 dB. Amp path verified EXACT on device under Wine (amp_gain_curve dev/eng 0.9999 at p29 37..127; velocity_to_gain exact; release laws match FUN_18000ccc0 incl. 0.9*total early-end). Residual is the osc1-dominant FM-off additive gain (cv[0x150]/0x154 halved-gain hypothesis) — see reports/bank0_tier2_grind.md. 057 tail M1 0.80 LU = sustain-remnant level delta in the same family (tail peak only -39 dB below render peak, not a noise-floor artifact).</p>
 <h2>BANKS EXPANSION (29 banked patches, banks 04/05/06/07/09/10/11)</h2>
-<p>Same strict stack (<code>--selffloor --tail-m1-only</code>), self-floor rendered fresh per patch (reports/self_floor.json now 61). Class split: 20 STOCHASTIC / 9 DETERMINISTIC. Verdicts: CLOSE+ 0/29 · IDENTICAL 0/29.</p>
+<p>Re-rendered with the fixed <code>render_ref.sh</code> (non-bank0 now load via <code>-setsy1</code>, not <code>-prog</code>), engine rebuilt with legion's HP12 tap fix. Strict stack <code>--selffloor --tail-m1-only</code>; self-floor re-rendered fresh (reports/self_floor.json now 61). Class split: 13 STOCHASTIC / 16 DETERMINISTIC. Verdicts: CLOSE+ 0/29 · IDENTICAL 0/29. Mean alignment corr 0.038; mean whole xcorr -0.005.</p>
 <table>
 <thead>
 <tr>
@@ -435,352 +435,425 @@ pre{background:#24283b;padding:1rem;overflow-x:auto;border-radius:6px}
 <tbody>
 <tr>
 <td>bank04_098</td>
-<td>STOC</td>
-<td style="text-align: right;">-24</td>
-<td>0.35 0.03 0.19 0.33 0.14</td>
-<td>8.6 11.8 11.1 10.3 10.7</td>
-<td>0.5 2.7 1.5 1.3 2.8</td>
-<td>4049 1984 35 42 11</td>
-<td style="text-align: right;">-0.030</td>
+<td>DETE</td>
+<td style="text-align: right;">-2</td>
+<td>0.00 0.02 0.00 0.05 0.03</td>
+<td>11.2 11.2 9.1 11.7 11.4</td>
+<td>7.8 3.5 6.5 3.0 2.6</td>
+<td>4033 2271 2691 2269 2753</td>
+<td style="text-align: right;">-0.004</td>
 <td>DIFFERENT</td>
-<td>slot1 mean-spec 14.9dB; slot1 band-std 4.2dB; slot1 env-pear -0.25; slot2 mean-spec 22.0dB; slot2 band-std 4.9dB; slot2 env-pear 0.37; slot2 level 3.5dB; slot3 mean-spec 22.3dB; slot3 band-std 4.0dB; slot3 env-pear -0.17; slot4 mean-spec 20.3dB; slot4 band-std 4.0dB; slot4 env-pear 0.02; slot4 level 2.5dB; slot5 mean-spec 13.7dB; slot5 band-std 5.7dB; slot5 env-pear -0.51; slot5 level 4.2dB; peak +3.9dB</td>
+<td>slot1 rho 0.00; slot2 rho 0.02; slot3 rho 0.00; slot4 rho 0.05; slot5 rho 0.03</td>
 </tr>
 <tr>
 <td>bank05_020</td>
-<td>STOC</td>
-<td style="text-align: right;">+13</td>
-<td>0.22 0.17 0.22 0.02 -0.12</td>
-<td>10.5 10.1 9.7 9.6 7.7</td>
-<td>0.8 5.3 8.8 0.0 2.1</td>
-<td>3 1249 27 24 54</td>
-<td style="text-align: right;">+0.002</td>
+<td>DETE</td>
+<td style="text-align: right;">-3</td>
+<td>0.02 0.01 0.02 0.01 0.00</td>
+<td>12.0 11.5 11.0 11.3 11.3</td>
+<td>5.4 8.0 11.8 4.4 7.0</td>
+<td>4108 3481 2657 2237 1666</td>
+<td style="text-align: right;">+0.006</td>
 <td>DIFFERENT</td>
-<td>slot1 mean-spec 9.4dB; slot1 band-std 9.3dB; slot2 mean-spec 14.1dB; slot2 band-std 7.9dB; slot2 level 5.4dB; slot3 mean-spec 9.9dB; slot3 band-std 10.6dB; slot3 flatness 0.036; slot3 level 9.8dB; slot4 mean-spec 12.2dB; slot4 band-std 10.5dB; slot4 env-pear 0.36; slot4 level 0.7dB; slot5 mean-spec 14.8dB; slot5 band-std 8.9dB; slot5 flatness 0.035; slot5 level 2.8dB; peak +9.7dB</td>
+<td>slot1 rho 0.02; slot2 rho 0.01; slot3 rho 0.02; slot4 rho 0.01; slot5 rho 0.00; peak +2.6dB</td>
 </tr>
 <tr>
 <td>bank05_025</td>
-<td>STOC</td>
-<td style="text-align: right;">+22</td>
-<td>0.59 0.15 0.58 0.65 0.38</td>
-<td>16.2 16.7 15.4 14.6 15.6</td>
-<td>10.8 10.9 10.7 11.2 8.8</td>
-<td>1208 1195 1214 1225 1189</td>
-<td style="text-align: right;">-0.151</td>
+<td>DETE</td>
+<td style="text-align: right;">+3</td>
+<td>0.00 -0.00 0.03 -0.00 0.00</td>
+<td>10.3 11.6 10.9 11.7 10.1</td>
+<td>5.9 1.9 1.6 1.6 0.7</td>
+<td>2827 1644 1224 920 3142</td>
+<td style="text-align: right;">-0.005</td>
 <td>DIFFERENT</td>
-<td>slot1 mean-spec 23.9dB; slot1 band-std 3.3dB; slot1 level 10.5dB; slot2 mean-spec 24.7dB; slot2 band-std 4.6dB; slot2 env-pear 0.69; slot2 level 10.4dB; slot3 mean-spec 22.1dB; slot3 env-pear 0.71; slot3 level 10.3dB; slot4 mean-spec 22.3dB; slot4 band-std 3.2dB; slot4 level 10.8dB; slot5 mean-spec 25.4dB; slot5 band-std 2.1dB; slot5 env-pear 0.52; slot5 level 8.1dB; peak +12.2dB</td>
+<td>slot1 rho 0.00; slot2 rho -0.00; slot3 rho 0.03; slot4 rho -0.00; slot5 rho 0.00; peak +5.3dB</td>
 </tr>
 <tr>
 <td>bank05_042</td>
-<td>STOC</td>
-<td style="text-align: right;">+15</td>
-<td>0.24 -0.08 0.16 0.20 0.16</td>
-<td>14.9 9.4 9.9 8.7 8.0</td>
-<td>5.5 0.6 2.8 0.5 0.3</td>
-<td>40 39 0 8 10</td>
-<td style="text-align: right;">+0.020</td>
+<td>DETE</td>
+<td style="text-align: right;">-1</td>
+<td>0.01 0.01 -0.00 -0.00 -0.00</td>
+<td>9.5 12.5 10.6 10.4 12.0</td>
+<td>4.8 5.0 7.7 4.3 4.7</td>
+<td>862 318 711 1032 1529</td>
+<td style="text-align: right;">-0.001</td>
 <td>DIFFERENT</td>
-<td>slot1 mean-spec 20.8dB; slot1 band-std 5.9dB; slot1 env-pear 0.30; slot1 level 7.5dB; slot2 mean-spec 9.8dB; slot2 band-std 7.2dB; slot2 flatness 0.043; slot2 env-pear -0.77; slot2 level 2.8dB; slot3 mean-spec 7.3dB; slot3 band-std 8.2dB; slot3 env-pear -0.33; slot3 level 5.4dB; slot4 mean-spec 10.1dB; slot4 band-std 8.5dB; slot4 flatness 0.034; slot4 env-pear -0.54; slot4 level 3.7dB; slot5 mean-spec 9.4dB; slot5 band-std 8.3dB; slot5 env-pear 0.60; slot5 level 3.5dB; peak +4.0dB</td>
+<td>slot1 rho 0.01; slot2 rho 0.01; slot3 rho -0.00; slot4 rho -0.00; slot5 rho -0.00</td>
 </tr>
 <tr>
 <td>bank06_037</td>
-<td>STOC</td>
-<td style="text-align: right;">-15</td>
-<td>0.28 0.09 0.28 0.07 0.08</td>
-<td>9.0 9.9 10.8 11.9 11.7</td>
-<td>1.6 0.8 3.0 0.6 0.4</td>
-<td>1254 1161 1179 1192 1144</td>
-<td style="text-align: right;">-0.063</td>
+<td>DETE</td>
+<td style="text-align: right;">-8</td>
+<td>0.02 0.00 0.03 -0.01 0.00</td>
+<td>10.4 10.8 10.1 9.6 13.2</td>
+<td>4.6 0.3 3.7 0.7 0.5</td>
+<td>2811 1622 2196 886 422</td>
+<td style="text-align: right;">-0.003</td>
 <td>DIFFERENT</td>
-<td>slot1 mean-spec 13.5dB; slot1 band-std 6.3dB; slot1 env-pear 0.58; slot1 level 1.8dB; slot2 mean-spec 17.5dB; slot2 band-std 8.2dB; slot2 env-pear 0.80; slot3 mean-spec 21.5dB; slot3 band-std 5.4dB; slot3 env-pear 0.61; slot3 level 3.2dB; slot4 mean-spec 22.8dB; slot4 band-std 8.0dB; slot4 env-pear 0.66; slot5 mean-spec 30.0dB; slot5 band-std 7.6dB; slot5 env-pear 0.65; peak +2.5dB</td>
+<td>slot1 rho 0.02; slot2 rho 0.00; slot3 rho 0.03; slot4 rho -0.01; slot5 rho 0.00; peak +5.5dB</td>
 </tr>
 <tr>
 <td>bank06_049</td>
-<td>STOC</td>
-<td style="text-align: right;">-10</td>
-<td>0.31 -0.02 0.34 0.27 0.09</td>
-<td>16.4 11.4 9.0 12.8 13.5</td>
-<td>2.2 1.2 0.8 1.5 4.4</td>
-<td>1230 1238 1262 1225 1167</td>
-<td style="text-align: right;">-0.054</td>
+<td>DETE</td>
+<td style="text-align: right;">+10</td>
+<td>0.00 -0.00 0.01 -0.00 0.00</td>
+<td>13.9 14.7 11.9 14.5 12.6</td>
+<td>6.7 3.9 2.4 2.8 0.9</td>
+<td>2844 1666 1252 953 3098</td>
+<td style="text-align: right;">-0.003</td>
 <td>DIFFERENT</td>
-<td>slot1 mean-spec 25.7dB; slot1 band-std 6.6dB; slot1 env-pear -0.75; slot1 level 2.5dB; slot2 mean-spec 33.1dB; slot2 band-std 5.7dB; slot2 env-pear -0.33; slot2 level 1.9dB; slot3 mean-spec 20.0dB; slot3 band-std 6.9dB; slot3 env-pear -0.24; slot3 level 0.8dB; slot4 mean-spec 27.2dB; slot4 band-std 6.1dB; slot4 env-pear -0.81; slot4 level 2.5dB; slot5 mean-spec 37.5dB; slot5 band-std 6.2dB; slot5 env-pear -0.36; slot5 level 6.0dB; peak +5.4dB</td>
+<td>slot1 rho 0.00; slot2 rho -0.00; slot3 rho 0.01; slot4 rho -0.00; slot5 rho 0.00; peak +7.6dB</td>
 </tr>
 <tr>
 <td>bank06_120</td>
 <td>STOC*</td>
-<td style="text-align: right;">-1</td>
-<td>0.07 0.03 0.05 0.09 0.06</td>
-<td>11.7 14.8 12.2 12.2 11.7</td>
-<td>1.2 2.4 3.1 4.7 3.6</td>
-<td>5222 2480 2822 3202 3731</td>
-<td style="text-align: right;">+0.042</td>
+<td style="text-align: right;">-2</td>
+<td>-0.04 -0.03 -0.04 0.04 -0.04</td>
+<td>8.6 8.6 8.5 8.3 8.0</td>
+<td>2.4 1.5 1.3 1.2 0.9</td>
+<td>2046 2150 2225 2013 2136</td>
+<td style="text-align: right;">-0.015</td>
 <td>DIFFERENT</td>
-<td>slot1 mean-spec 36.2dB; slot1 band-std 35.6dB; slot1 flatness 0.031; slot1 env-pear 0.61; slot1 level 3.9dB; slot2 mean-spec 38.7dB; slot2 band-std 35.7dB; slot2 flatness 0.044; slot2 env-pear 0.70; slot2 level 4.8dB; slot3 mean-spec 35.1dB; slot3 band-std 33.2dB; slot3 flatness 0.044; slot3 env-pear 0.88; slot3 level 5.2dB; slot4 mean-spec 35.5dB; slot4 band-std 35.1dB; slot4 flatness 0.056; slot4 env-pear 0.89; slot4 level 6.4dB; slot5 mean-spec 32.3dB; slot5 band-std 31.8dB; slot5 flatness 0.069; slot5 env-pear 0.82; slot5 level 5.5dB</td>
+<td>slot1 mean-spec 16.1dB; slot1 band-std 6.0dB; slot1 env-pear 0.87; slot1 level 4.7dB; slot2 mean-spec 19.4dB; slot2 band-std 4.5dB; slot2 flatness 0.030; slot2 env-pear 0.91; slot2 level 3.9dB; slot3 mean-spec 16.3dB; slot3 band-std 5.5dB; slot3 env-pear 0.93; slot3 level 3.4dB; slot4 mean-spec 18.9dB; slot4 band-std 4.8dB; slot4 flatness 0.038; slot4 env-pear 0.91; slot4 level 3.6dB; slot5 mean-spec 17.6dB; slot5 band-std 3.3dB; slot5 flatness 0.050; slot5 env-pear 0.92; slot5 level 3.3dB; peak +1.3dB</td>
 </tr>
 <tr>
 <td>bank07_050</td>
 <td>STOC</td>
-<td style="text-align: right;">-42</td>
-<td>-0.09 0.16 0.44 0.17 0.39</td>
-<td>12.3 12.3 11.3 13.4 10.5</td>
-<td>3.2 2.4 6.3 1.8 1.8</td>
-<td>35 1123 33 88 421</td>
-<td style="text-align: right;">-0.023</td>
+<td style="text-align: right;">-6</td>
+<td>0.01 0.00 0.01 0.00 -0.00</td>
+<td>12.7 11.5 12.4 13.1 12.5</td>
+<td>7.5 4.7 10.4 7.1 6.1</td>
+<td>932 2929 735 2220 1687</td>
+<td style="text-align: right;">+0.002</td>
 <td>DIFFERENT</td>
-<td>slot1 mean-spec 25.3dB; slot1 band-std 5.1dB; slot1 env-pear -0.95; slot1 level 3.4dB; slot2 mean-spec 25.4dB; slot2 band-std 4.7dB; slot2 flatness 0.040; slot2 env-pear 0.16; slot2 level 4.0dB; slot3 mean-spec 26.4dB; slot3 band-std 5.4dB; slot3 env-pear 0.14; slot3 level 5.8dB; slot4 mean-spec 18.2dB; slot4 band-std 5.6dB; slot4 env-pear -0.74; slot4 level 2.8dB; slot5 mean-spec 22.4dB; slot5 band-std 5.4dB; slot5 level 0.9dB; peak +5.0dB</td>
+<td>slot1 mean-spec 21.1dB; slot1 band-std 2.1dB; slot1 level 6.5dB; slot2 mean-spec 24.1dB; slot2 band-std 3.3dB; slot2 flatness 0.033; slot2 level 2.0dB; slot3 mean-spec 22.1dB; slot3 band-std 3.0dB; slot3 flatness 0.033; slot3 env-pear 0.91; slot3 level 10.8dB; slot4 mean-spec 26.4dB; slot4 band-std 2.9dB; slot4 env-pear 0.94; slot4 level 6.5dB; slot5 mean-spec 29.1dB; slot5 band-std 2.0dB; slot5 env-pear 0.95; slot5 level 4.9dB; peak +3.6dB</td>
 </tr>
 <tr>
 <td>bank07_109</td>
-<td>STOC</td>
-<td style="text-align: right;">+16</td>
-<td>0.12 0.13 0.07 0.03 0.08</td>
-<td>10.5 10.5 9.4 10.1 12.2</td>
-<td>4.6 1.2 1.3 1.0 0.4</td>
-<td>1208 1183 1228 1225 1211</td>
-<td style="text-align: right;">-0.027</td>
+<td>DETE</td>
+<td style="text-align: right;">-13</td>
+<td>-0.01 0.00 0.02 0.00 0.00</td>
+<td>9.1 10.6 9.9 9.6 11.6</td>
+<td>8.8 6.5 5.8 4.7 5.5</td>
+<td>2860 1622 1279 886 422</td>
+<td style="text-align: right;">+0.000</td>
 <td>DIFFERENT</td>
-<td>slot4 mean-spec 31.7dB; slot5 mean-spec 33.8dB; peak +6.2dB</td>
+<td>slot1 rho -0.01; slot2 rho 0.00; slot3 rho 0.02; slot4 rho 0.00; slot5 rho 0.00; peak +7.0dB</td>
 </tr>
 <tr>
 <td>bank09_030</td>
 <td>STOC*</td>
-<td style="text-align: right;">+12</td>
-<td>0.02 0.03 0.02 0.01 0.00</td>
-<td>26.4 32.1 31.4 33.6 33.5</td>
-<td>17.3 20.3 18.3 21.9 19.4</td>
-<td>4170 735 1155 1424 1984</td>
-<td style="text-align: right;">+0.008</td>
+<td style="text-align: right;">+34</td>
+<td>0.06 -0.05 0.05 0.02 -0.03</td>
+<td>9.5 9.6 9.6 10.1 9.7</td>
+<td>10.6 11.3 11.6 11.4 12.8</td>
+<td>3146 536 547 601 520</td>
+<td style="text-align: right;">-0.031</td>
 <td>DIFFERENT</td>
-<td>slot1 mean-spec 38.5dB; slot1 band-std 8.5dB; slot1 flatness 0.084; slot1 env-pear 0.61; slot1 level 16.2dB; slot2 mean-spec 36.4dB; slot2 band-std 9.1dB; slot2 flatness 0.087; slot2 env-pear 0.70; slot2 level 19.0dB; slot3 mean-spec 36.3dB; slot3 band-std 9.5dB; slot3 flatness 0.115; slot3 env-pear 0.70; slot3 level 16.8dB; slot4 mean-spec 40.1dB; slot4 band-std 7.4dB; slot4 flatness 0.119; slot4 env-pear 0.64; slot4 level 20.6dB; slot5 mean-spec 37.9dB; slot5 band-std 6.4dB; slot5 flatness 0.138; slot5 env-pear 0.78; slot5 level 17.7dB; peak +16.0dB</td>
+<td>slot1 mean-spec 18.3dB; slot1 band-std 2.1dB; slot1 flatness 0.099; slot1 env-pear 0.91; slot1 level 11.9dB; slot2 mean-spec 19.8dB; slot2 band-std 3.1dB; slot2 flatness 0.124; slot2 env-pear 0.92; slot2 level 13.0dB; slot3 mean-spec 21.1dB; slot3 band-std 3.2dB; slot3 flatness 0.143; slot3 env-pear 0.92; slot3 level 13.4dB; slot4 mean-spec 21.7dB; slot4 band-std 2.8dB; slot4 flatness 0.158; slot4 env-pear 0.92; slot4 level 13.4dB; slot5 mean-spec 23.7dB; slot5 band-std 3.0dB; slot5 flatness 0.167; slot5 env-pear 0.94; slot5 level 15.0dB</td>
 </tr>
 <tr>
 <td>bank09_032</td>
 <td>STOC*</td>
-<td style="text-align: right;">+8</td>
-<td>0.03 0.01 0.03 0.05 0.04</td>
-<td>33.4 28.9 27.5 26.0 25.8</td>
-<td>9.3 3.2 0.7 1.0 3.9</td>
-<td>2111 3245 3652 3762 3129</td>
-<td style="text-align: right;">+0.024</td>
+<td style="text-align: right;">-2</td>
+<td>-0.00 0.00 -0.03 -0.03 -0.01</td>
+<td>11.5 12.0 11.7 11.3 11.2</td>
+<td>1.3 1.7 1.8 2.2 3.0</td>
+<td>666 672 659 672 691</td>
+<td style="text-align: right;">-0.021</td>
 <td>DIFFERENT</td>
-<td>slot1 mean-spec 69.5dB; slot1 band-std 48.6dB; slot1 env-pear 0.78; slot1 level 11.2dB; slot2 mean-spec 54.1dB; slot2 band-std 38.3dB; slot2 flatness 0.032; slot2 env-pear 0.55; slot2 level 4.9dB; slot3 mean-spec 47.6dB; slot3 band-std 33.7dB; slot3 env-pear 0.71; slot3 level 1.8dB; slot4 mean-spec 47.9dB; slot4 band-std 36.8dB; slot4 env-pear 0.64; slot5 mean-spec 52.6dB; slot5 band-std 43.2dB; slot5 env-pear 0.63; slot5 level 3.4dB</td>
+<td>slot1 mean-spec 13.4dB; slot1 band-std 10.5dB; slot1 level 3.5dB; slot2 mean-spec 13.4dB; slot2 band-std 6.9dB; slot2 level 4.3dB; slot3 mean-spec 15.9dB; slot3 band-std 11.4dB; slot3 level 4.4dB; slot4 mean-spec 13.7dB; slot4 band-std 7.0dB; slot4 level 4.9dB; slot5 mean-spec 17.7dB; slot5 band-std 11.5dB; slot5 level 6.1dB</td>
 </tr>
 <tr>
 <td>bank09_034</td>
 <td>DETE</td>
-<td style="text-align: right;">+2</td>
-<td>0.29 0.50 0.33 0.27 0.44</td>
-<td>12.2 12.2 11.7 10.4 11.2</td>
-<td>0.3 7.3 2.0 4.7 0.8</td>
-<td>4165 94 1593 1192 44</td>
-<td style="text-align: right;">+0.228</td>
+<td style="text-align: right;">-27</td>
+<td>0.08 0.01 0.04 -0.00 -0.00</td>
+<td>8.5 9.4 7.6 8.7 13.4</td>
+<td>7.2 2.6 10.8 15.6 13.1</td>
+<td>0 2788 3742 3409 1644</td>
+<td style="text-align: right;">+0.001</td>
 <td>DIFFERENT</td>
-<td>slot1 rho 0.29; slot2 rho 0.50; slot3 rho 0.33; slot4 rho 0.27; slot5 rho 0.44; peak +4.5dB</td>
+<td>slot1 rho 0.08; slot2 rho 0.01; slot3 rho 0.04; slot4 rho -0.00; slot5 rho -0.00</td>
 </tr>
 <tr>
 <td>bank09_079</td>
 <td>STOC*</td>
-<td style="text-align: right;">-42</td>
-<td>0.29 0.06 0.11 0.12 -0.02</td>
-<td>8.4 12.6 9.5 9.4 9.9</td>
-<td>6.1 10.1 7.6 6.0 3.6</td>
-<td>16 5 34 49 34</td>
-<td style="text-align: right;">-0.031</td>
+<td style="text-align: right;">-5</td>
+<td>0.00 0.00 -0.00 0.00 -0.00</td>
+<td>10.5 11.9 12.3 12.2 13.2</td>
+<td>0.9 2.4 0.1 0.4 1.1</td>
+<td>873 2273 2091 2343 3556</td>
+<td style="text-align: right;">-0.004</td>
 <td>DIFFERENT</td>
-<td>slot1 mean-spec 19.2dB; slot1 band-std 6.1dB; slot1 env-pear -0.46; slot1 level 5.2dB; slot2 mean-spec 21.8dB; slot2 band-std 5.8dB; slot2 env-pear -0.28; slot2 level 6.8dB; slot3 mean-spec 30.5dB; slot3 band-std 4.8dB; slot3 env-pear 0.26; slot3 level 4.3dB; slot4 mean-spec 32.1dB; slot4 band-std 5.9dB; slot4 env-pear -0.44; slot4 level 2.5dB; slot5 mean-spec 13.9dB; slot5 band-std 5.3dB; slot5 env-pear -0.20</td>
+<td>slot1 mean-spec 23.4dB; slot1 band-std 5.8dB; slot1 flatness 0.067; slot1 env-pear 0.80; slot1 level 2.2dB; slot2 mean-spec 26.1dB; slot2 band-std 5.6dB; slot2 env-pear 0.79; slot2 level 1.2dB; slot3 mean-spec 24.9dB; slot3 band-std 4.9dB; slot3 flatness 0.040; slot3 env-pear 0.83; slot3 level 1.3dB; slot4 mean-spec 29.7dB; slot4 band-std 5.6dB; slot4 flatness 0.079; slot4 env-pear 0.76; slot4 level 1.7dB; slot5 mean-spec 29.0dB; slot5 band-std 5.4dB; slot5 flatness 0.064; slot5 env-pear 0.66; slot5 level 3.8dB</td>
 </tr>
 <tr>
 <td>bank10_019</td>
 <td>STOC*</td>
-<td style="text-align: right;">+3</td>
-<td>0.01 0.02 0.02 0.03 0.04</td>
-<td>17.4 15.0 15.7 15.7 15.0</td>
-<td>4.9 4.7 5.2 5.4 4.4</td>
-<td>4181 2973 2577 2268 1768</td>
-<td style="text-align: right;">+0.011</td>
+<td style="text-align: right;">-13</td>
+<td>0.09 0.10 0.09 0.10 0.10</td>
+<td>11.9 11.8 11.9 11.8 11.8</td>
+<td>12.7 12.7 12.8 12.7 12.7</td>
+<td>3259 3259 3259 3259 3259</td>
+<td style="text-align: right;">+0.035</td>
 <td>DIFFERENT</td>
-<td>slot1 mean-spec 19.4dB; slot1 band-std 11.2dB; slot1 env-pear 0.81; slot1 level 3.6dB; slot2 mean-spec 23.4dB; slot2 band-std 12.6dB; slot2 env-pear 0.87; slot2 level 3.9dB; slot3 mean-spec 22.3dB; slot3 band-std 12.8dB; slot3 level 4.8dB; slot4 mean-spec 28.1dB; slot4 band-std 12.6dB; slot4 env-pear 0.93; slot4 level 5.2dB; slot5 mean-spec 27.9dB; slot5 band-std 12.5dB; slot5 flatness 0.033; slot5 env-pear 0.87; slot5 level 4.9dB; peak +4.3dB</td>
+<td>slot1 mean-spec 30.2dB; slot1 band-std 6.4dB; slot1 level 14.1dB; slot2 mean-spec 30.2dB; slot2 band-std 6.5dB; slot2 level 14.1dB; slot3 mean-spec 30.3dB; slot3 band-std 6.2dB; slot3 level 14.1dB; slot4 mean-spec 30.1dB; slot4 band-std 6.5dB; slot4 level 14.1dB; slot5 mean-spec 30.1dB; slot5 band-std 6.3dB; slot5 level 14.1dB</td>
 </tr>
 <tr>
 <td>bank10_024</td>
 <td>STOC*</td>
-<td style="text-align: right;">+1</td>
-<td>0.00 0.00 0.01 0.00 0.00</td>
-<td>27.9 26.3 27.7 28.0 26.3</td>
-<td>15.3 14.3 13.8 13.9 12.8</td>
-<td>4186 2994 2597 2181 1789</td>
-<td style="text-align: right;">-0.001</td>
+<td style="text-align: right;">-1</td>
+<td>0.07 0.04 0.05 0.15 0.08</td>
+<td>12.9 13.2 13.7 13.6 13.3</td>
+<td>19.6 19.1 19.3 19.6 19.3</td>
+<td>3405 3405 3405 3183 3405</td>
+<td style="text-align: right;">-0.023</td>
 <td>DIFFERENT</td>
-<td>slot1 mean-spec 60.4dB; slot1 band-std 22.1dB; slot1 flatness 0.153; slot1 env-pear -0.36; slot1 level 11.6dB; slot2 mean-spec 54.3dB; slot2 band-std 21.3dB; slot2 flatness 0.263; slot2 env-pear -0.28; slot2 level 11.5dB; slot3 mean-spec 53.9dB; slot3 band-std 22.0dB; slot3 flatness 0.330; slot3 env-pear -0.25; slot3 level 11.4dB; slot4 mean-spec 52.0dB; slot4 band-std 21.9dB; slot4 flatness 0.273; slot4 env-pear -0.32; slot4 level 11.7dB; slot5 mean-spec 50.9dB; slot5 band-std 22.1dB; slot5 flatness 0.216; slot5 env-pear -0.20; slot5 level 11.0dB; peak +21.8dB</td>
+<td>slot1 mean-spec 16.7dB; slot1 band-std 5.7dB; slot1 level 19.5dB; slot2 mean-spec 16.8dB; slot2 band-std 5.4dB; slot2 level 19.0dB; slot3 mean-spec 17.2dB; slot3 band-std 5.7dB; slot3 level 19.2dB; slot4 mean-spec 17.5dB; slot4 band-std 6.1dB; slot4 level 19.6dB; slot5 mean-spec 17.1dB; slot5 band-std 6.1dB; slot5 level 19.2dB; peak +9.1dB</td>
 </tr>
 <tr>
 <td>bank10_026</td>
 <td>STOC*</td>
-<td style="text-align: right;">+3</td>
-<td>-0.04 -0.00 0.03 -0.00 -0.01</td>
-<td>16.9 17.2 17.5 17.8 19.8</td>
-<td>11.4 11.6 11.4 11.2 10.3</td>
-<td>4143 2918 2509 2219 1702</td>
-<td style="text-align: right;">-0.007</td>
+<td style="text-align: right;">+6</td>
+<td>0.13 0.13 0.13 0.13 0.13</td>
+<td>10.1 8.8 8.5 8.2 8.2</td>
+<td>8.8 9.2 9.3 9.3 9.5</td>
+<td>3231 3231 3231 3231 3231</td>
+<td style="text-align: right;">+0.081</td>
 <td>DIFFERENT</td>
-<td>slot1 mean-spec 13.5dB; slot1 band-std 14.8dB; slot1 env-pear 0.71; slot1 level 10.5dB; slot2 mean-spec 21.3dB; slot2 band-std 15.7dB; slot2 env-pear 0.78; slot2 level 11.1dB; slot3 mean-spec 21.3dB; slot3 band-std 16.2dB; slot3 env-pear 0.83; slot3 level 11.0dB; slot4 mean-spec 26.5dB; slot4 band-std 17.0dB; slot4 env-pear 0.75; slot4 level 10.9dB; slot5 mean-spec 26.8dB; slot5 band-std 17.4dB; slot5 env-pear 0.84; slot5 level 10.0dB; peak +16.6dB</td>
+<td>slot1 mean-spec 17.9dB; slot1 band-std 8.3dB; slot1 level 9.6dB; slot2 mean-spec 18.2dB; slot2 band-std 8.0dB; slot2 level 10.1dB; slot3 mean-spec 18.4dB; slot3 band-std 9.0dB; slot3 level 10.2dB; slot4 mean-spec 18.6dB; slot4 band-std 9.5dB; slot4 level 10.3dB; slot5 mean-spec 18.9dB; slot5 band-std 8.8dB; slot5 level 10.5dB</td>
 </tr>
 <tr>
 <td>bank10_031</td>
 <td>STOC*</td>
-<td style="text-align: right;">+8</td>
-<td>0.14 0.06 0.03 0.01 0.03</td>
-<td>20.4 18.1 18.7 19.9 16.5</td>
-<td>6.8 4.6 6.4 7.3 5.1</td>
-<td>33 35 46 1160 1281</td>
-<td style="text-align: right;">+0.020</td>
+<td style="text-align: right;">+11</td>
+<td>0.01 -0.02 0.02 0.02 0.00</td>
+<td>18.7 17.0 18.9 17.2 17.4</td>
+<td>2.6 2.6 3.9 2.3 1.3</td>
+<td>980 260 627 905 2610</td>
+<td style="text-align: right;">-0.002</td>
 <td>DIFFERENT</td>
-<td>slot1 mean-spec 38.5dB; slot1 band-std 2.9dB; slot1 flatness 0.386; slot1 env-pear -0.15; slot1 level 4.9dB; slot2 mean-spec 33.0dB; slot2 band-std 3.2dB; slot2 flatness 0.349; slot2 env-pear -0.11; slot2 level 3.9dB; slot3 mean-spec 35.5dB; slot3 band-std 2.4dB; slot3 flatness 0.290; slot3 env-pear -0.03; slot3 level 5.4dB; slot4 mean-spec 33.5dB; slot4 band-std 3.5dB; slot4 flatness 0.195; slot4 env-pear -0.04; slot4 level 6.9dB; slot5 mean-spec 33.3dB; slot5 band-std 5.4dB; slot5 flatness 0.249; slot5 env-pear 0.21; slot5 level 3.8dB; peak +8.6dB</td>
+<td>slot1 mean-spec 35.7dB; slot1 band-std 3.2dB; slot1 flatness 0.382; slot1 env-pear -0.03; slot2 mean-spec 32.3dB; slot2 band-std 2.6dB; slot2 flatness 0.355; slot2 env-pear -0.02; slot2 level 0.7dB; slot3 mean-spec 30.6dB; slot3 band-std 2.5dB; slot3 flatness 0.270; slot3 env-pear -0.15; slot3 level 2.1dB; slot4 mean-spec 30.7dB; slot4 band-std 3.1dB; slot4 flatness 0.192; slot4 env-pear -0.11; slot5 mean-spec 39.4dB; slot5 band-std 4.8dB; slot5 flatness 0.242; slot5 env-pear 0.02; slot5 level 4.0dB; peak +2.1dB</td>
 </tr>
 <tr>
 <td>bank10_032</td>
 <td>STOC*</td>
-<td style="text-align: right;">+8</td>
-<td>0.01 0.03 0.01 0.01 0.01</td>
-<td>49.0 41.3 35.2 32.8 29.0</td>
-<td>20.2 13.1 10.2 8.1 4.1</td>
-<td>2330 0 0 0 0</td>
-<td style="text-align: right;">-0.005</td>
+<td style="text-align: right;">+1</td>
+<td>-0.01 0.02 -0.04 0.03 0.03</td>
+<td>11.4 10.4 11.1 11.1 11.1</td>
+<td>12.8 11.5 12.6 12.0 12.1</td>
+<td>1372 0 0 0 0</td>
+<td style="text-align: right;">-0.019</td>
 <td>DIFFERENT</td>
-<td>slot1 mean-spec 90.6dB; slot1 band-std 46.0dB; slot1 env-pear 0.56; slot1 level 23.8dB; slot2 mean-spec 80.2dB; slot2 band-std 46.3dB; slot2 flatness 0.033; slot2 env-pear 0.70; slot2 level 16.0dB; slot3 mean-spec 73.0dB; slot3 band-std 46.2dB; slot3 env-pear 0.92; slot3 level 12.6dB; slot4 mean-spec 69.4dB; slot4 band-std 45.1dB; slot4 env-pear 0.86; slot4 level 10.1dB; slot5 mean-spec 64.4dB; slot5 band-std 46.2dB; slot5 env-pear 0.84; slot5 level 5.4dB</td>
+<td>slot1 mean-spec 11.7dB; slot1 band-std 10.1dB; slot1 env-pear 0.92; slot1 level 10.8dB; slot2 mean-spec 11.5dB; slot2 band-std 8.2dB; slot2 level 10.1dB; slot3 mean-spec 11.8dB; slot3 band-std 8.2dB; slot3 level 11.0dB; slot4 mean-spec 11.8dB; slot4 band-std 8.1dB; slot4 level 10.5dB; slot5 mean-spec 12.4dB; slot5 band-std 9.1dB; slot5 level 10.6dB; peak +3.6dB</td>
 </tr>
 <tr>
 <td>bank10_038</td>
 <td>STOC*</td>
-<td style="text-align: right;">-5</td>
-<td>0.03 -0.05 -0.00 -0.01 -0.01</td>
-<td>15.6 18.3 22.7 21.9 22.9</td>
-<td>5.9 4.4 7.8 7.7 5.1</td>
-<td>4165 2851 2494 2152 1634</td>
-<td style="text-align: right;">-0.015</td>
+<td style="text-align: right;">+18</td>
+<td>0.09 0.10 0.10 -0.10 0.06</td>
+<td>11.0 11.2 11.5 10.7 9.9</td>
+<td>7.3 7.3 8.0 6.9 6.6</td>
+<td>3165 3165 3165 3175 3175</td>
+<td style="text-align: right;">-0.028</td>
 <td>DIFFERENT</td>
-<td>slot1 mean-spec 21.3dB; slot1 band-std 9.1dB; slot1 flatness 0.039; slot1 level 4.0dB; slot2 mean-spec 23.2dB; slot2 band-std 8.8dB; slot2 flatness 0.041; slot2 env-pear 0.94; slot2 level 2.5dB; slot3 mean-spec 31.3dB; slot3 band-std 7.8dB; slot3 flatness 0.038; slot3 level 6.5dB; slot4 mean-spec 34.8dB; slot4 band-std 9.4dB; slot4 flatness 0.039; slot4 level 6.3dB; slot5 mean-spec 32.3dB; slot5 band-std 7.7dB; slot5 flatness 0.047; slot5 env-pear 0.93; slot5 level 3.6dB; peak +9.5dB</td>
+<td>slot1 mean-spec 20.9dB; slot1 band-std 12.3dB; slot1 flatness 0.036; slot1 env-pear 0.94; slot1 level 9.5dB; slot2 mean-spec 20.9dB; slot2 band-std 11.6dB; slot2 flatness 0.036; slot2 env-pear 0.94; slot2 level 9.6dB; slot3 mean-spec 21.6dB; slot3 band-std 11.9dB; slot3 flatness 0.036; slot3 env-pear 0.94; slot3 level 10.2dB; slot4 mean-spec 20.4dB; slot4 band-std 11.8dB; slot4 flatness 0.035; slot4 level 9.1dB; slot5 mean-spec 19.9dB; slot5 band-std 11.7dB; slot5 flatness 0.038; slot5 level 8.7dB</td>
 </tr>
 <tr>
 <td>bank10_039</td>
 <td>STOC*</td>
-<td style="text-align: right;">+9</td>
-<td>-0.00 0.01 0.02 0.01 -0.01</td>
-<td>31.1 20.7 25.3 28.8 20.2</td>
-<td>12.2 14.2 12.9 13.1 13.8</td>
-<td>1197 2547 2949 3170 3781</td>
-<td style="text-align: right;">+0.004</td>
+<td style="text-align: right;">-3</td>
+<td>0.01 -0.07 0.01 0.05 -0.03</td>
+<td>11.1 8.6 7.6 7.4 6.8</td>
+<td>3.7 3.1 2.7 2.5 2.0</td>
+<td>2070 2090 2185 2105 2217</td>
+<td style="text-align: right;">-0.000</td>
 <td>DIFFERENT</td>
-<td>slot1 mean-spec 42.3dB; slot1 band-std 10.9dB; slot1 env-pear 0.74; slot1 level 15.4dB; slot2 mean-spec 42.0dB; slot2 band-std 10.2dB; slot2 env-pear 0.89; slot2 level 17.1dB; slot3 mean-spec 41.0dB; slot3 band-std 13.5dB; slot3 env-pear 0.36; slot3 level 15.6dB; slot4 mean-spec 42.7dB; slot4 band-std 12.5dB; slot4 env-pear 0.49; slot4 level 15.9dB; slot5 mean-spec 41.1dB; slot5 band-std 11.8dB; slot5 env-pear 0.87; slot5 level 16.6dB</td>
+<td>slot1 mean-spec 20.8dB; slot1 band-std 5.6dB; slot1 env-pear 0.88; slot1 level 6.4dB; slot2 mean-spec 20.9dB; slot2 band-std 4.5dB; slot2 env-pear 0.92; slot2 level 5.7dB; slot3 mean-spec 20.7dB; slot3 band-std 4.7dB; slot3 env-pear 0.92; slot3 level 5.4dB; slot4 mean-spec 21.0dB; slot4 band-std 4.0dB; slot4 env-pear 0.92; slot4 level 5.2dB; slot5 mean-spec 20.7dB; slot5 band-std 3.3dB; slot5 env-pear 0.94; slot5 level 4.8dB</td>
 </tr>
 <tr>
 <td>bank10_061</td>
 <td>DETE</td>
-<td style="text-align: right;">-25</td>
-<td>0.14 0.16 0.39 0.26 0.03</td>
-<td>13.0 15.0 10.0 10.6 11.1</td>
-<td>3.0 3.8 2.3 3.3 4.0</td>
-<td>1228 1205 1200 1192 1135</td>
-<td style="text-align: right;">-0.019</td>
+<td style="text-align: right;">+1</td>
+<td>0.01 0.01 0.02 0.00 -0.00</td>
+<td>10.0 9.7 10.2 11.2 10.3</td>
+<td>1.2 2.1 1.6 3.3 4.0</td>
+<td>2154 954 533 212 1507</td>
+<td style="text-align: right;">+0.004</td>
 <td>DIFFERENT</td>
-<td>slot1 rho 0.14; slot2 rho 0.16; slot3 rho 0.39; slot4 rho 0.26; slot5 rho 0.03; peak +6.4dB</td>
+<td>slot1 rho 0.01; slot2 rho 0.01; slot3 rho 0.02; slot4 rho 0.00; slot5 rho -0.00; peak +5.5dB</td>
 </tr>
 <tr>
 <td>bank10_109</td>
 <td>DETE</td>
-<td style="text-align: right;">-5</td>
-<td>0.01 0.07 -0.08 -0.00 0.12</td>
-<td>14.8 12.4 9.5 7.7 7.0</td>
-<td>3.3 6.5 3.2 3.7 3.0</td>
-<td>66 85 20 40 10</td>
-<td style="text-align: right;">+0.011</td>
+<td style="text-align: right;">-6</td>
+<td>0.02 0.04 0.02 0.02 0.01</td>
+<td>39.2 37.7 36.6 36.3 32.7</td>
+<td>33.8 34.2 33.3 32.8 31.5</td>
+<td>2773 1562 2265 2217 1708</td>
+<td style="text-align: right;">+0.006</td>
 <td>DIFFERENT</td>
-<td>slot1 rho 0.01; slot2 rho 0.07; slot3 rho -0.08; slot4 rho -0.00; slot5 rho 0.12; peak +1.9dB</td>
+<td>slot1 rho 0.02; slot2 rho 0.04; slot3 rho 0.02; slot4 rho 0.02; slot5 rho 0.01; peak +32.2dB</td>
 </tr>
 <tr>
 <td>bank10_110</td>
 <td>DETE</td>
-<td style="text-align: right;">-5</td>
-<td>0.32 0.07 0.04 0.30 0.09</td>
-<td>10.6 13.4 12.9 12.9 12.7</td>
-<td>3.3 4.9 4.9 4.0 4.7</td>
-<td>0 0 0 0 0</td>
-<td style="text-align: right;">+0.002</td>
+<td style="text-align: right;">+6</td>
+<td>0.00 0.07 0.00 0.00 0.00</td>
+<td>38.2 38.6 35.8 33.5 32.0</td>
+<td>32.8 32.2 30.6 30.2 28.0</td>
+<td>2773 1562 2275 2217 1708</td>
+<td style="text-align: right;">+0.007</td>
 <td>DIFFERENT</td>
-<td>slot1 rho 0.32; slot2 rho 0.07; slot3 rho 0.04; slot4 rho 0.30; slot5 rho 0.09</td>
+<td>slot1 rho 0.00; slot2 rho 0.07; slot3 rho 0.00; slot4 rho 0.00; slot5 rho 0.00; peak +31.0dB</td>
 </tr>
 <tr>
 <td>bank10_115</td>
 <td>DETE</td>
 <td style="text-align: right;">-0</td>
-<td>0.01 -0.00 0.01 0.01 0.01</td>
-<td>17.5 17.0 17.8 17.9 16.3</td>
-<td>8.8 4.3 3.7 3.2 1.9</td>
-<td>477 580 725 396 3582</td>
+<td>-0.00 0.00 0.00 -0.01 0.03</td>
+<td>17.9 11.6 15.8 13.9 12.5</td>
+<td>19.1 7.1 10.8 9.1 1.1</td>
+<td>245 3412 3100 3410 3856</td>
 <td style="text-align: right;">+0.004</td>
 <td>DIFFERENT</td>
-<td>slot1 rho 0.01; slot2 rho -0.00; slot3 rho 0.01; slot4 rho 0.01; slot5 rho 0.01</td>
+<td>slot1 rho -0.00; slot2 rho 0.00; slot3 rho 0.00; slot4 rho -0.01; slot5 rho 0.03; peak +1.6dB</td>
 </tr>
 <tr>
 <td>bank11_018</td>
 <td>DETE</td>
 <td style="text-align: right;">-1</td>
-<td>0.00 0.00 0.01 0.00 -0.01</td>
-<td>20.3 19.0 19.5 19.6 18.0</td>
-<td>6.8 7.0 7.6 7.0 7.8</td>
+<td>0.04 0.01 0.03 0.02 -0.01</td>
+<td>20.7 19.1 21.3 20.8 19.9</td>
+<td>0.9 3.1 0.1 1.0 1.5</td>
 <td>0 0 0 0 0</td>
-<td style="text-align: right;">+0.001</td>
+<td style="text-align: right;">+0.007</td>
 <td>DIFFERENT</td>
-<td>slot1 rho 0.00; slot2 rho 0.00; slot3 rho 0.01; slot4 rho 0.00; slot5 rho -0.01</td>
+<td>slot1 rho 0.04; slot2 rho 0.01; slot3 rho 0.03; slot4 rho 0.02; slot5 rho -0.01; peak +2.4dB</td>
 </tr>
 <tr>
 <td>bank11_019</td>
 <td>DETE</td>
-<td style="text-align: right;">-12</td>
-<td>0.46 0.37 0.55 0.47 0.61</td>
-<td>11.9 8.2 10.0 10.1 9.8</td>
-<td>8.3 5.5 5.1 4.2 3.7</td>
-<td>1290 1189 0 0 0</td>
-<td style="text-align: right;">-0.310</td>
+<td style="text-align: right;">-8</td>
+<td>0.00 0.01 0.00 0.05 0.01</td>
+<td>14.5 14.4 15.0 15.5 15.9</td>
+<td>4.2 1.3 2.9 4.4 4.5</td>
+<td>780 373 2323 2228 2216</td>
+<td style="text-align: right;">-0.009</td>
 <td>DIFFERENT</td>
-<td>slot1 rho 0.46; slot2 rho 0.37; slot3 rho 0.55; slot4 rho 0.47; slot5 rho 0.61; peak +3.9dB</td>
+<td>slot1 rho 0.00; slot2 rho 0.01; slot3 rho 0.00; slot4 rho 0.05; slot5 rho 0.01</td>
 </tr>
 <tr>
 <td>bank11_021</td>
 <td>DETE</td>
-<td style="text-align: right;">-28</td>
-<td>0.15 0.53 0.61 0.44 0.57</td>
-<td>18.6 19.9 17.6 19.9 19.7</td>
-<td>25.3 23.8 22.1 24.2 21.0</td>
-<td>1189 1155 1133 1124 1125</td>
-<td style="text-align: right;">-0.087</td>
+<td style="text-align: right;">+48</td>
+<td>0.01 0.01 0.02 0.03 0.00</td>
+<td>12.7 12.0 20.6 16.7 12.2</td>
+<td>12.0 1.4 15.1 8.8 3.5</td>
+<td>5298 4076 3666 3353 2866</td>
+<td style="text-align: right;">-0.001</td>
 <td>DIFFERENT</td>
-<td>slot1 rho 0.15; slot2 rho 0.53; slot3 rho 0.61; slot4 rho 0.44; slot5 rho 0.57; peak +19.8dB</td>
+<td>slot1 rho 0.01; slot2 rho 0.01; slot3 rho 0.02; slot4 rho 0.03; slot5 rho 0.00</td>
 </tr>
 <tr>
 <td>bank11_038</td>
 <td>STOC*</td>
-<td style="text-align: right;">+0</td>
-<td>0.02 -0.01 0.00 -0.01 -0.00</td>
-<td>13.9 16.2 21.3 20.2 19.1</td>
-<td>1.5 0.3 3.8 3.6 1.2</td>
-<td>4165 2851 2494 2152 1634</td>
-<td style="text-align: right;">-0.003</td>
+<td style="text-align: right;">+1</td>
+<td>0.09 0.05 0.09 0.08 0.07</td>
+<td>10.2 10.3 9.8 9.9 9.9</td>
+<td>8.9 8.7 8.8 8.4 8.3</td>
+<td>3241 3241 3241 3241 3241</td>
+<td style="text-align: right;">+0.048</td>
 <td>DIFFERENT</td>
-<td>slot1 mean-spec 16.9dB; slot1 band-std 10.1dB; slot1 flatness 0.056; slot1 env-pear 0.94; slot2 mean-spec 21.6dB; slot2 band-std 10.1dB; slot2 flatness 0.091; slot2 env-pear 0.93; slot2 level 1.5dB; slot3 mean-spec 29.4dB; slot3 band-std 9.4dB; slot3 flatness 0.104; slot3 env-pear 0.94; slot3 level 2.5dB; slot4 mean-spec 32.8dB; slot4 band-std 11.6dB; slot4 flatness 0.119; slot4 level 2.3dB; slot5 mean-spec 30.1dB; slot5 band-std 9.4dB; slot5 flatness 0.148; slot5 env-pear 0.89; peak +2.8dB</td>
+<td>slot1 mean-spec 22.9dB; slot1 band-std 10.3dB; slot1 flatness 0.056; slot1 env-pear 0.95; slot1 level 10.7dB; slot2 mean-spec 23.1dB; slot2 band-std 9.8dB; slot2 flatness 0.089; slot2 level 10.6dB; slot3 mean-spec 23.2dB; slot3 band-std 9.9dB; slot3 flatness 0.103; slot3 level 10.8dB; slot4 mean-spec 23.1dB; slot4 band-std 10.4dB; slot4 flatness 0.116; slot4 level 10.5dB; slot5 mean-spec 23.2dB; slot5 band-std 9.5dB; slot5 flatness 0.140; slot5 level 10.4dB</td>
 </tr>
 <tr>
 <td>bank11_040</td>
 <td>DETE</td>
-<td style="text-align: right;">+11</td>
-<td>0.16 0.00 0.00 0.03 0.02</td>
-<td>12.4 14.8 13.0 12.9 12.2</td>
-<td>7.7 6.5 2.8 3.7 4.6</td>
-<td>0 2529 2452 2437 2443</td>
-<td style="text-align: right;">-0.009</td>
+<td style="text-align: right;">+56</td>
+<td>0.30 0.57 0.10 0.60 -0.13</td>
+<td>16.4 15.6 15.0 16.7 15.4</td>
+<td>4.9 0.4 8.4 6.9 0.5</td>
+<td>0 5292 0 3385 4066</td>
+<td style="text-align: right;">-0.166</td>
 <td>DIFFERENT</td>
-<td>slot1 rho 0.16; slot2 rho 0.00; slot3 rho 0.00; slot4 rho 0.03; slot5 rho 0.02</td>
+<td>slot1 rho 0.30; slot2 rho 0.57; slot3 rho 0.10; slot4 rho 0.60; slot5 rho -0.13; peak +6.3dB</td>
 </tr>
 </tbody>
 </table>
-<p><strong>Peak-gate fails (engine peak &gt; orig + 0.5 dB, additive-gain family): 20/29</strong> — bank04_098 +3.9dB, bank05_020 +9.7dB, bank05_025 +12.2dB, bank05_042 +4.0dB, bank06_037 +2.5dB, bank06_049 +5.4dB, bank07_050 +5.0dB, bank07_109 +6.2dB, bank09_030 +16.0dB, bank09_034 +4.5dB, bank10_019 +4.3dB, bank10_024 +21.8dB, bank10_026 +16.6dB, bank10_031 +8.6dB, bank10_038 +9.5dB, bank10_061 +6.4dB, bank10_109 +1.9dB, bank11_019 +3.9dB, bank11_021 +19.8dB, bank11_038 +2.8dB</p><p class='deploy-stamp' style='color:#8b8f9e;font-size:.85rem'>Deployed: 2026-10-08 06:37 UTC</p></body></html>
+<h3>Family roll-up (worst first by mean whole xcorr)</h3>
+<table>
+<thead>
+<tr>
+<th>Family</th>
+<th style="text-align: right;">n</th>
+<th style="text-align: right;">mean whole xcorr</th>
+<th style="text-align: right;">peak-gate fails</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>pluck</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">-0.004</td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr>
+<td>drum</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">-0.009</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr>
+<td>percussion</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">+0.043</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr>
+<td>guitar</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">-0.003</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr>
+<td>brass</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">+0.006</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr>
+<td>ticker</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">-0.008</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr>
+<td>harp</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">-0.003</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr>
+<td>woodwind</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">+0.004</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr>
+<td>mallet</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">-0.009</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr>
+<td>bass</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">-0.166</td>
+<td style="text-align: right;">1</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Peak-gate fails (engine peak &gt; orig + 0.5 dB, additive-gain family): 16/29</strong> — bank05_020 +2.6dB, bank05_025 +5.3dB, bank06_037 +5.5dB, bank06_049 +7.6dB, bank06_120 +1.3dB, bank07_050 +3.6dB, bank07_109 +7.0dB, bank10_024 +9.1dB, bank10_031 +2.1dB, bank10_032 +3.6dB, bank10_061 +5.5dB, bank10_109 +32.2dB, bank10_110 +31.0dB, bank10_115 +1.6dB, bank11_018 +2.4dB, bank11_040 +6.3dB</p><p class='deploy-stamp' style='color:#8b8f9e;font-size:.85rem'>Deployed: 2026-10-08 07:07 UTC</p></body></html>
