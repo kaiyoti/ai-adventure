@@ -6,14 +6,14 @@
     "notes": "48,60,64,67,72",
     "ref_file": "audio/patch_001_vst.wav",
     "eng_file": "audio/patch_001_reconstructed.wav",
-    "null_db": -4.49,
-    "corr": 0.936,
+    "null_db": -3.64,
+    "corr": 0.931,
     "ref_peak": 0.311,
-    "eng_peak": 0.302,
+    "eng_peak": 0.32,
     "ref_rms": 0.051,
-    "eng_rms": 0.055,
+    "eng_rms": 0.057,
     "lag": 1,
-    "stft_logmag": 0.47
+    "stft_logmag": 0.31
   },
   {
     "id": "002",
@@ -22,14 +22,14 @@
     "notes": "48,60,64,67,72",
     "ref_file": "audio/patch_002_vst.wav",
     "eng_file": "audio/patch_002_reconstructed.wav",
-    "null_db": -8.11,
+    "null_db": -8.09,
     "corr": 0.984,
     "ref_peak": 0.353,
-    "eng_peak": 0.349,
+    "eng_peak": 0.353,
     "ref_rms": 0.061,
     "eng_rms": 0.06,
     "lag": -1,
-    "stft_logmag": 0.44
+    "stft_logmag": 0.3
   },
   {
     "id": "005",
@@ -38,14 +38,14 @@
     "notes": "48,60,64,67,72",
     "ref_file": "audio/patch_005_vst.wav",
     "eng_file": "audio/patch_005_reconstructed.wav",
-    "null_db": 2.64,
+    "null_db": 2.68,
     "corr": 0.874,
     "ref_peak": 0.294,
-    "eng_peak": 0.566,
+    "eng_peak": 0.568,
     "ref_rms": 0.045,
     "eng_rms": 0.092,
     "lag": 0,
-    "stft_logmag": 0.65
+    "stft_logmag": 0.42
   },
   {
     "id": "017",
@@ -54,14 +54,14 @@
     "notes": "48,60,64,67,72",
     "ref_file": "audio/patch_017_vst.wav",
     "eng_file": "audio/patch_017_reconstructed.wav",
-    "null_db": -6.67,
+    "null_db": -6.68,
     "corr": 0.973,
     "ref_peak": 0.193,
     "eng_peak": 0.178,
     "ref_rms": 0.023,
     "eng_rms": 0.023,
     "lag": -1,
-    "stft_logmag": 0.44
+    "stft_logmag": 0.3
   },
   {
     "id": "033",
@@ -77,7 +77,7 @@
     "ref_rms": 0.022,
     "eng_rms": 0.022,
     "lag": -2,
-    "stft_logmag": 0.51
+    "stft_logmag": 0.36
   },
   {
     "id": "039",
@@ -86,14 +86,14 @@
     "notes": "36,43,48,55,60",
     "ref_file": "audio/patch_039_vst.wav",
     "eng_file": "audio/patch_039_reconstructed.wav",
-    "null_db": -31.03,
+    "null_db": -31.07,
     "corr": 1.0,
     "ref_peak": 0.358,
     "eng_peak": 0.346,
     "ref_rms": 0.049,
     "eng_rms": 0.049,
     "lag": 0,
-    "stft_logmag": 0.57
+    "stft_logmag": 0.39
   },
   {
     "id": "042",
@@ -109,7 +109,7 @@
     "ref_rms": 0.042,
     "eng_rms": 0.046,
     "lag": 0,
-    "stft_logmag": 0.65
+    "stft_logmag": 0.41
   },
   {
     "id": "050",
@@ -118,14 +118,14 @@
     "notes": "48,60,64,67,72",
     "ref_file": "audio/patch_050_vst.wav",
     "eng_file": "audio/patch_050_reconstructed.wav",
-    "null_db": -9.8,
+    "null_db": -9.39,
     "corr": 0.975,
     "ref_peak": 0.245,
-    "eng_peak": 0.245,
+    "eng_peak": 0.257,
     "ref_rms": 0.042,
-    "eng_rms": 0.041,
-    "lag": 0,
-    "stft_logmag": 0.55
+    "eng_rms": 0.042,
+    "lag": -1,
+    "stft_logmag": 0.5
   },
   {
     "id": "057",
@@ -134,14 +134,14 @@
     "notes": "48,60,64,67,72",
     "ref_file": "audio/patch_057_vst.wav",
     "eng_file": "audio/patch_057_reconstructed.wav",
-    "null_db": -22.12,
-    "corr": 0.997,
+    "null_db": -24.64,
+    "corr": 0.998,
     "ref_peak": 0.269,
-    "eng_peak": 0.257,
+    "eng_peak": 0.27,
     "ref_rms": 0.045,
     "eng_rms": 0.045,
     "lag": 0,
-    "stft_logmag": 1.84
+    "stft_logmag": 0.28
   },
   {
     "id": "062",
@@ -150,14 +150,14 @@
     "notes": "48,60,64,67,72",
     "ref_file": "audio/patch_062_vst.wav",
     "eng_file": "audio/patch_062_reconstructed.wav",
-    "null_db": -8.65,
-    "corr": 0.975,
+    "null_db": -8.28,
+    "corr": 0.97,
     "ref_peak": 0.06,
     "eng_peak": 0.063,
     "ref_rms": 0.012,
     "eng_rms": 0.013,
     "lag": -1,
-    "stft_logmag": 0.62
+    "stft_logmag": 0.32
   },
   {
     "id": "081",
@@ -166,14 +166,14 @@
     "notes": "48,60,64,67,72",
     "ref_file": "audio/patch_081_vst.wav",
     "eng_file": "audio/patch_081_reconstructed.wav",
-    "null_db": -6.4,
-    "corr": 0.972,
+    "null_db": -6.29,
+    "corr": 0.977,
     "ref_peak": 0.301,
-    "eng_peak": 0.278,
+    "eng_peak": 0.304,
     "ref_rms": 0.076,
-    "eng_rms": 0.079,
+    "eng_rms": 0.08,
     "lag": -7,
-    "stft_logmag": 0.46
+    "stft_logmag": 0.21
   },
   {
     "id": "101",
@@ -182,13 +182,13 @@
     "notes": "48,60,64,67,72",
     "ref_file": "audio/patch_101_vst.wav",
     "eng_file": "audio/patch_101_reconstructed.wav",
-    "null_db": -2.71,
-    "corr": 0.9,
+    "null_db": -1.84,
+    "corr": 0.893,
     "ref_peak": 0.373,
-    "eng_peak": 0.352,
+    "eng_peak": 0.351,
     "ref_rms": 0.034,
-    "eng_rms": 0.032,
+    "eng_rms": 0.034,
     "lag": 0,
-    "stft_logmag": 0.93
+    "stft_logmag": 0.45
   }
 ]
