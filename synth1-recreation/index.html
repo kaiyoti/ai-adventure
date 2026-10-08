@@ -296,7 +296,7 @@
       <div class="title-group">
         <h1>Synth1 A/B Listening Suite <span class="badge">Verification</span></h1>
         <p>Direct perceptual and quantitative comparisons between the original 32-bit Synth1 VST and the reconstructed C++ engine</p>
-        <p class='deploy-stamp' style='color:#8b8f9e;font-size:.85rem'>Deployed: 2026-10-08 05:02 UTC</p> <a href="scoring_v2.html" style="color:#7aa2f7">Scoring v2</a> <a href="self_floor.html" style="color:#7aa2f7">Self-floor</a>
+        <p class='deploy-stamp' style='color:#8b8f9e;font-size:.85rem'>Deployed: 2026-10-08 05:57 UTC</p> <a href="scoring_v2.html" style="color:#7aa2f7">Scoring v2</a> <a href="self_floor.html" style="color:#7aa2f7">Self-floor</a>
       </div>
       <div class="ab-legend">
         <span class="tag-a"><span class="tag-dot a"></span> Source A: Original VST (Wine)</span>
@@ -307,11 +307,11 @@
     <div class="stats-bar">
       <div class="stat-card">
         <div class="stat-label">Patches Tested</div>
-        <div class="stat-value">32</div>
+        <div class="stat-value">61</div>
       </div>
       <div class="stat-card">
         <div class="stat-label">Average Correlation</div>
-        <div class="stat-value">0.681</div>
+        <div class="stat-value">0.408</div>
       </div>
       <div class="stat-card">
         <div class="stat-label">Sample Rate / Block</div>
@@ -1791,6 +1791,1340 @@
         </div>
         <div class="switcher-row">
           <button class="seamless-toggle" onclick="toggleAB('127')">
+            <span>&#8644; Seamless A/B Flip (Listen Mid-Playback)</span>
+          </button>
+          <div class="notes-tag">Test Phrase MIDI: [48,60,64,67,72]</div>
+        </div>
+      </div>
+
+      <div class="patch-card" id="card-bank04_098" data-ref="audio/patch_bank04_098_vst.wav" data-eng="audio/patch_bank04_098_reconstructed.wav">
+        <div class="patch-header">
+          <div class="patch-meta">
+            <span class="patch-id">#bank04_098</span>
+            <span class="patch-name">Macarena</span>
+            <span class="patch-cat">Plucked (bank04)</span>
+          </div>
+          <div class="metrics-pill-group">
+            <div class="metric-pill">Corr: <span>0.170</span></div>
+            <div class="metric-pill">Null: <span>1.86 dB</span></div>
+            <div class="metric-pill">STFT &Delta;: <span>1.52</span></div>
+            <div class="metric-pill">Peak A/B: <span>0.08 / 0.12</span></div>
+          </div>
+        </div>
+        <div class="player-row">
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-a"><span class="tag-dot a"></span> Original 32-bit VST (Source A)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.014</span>
+            </div>
+            <audio id="aud-a-bank04_098" controls preload="metadata" src="audio/patch_bank04_098_vst.wav"></audio>
+          </div>
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-b"><span class="tag-dot b"></span> Reconstructed Synth (Source B)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.012</span>
+            </div>
+            <audio id="aud-b-bank04_098" controls preload="metadata" src="audio/patch_bank04_098_reconstructed.wav"></audio>
+          </div>
+        </div>
+        <div class="viz-block">
+          <div class="viz-label">Waveform overlay <span class="tag-a"><span class="tag-dot a"></span>VST</span><span class="tag-b"><span class="tag-dot b"></span>Reconstructed</span><span class="viz-status" data-status-for="bank04_098">decoding audio for visualization...</span></div>
+          <canvas id="wave-bank04_098" class="wave-canvas"></canvas>
+          <div class="spec-grid">
+            <div class="spec-cell"><span class="tag-a"><span class="tag-dot a"></span> Spectrogram — VST</span><canvas id="spec-a-bank04_098" class="spec-canvas spec-a"></canvas></div>
+            <div class="spec-cell"><span class="tag-b"><span class="tag-dot b"></span> Spectrogram — Reconstructed</span><canvas id="spec-b-bank04_098" class="spec-canvas spec-b"></canvas></div>
+          </div>
+        </div>
+        <div class="switcher-row">
+          <button class="seamless-toggle" onclick="toggleAB('bank04_098')">
+            <span>&#8644; Seamless A/B Flip (Listen Mid-Playback)</span>
+          </button>
+          <div class="notes-tag">Test Phrase MIDI: [48,60,64,67,72]</div>
+        </div>
+      </div>
+
+      <div class="patch-card" id="card-bank05_020" data-ref="audio/patch_bank05_020_vst.wav" data-eng="audio/patch_bank05_020_reconstructed.wav">
+        <div class="patch-header">
+          <div class="patch-meta">
+            <span class="patch-id">#bank05_020</span>
+            <span class="patch-name">Unknown Pluck</span>
+            <span class="patch-cat">Plucked (bank05)</span>
+          </div>
+          <div class="metrics-pill-group">
+            <div class="metric-pill">Corr: <span>0.118</span></div>
+            <div class="metric-pill">Null: <span>5.36 dB</span></div>
+            <div class="metric-pill">STFT &Delta;: <span>2.84</span></div>
+            <div class="metric-pill">Peak A/B: <span>0.11 / 0.33</span></div>
+          </div>
+        </div>
+        <div class="player-row">
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-a"><span class="tag-dot a"></span> Original 32-bit VST (Source A)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.015</span>
+            </div>
+            <audio id="aud-a-bank05_020" controls preload="metadata" src="audio/patch_bank05_020_vst.wav"></audio>
+          </div>
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-b"><span class="tag-dot b"></span> Reconstructed Synth (Source B)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.026</span>
+            </div>
+            <audio id="aud-b-bank05_020" controls preload="metadata" src="audio/patch_bank05_020_reconstructed.wav"></audio>
+          </div>
+        </div>
+        <div class="viz-block">
+          <div class="viz-label">Waveform overlay <span class="tag-a"><span class="tag-dot a"></span>VST</span><span class="tag-b"><span class="tag-dot b"></span>Reconstructed</span><span class="viz-status" data-status-for="bank05_020">decoding audio for visualization...</span></div>
+          <canvas id="wave-bank05_020" class="wave-canvas"></canvas>
+          <div class="spec-grid">
+            <div class="spec-cell"><span class="tag-a"><span class="tag-dot a"></span> Spectrogram — VST</span><canvas id="spec-a-bank05_020" class="spec-canvas spec-a"></canvas></div>
+            <div class="spec-cell"><span class="tag-b"><span class="tag-dot b"></span> Spectrogram — Reconstructed</span><canvas id="spec-b-bank05_020" class="spec-canvas spec-b"></canvas></div>
+          </div>
+        </div>
+        <div class="switcher-row">
+          <button class="seamless-toggle" onclick="toggleAB('bank05_020')">
+            <span>&#8644; Seamless A/B Flip (Listen Mid-Playback)</span>
+          </button>
+          <div class="notes-tag">Test Phrase MIDI: [48,60,64,67,72]</div>
+        </div>
+      </div>
+
+      <div class="patch-card" id="card-bank05_025" data-ref="audio/patch_bank05_025_vst.wav" data-eng="audio/patch_bank05_025_reconstructed.wav">
+        <div class="patch-header">
+          <div class="patch-meta">
+            <span class="patch-id">#bank05_025</span>
+            <span class="patch-name">Harp-Like</span>
+            <span class="patch-cat">Plucked (bank05)</span>
+          </div>
+          <div class="metrics-pill-group">
+            <div class="metric-pill">Corr: <span>0.435</span></div>
+            <div class="metric-pill">Null: <span>11.26 dB</span></div>
+            <div class="metric-pill">STFT &Delta;: <span>3.04</span></div>
+            <div class="metric-pill">Peak A/B: <span>0.13 / 0.52</span></div>
+          </div>
+        </div>
+        <div class="player-row">
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-a"><span class="tag-dot a"></span> Original 32-bit VST (Source A)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.022</span>
+            </div>
+            <audio id="aud-a-bank05_025" controls preload="metadata" src="audio/patch_bank05_025_vst.wav"></audio>
+          </div>
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-b"><span class="tag-dot b"></span> Reconstructed Synth (Source B)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.086</span>
+            </div>
+            <audio id="aud-b-bank05_025" controls preload="metadata" src="audio/patch_bank05_025_reconstructed.wav"></audio>
+          </div>
+        </div>
+        <div class="viz-block">
+          <div class="viz-label">Waveform overlay <span class="tag-a"><span class="tag-dot a"></span>VST</span><span class="tag-b"><span class="tag-dot b"></span>Reconstructed</span><span class="viz-status" data-status-for="bank05_025">decoding audio for visualization...</span></div>
+          <canvas id="wave-bank05_025" class="wave-canvas"></canvas>
+          <div class="spec-grid">
+            <div class="spec-cell"><span class="tag-a"><span class="tag-dot a"></span> Spectrogram — VST</span><canvas id="spec-a-bank05_025" class="spec-canvas spec-a"></canvas></div>
+            <div class="spec-cell"><span class="tag-b"><span class="tag-dot b"></span> Spectrogram — Reconstructed</span><canvas id="spec-b-bank05_025" class="spec-canvas spec-b"></canvas></div>
+          </div>
+        </div>
+        <div class="switcher-row">
+          <button class="seamless-toggle" onclick="toggleAB('bank05_025')">
+            <span>&#8644; Seamless A/B Flip (Listen Mid-Playback)</span>
+          </button>
+          <div class="notes-tag">Test Phrase MIDI: [48,60,64,67,72]</div>
+        </div>
+      </div>
+
+      <div class="patch-card" id="card-bank05_042" data-ref="audio/patch_bank05_042_vst.wav" data-eng="audio/patch_bank05_042_reconstructed.wav">
+        <div class="patch-header">
+          <div class="patch-meta">
+            <span class="patch-id">#bank05_042</span>
+            <span class="patch-name">Exotic Pluck</span>
+            <span class="patch-cat">Plucked (bank05)</span>
+          </div>
+          <div class="metrics-pill-group">
+            <div class="metric-pill">Corr: <span>0.130</span></div>
+            <div class="metric-pill">Null: <span>5.14 dB</span></div>
+            <div class="metric-pill">STFT &Delta;: <span>1.62</span></div>
+            <div class="metric-pill">Peak A/B: <span>0.27 / 0.42</span></div>
+          </div>
+        </div>
+        <div class="player-row">
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-a"><span class="tag-dot a"></span> Original 32-bit VST (Source A)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.042</span>
+            </div>
+            <audio id="aud-a-bank05_042" controls preload="metadata" src="audio/patch_bank05_042_vst.wav"></audio>
+          </div>
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-b"><span class="tag-dot b"></span> Reconstructed Synth (Source B)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.068</span>
+            </div>
+            <audio id="aud-b-bank05_042" controls preload="metadata" src="audio/patch_bank05_042_reconstructed.wav"></audio>
+          </div>
+        </div>
+        <div class="viz-block">
+          <div class="viz-label">Waveform overlay <span class="tag-a"><span class="tag-dot a"></span>VST</span><span class="tag-b"><span class="tag-dot b"></span>Reconstructed</span><span class="viz-status" data-status-for="bank05_042">decoding audio for visualization...</span></div>
+          <canvas id="wave-bank05_042" class="wave-canvas"></canvas>
+          <div class="spec-grid">
+            <div class="spec-cell"><span class="tag-a"><span class="tag-dot a"></span> Spectrogram — VST</span><canvas id="spec-a-bank05_042" class="spec-canvas spec-a"></canvas></div>
+            <div class="spec-cell"><span class="tag-b"><span class="tag-dot b"></span> Spectrogram — Reconstructed</span><canvas id="spec-b-bank05_042" class="spec-canvas spec-b"></canvas></div>
+          </div>
+        </div>
+        <div class="switcher-row">
+          <button class="seamless-toggle" onclick="toggleAB('bank05_042')">
+            <span>&#8644; Seamless A/B Flip (Listen Mid-Playback)</span>
+          </button>
+          <div class="notes-tag">Test Phrase MIDI: [48,60,64,67,72]</div>
+        </div>
+      </div>
+
+      <div class="patch-card" id="card-bank06_037" data-ref="audio/patch_bank06_037_vst.wav" data-eng="audio/patch_bank06_037_reconstructed.wav">
+        <div class="patch-header">
+          <div class="patch-meta">
+            <span class="patch-id">#bank06_037</span>
+            <span class="patch-name">Real Harp</span>
+            <span class="patch-cat">Harp (bank06)</span>
+          </div>
+          <div class="metrics-pill-group">
+            <div class="metric-pill">Corr: <span>0.138</span></div>
+            <div class="metric-pill">Null: <span>3.89 dB</span></div>
+            <div class="metric-pill">STFT &Delta;: <span>2.47</span></div>
+            <div class="metric-pill">Peak A/B: <span>0.28 / 0.37</span></div>
+          </div>
+        </div>
+        <div class="player-row">
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-a"><span class="tag-dot a"></span> Original 32-bit VST (Source A)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.035</span>
+            </div>
+            <audio id="aud-a-bank06_037" controls preload="metadata" src="audio/patch_bank06_037_vst.wav"></audio>
+          </div>
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-b"><span class="tag-dot b"></span> Reconstructed Synth (Source B)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.047</span>
+            </div>
+            <audio id="aud-b-bank06_037" controls preload="metadata" src="audio/patch_bank06_037_reconstructed.wav"></audio>
+          </div>
+        </div>
+        <div class="viz-block">
+          <div class="viz-label">Waveform overlay <span class="tag-a"><span class="tag-dot a"></span>VST</span><span class="tag-b"><span class="tag-dot b"></span>Reconstructed</span><span class="viz-status" data-status-for="bank06_037">decoding audio for visualization...</span></div>
+          <canvas id="wave-bank06_037" class="wave-canvas"></canvas>
+          <div class="spec-grid">
+            <div class="spec-cell"><span class="tag-a"><span class="tag-dot a"></span> Spectrogram — VST</span><canvas id="spec-a-bank06_037" class="spec-canvas spec-a"></canvas></div>
+            <div class="spec-cell"><span class="tag-b"><span class="tag-dot b"></span> Spectrogram — Reconstructed</span><canvas id="spec-b-bank06_037" class="spec-canvas spec-b"></canvas></div>
+          </div>
+        </div>
+        <div class="switcher-row">
+          <button class="seamless-toggle" onclick="toggleAB('bank06_037')">
+            <span>&#8644; Seamless A/B Flip (Listen Mid-Playback)</span>
+          </button>
+          <div class="notes-tag">Test Phrase MIDI: [48,60,64,67,72]</div>
+        </div>
+      </div>
+
+      <div class="patch-card" id="card-bank06_049" data-ref="audio/patch_bank06_049_vst.wav" data-eng="audio/patch_bank06_049_reconstructed.wav">
+        <div class="patch-header">
+          <div class="patch-meta">
+            <span class="patch-id">#bank06_049</span>
+            <span class="patch-name">Synthetic Pluck</span>
+            <span class="patch-cat">Plucked (bank06)</span>
+          </div>
+          <div class="metrics-pill-group">
+            <div class="metric-pill">Corr: <span>0.160</span></div>
+            <div class="metric-pill">Null: <span>1.72 dB</span></div>
+            <div class="metric-pill">STFT &Delta;: <span>2.10</span></div>
+            <div class="metric-pill">Peak A/B: <span>0.22 / 0.41</span></div>
+          </div>
+        </div>
+        <div class="player-row">
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-a"><span class="tag-dot a"></span> Original 32-bit VST (Source A)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.044</span>
+            </div>
+            <audio id="aud-a-bank06_049" controls preload="metadata" src="audio/patch_bank06_049_vst.wav"></audio>
+          </div>
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-b"><span class="tag-dot b"></span> Reconstructed Synth (Source B)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.038</span>
+            </div>
+            <audio id="aud-b-bank06_049" controls preload="metadata" src="audio/patch_bank06_049_reconstructed.wav"></audio>
+          </div>
+        </div>
+        <div class="viz-block">
+          <div class="viz-label">Waveform overlay <span class="tag-a"><span class="tag-dot a"></span>VST</span><span class="tag-b"><span class="tag-dot b"></span>Reconstructed</span><span class="viz-status" data-status-for="bank06_049">decoding audio for visualization...</span></div>
+          <canvas id="wave-bank06_049" class="wave-canvas"></canvas>
+          <div class="spec-grid">
+            <div class="spec-cell"><span class="tag-a"><span class="tag-dot a"></span> Spectrogram — VST</span><canvas id="spec-a-bank06_049" class="spec-canvas spec-a"></canvas></div>
+            <div class="spec-cell"><span class="tag-b"><span class="tag-dot b"></span> Spectrogram — Reconstructed</span><canvas id="spec-b-bank06_049" class="spec-canvas spec-b"></canvas></div>
+          </div>
+        </div>
+        <div class="switcher-row">
+          <button class="seamless-toggle" onclick="toggleAB('bank06_049')">
+            <span>&#8644; Seamless A/B Flip (Listen Mid-Playback)</span>
+          </button>
+          <div class="notes-tag">Test Phrase MIDI: [48,60,64,67,72]</div>
+        </div>
+      </div>
+
+      <div class="patch-card" id="card-bank06_120" data-ref="audio/patch_bank06_120_vst.wav" data-eng="audio/patch_bank06_120_reconstructed.wav">
+        <div class="patch-header">
+          <div class="patch-meta">
+            <span class="patch-id">#bank06_120</span>
+            <span class="patch-name">Pluck Master</span>
+            <span class="patch-cat">Plucked (bank06)</span>
+          </div>
+          <div class="metrics-pill-group">
+            <div class="metric-pill">Corr: <span>0.059</span></div>
+            <div class="metric-pill">Null: <span>1.38 dB</span></div>
+            <div class="metric-pill">STFT &Delta;: <span>3.18</span></div>
+            <div class="metric-pill">Peak A/B: <span>0.38 / 0.36</span></div>
+          </div>
+        </div>
+        <div class="player-row">
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-a"><span class="tag-dot a"></span> Original 32-bit VST (Source A)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.030</span>
+            </div>
+            <audio id="aud-a-bank06_120" controls preload="metadata" src="audio/patch_bank06_120_vst.wav"></audio>
+          </div>
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-b"><span class="tag-dot b"></span> Reconstructed Synth (Source B)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.020</span>
+            </div>
+            <audio id="aud-b-bank06_120" controls preload="metadata" src="audio/patch_bank06_120_reconstructed.wav"></audio>
+          </div>
+        </div>
+        <div class="viz-block">
+          <div class="viz-label">Waveform overlay <span class="tag-a"><span class="tag-dot a"></span>VST</span><span class="tag-b"><span class="tag-dot b"></span>Reconstructed</span><span class="viz-status" data-status-for="bank06_120">decoding audio for visualization...</span></div>
+          <canvas id="wave-bank06_120" class="wave-canvas"></canvas>
+          <div class="spec-grid">
+            <div class="spec-cell"><span class="tag-a"><span class="tag-dot a"></span> Spectrogram — VST</span><canvas id="spec-a-bank06_120" class="spec-canvas spec-a"></canvas></div>
+            <div class="spec-cell"><span class="tag-b"><span class="tag-dot b"></span> Spectrogram — Reconstructed</span><canvas id="spec-b-bank06_120" class="spec-canvas spec-b"></canvas></div>
+          </div>
+        </div>
+        <div class="switcher-row">
+          <button class="seamless-toggle" onclick="toggleAB('bank06_120')">
+            <span>&#8644; Seamless A/B Flip (Listen Mid-Playback)</span>
+          </button>
+          <div class="notes-tag">Test Phrase MIDI: [48,60,64,67,72]</div>
+        </div>
+      </div>
+
+      <div class="patch-card" id="card-bank07_050" data-ref="audio/patch_bank07_050_vst.wav" data-eng="audio/patch_bank07_050_reconstructed.wav">
+        <div class="patch-header">
+          <div class="patch-meta">
+            <span class="patch-id">#bank07_050</span>
+            <span class="patch-name">Pizzicato</span>
+            <span class="patch-cat">Bowed Strings Pluck (bank07)</span>
+          </div>
+          <div class="metrics-pill-group">
+            <div class="metric-pill">Corr: <span>0.190</span></div>
+            <div class="metric-pill">Null: <span>1.50 dB</span></div>
+            <div class="metric-pill">STFT &Delta;: <span>1.35</span></div>
+            <div class="metric-pill">Peak A/B: <span>0.24 / 0.44</span></div>
+          </div>
+        </div>
+        <div class="player-row">
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-a"><span class="tag-dot a"></span> Original 32-bit VST (Source A)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.042</span>
+            </div>
+            <audio id="aud-a-bank07_050" controls preload="metadata" src="audio/patch_bank07_050_vst.wav"></audio>
+          </div>
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-b"><span class="tag-dot b"></span> Reconstructed Synth (Source B)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.036</span>
+            </div>
+            <audio id="aud-b-bank07_050" controls preload="metadata" src="audio/patch_bank07_050_reconstructed.wav"></audio>
+          </div>
+        </div>
+        <div class="viz-block">
+          <div class="viz-label">Waveform overlay <span class="tag-a"><span class="tag-dot a"></span>VST</span><span class="tag-b"><span class="tag-dot b"></span>Reconstructed</span><span class="viz-status" data-status-for="bank07_050">decoding audio for visualization...</span></div>
+          <canvas id="wave-bank07_050" class="wave-canvas"></canvas>
+          <div class="spec-grid">
+            <div class="spec-cell"><span class="tag-a"><span class="tag-dot a"></span> Spectrogram — VST</span><canvas id="spec-a-bank07_050" class="spec-canvas spec-a"></canvas></div>
+            <div class="spec-cell"><span class="tag-b"><span class="tag-dot b"></span> Spectrogram — Reconstructed</span><canvas id="spec-b-bank07_050" class="spec-canvas spec-b"></canvas></div>
+          </div>
+        </div>
+        <div class="switcher-row">
+          <button class="seamless-toggle" onclick="toggleAB('bank07_050')">
+            <span>&#8644; Seamless A/B Flip (Listen Mid-Playback)</span>
+          </button>
+          <div class="notes-tag">Test Phrase MIDI: [48,60,64,67,72]</div>
+        </div>
+      </div>
+
+      <div class="patch-card" id="card-bank07_109" data-ref="audio/patch_bank07_109_vst.wav" data-eng="audio/patch_bank07_109_reconstructed.wav">
+        <div class="patch-header">
+          <div class="patch-meta">
+            <span class="patch-id">#bank07_109</span>
+            <span class="patch-name">Harp 2</span>
+            <span class="patch-cat">Plucked (bank07)</span>
+          </div>
+          <div class="metrics-pill-group">
+            <div class="metric-pill">Corr: <span>0.065</span></div>
+            <div class="metric-pill">Null: <span>2.94 dB</span></div>
+            <div class="metric-pill">STFT &Delta;: <span>1.76</span></div>
+            <div class="metric-pill">Peak A/B: <span>0.28 / 0.58</span></div>
+          </div>
+        </div>
+        <div class="player-row">
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-a"><span class="tag-dot a"></span> Original 32-bit VST (Source A)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.078</span>
+            </div>
+            <audio id="aud-a-bank07_109" controls preload="metadata" src="audio/patch_bank07_109_vst.wav"></audio>
+          </div>
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-b"><span class="tag-dot b"></span> Reconstructed Synth (Source B)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.077</span>
+            </div>
+            <audio id="aud-b-bank07_109" controls preload="metadata" src="audio/patch_bank07_109_reconstructed.wav"></audio>
+          </div>
+        </div>
+        <div class="viz-block">
+          <div class="viz-label">Waveform overlay <span class="tag-a"><span class="tag-dot a"></span>VST</span><span class="tag-b"><span class="tag-dot b"></span>Reconstructed</span><span class="viz-status" data-status-for="bank07_109">decoding audio for visualization...</span></div>
+          <canvas id="wave-bank07_109" class="wave-canvas"></canvas>
+          <div class="spec-grid">
+            <div class="spec-cell"><span class="tag-a"><span class="tag-dot a"></span> Spectrogram — VST</span><canvas id="spec-a-bank07_109" class="spec-canvas spec-a"></canvas></div>
+            <div class="spec-cell"><span class="tag-b"><span class="tag-dot b"></span> Spectrogram — Reconstructed</span><canvas id="spec-b-bank07_109" class="spec-canvas spec-b"></canvas></div>
+          </div>
+        </div>
+        <div class="switcher-row">
+          <button class="seamless-toggle" onclick="toggleAB('bank07_109')">
+            <span>&#8644; Seamless A/B Flip (Listen Mid-Playback)</span>
+          </button>
+          <div class="notes-tag">Test Phrase MIDI: [48,60,64,67,72]</div>
+        </div>
+      </div>
+
+      <div class="patch-card" id="card-bank09_030" data-ref="audio/patch_bank09_030_vst.wav" data-eng="audio/patch_bank09_030_reconstructed.wav">
+        <div class="patch-header">
+          <div class="patch-meta">
+            <span class="patch-id">#bank09_030</span>
+            <span class="patch-name">Big Snare Drum</span>
+            <span class="patch-cat">Drums (bank09)</span>
+          </div>
+          <div class="metrics-pill-group">
+            <div class="metric-pill">Corr: <span>0.013</span></div>
+            <div class="metric-pill">Null: <span>18.15 dB</span></div>
+            <div class="metric-pill">STFT &Delta;: <span>2.89</span></div>
+            <div class="metric-pill">Peak A/B: <span>0.05 / 0.30</span></div>
+          </div>
+        </div>
+        <div class="player-row">
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-a"><span class="tag-dot a"></span> Original 32-bit VST (Source A)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.004</span>
+            </div>
+            <audio id="aud-a-bank09_030" controls preload="metadata" src="audio/patch_bank09_030_vst.wav"></audio>
+          </div>
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-b"><span class="tag-dot b"></span> Reconstructed Synth (Source B)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.029</span>
+            </div>
+            <audio id="aud-b-bank09_030" controls preload="metadata" src="audio/patch_bank09_030_reconstructed.wav"></audio>
+          </div>
+        </div>
+        <div class="viz-block">
+          <div class="viz-label">Waveform overlay <span class="tag-a"><span class="tag-dot a"></span>VST</span><span class="tag-b"><span class="tag-dot b"></span>Reconstructed</span><span class="viz-status" data-status-for="bank09_030">decoding audio for visualization...</span></div>
+          <canvas id="wave-bank09_030" class="wave-canvas"></canvas>
+          <div class="spec-grid">
+            <div class="spec-cell"><span class="tag-a"><span class="tag-dot a"></span> Spectrogram — VST</span><canvas id="spec-a-bank09_030" class="spec-canvas spec-a"></canvas></div>
+            <div class="spec-cell"><span class="tag-b"><span class="tag-dot b"></span> Spectrogram — Reconstructed</span><canvas id="spec-b-bank09_030" class="spec-canvas spec-b"></canvas></div>
+          </div>
+        </div>
+        <div class="switcher-row">
+          <button class="seamless-toggle" onclick="toggleAB('bank09_030')">
+            <span>&#8644; Seamless A/B Flip (Listen Mid-Playback)</span>
+          </button>
+          <div class="notes-tag">Test Phrase MIDI: [48,60,64,67,72]</div>
+        </div>
+      </div>
+
+      <div class="patch-card" id="card-bank09_032" data-ref="audio/patch_bank09_032_vst.wav" data-eng="audio/patch_bank09_032_reconstructed.wav">
+        <div class="patch-header">
+          <div class="patch-meta">
+            <span class="patch-id">#bank09_032</span>
+            <span class="patch-name">Snare Ensemble</span>
+            <span class="patch-cat">Drums (bank09)</span>
+          </div>
+          <div class="metrics-pill-group">
+            <div class="metric-pill">Corr: <span>0.030</span></div>
+            <div class="metric-pill">Null: <span>0.83 dB</span></div>
+            <div class="metric-pill">STFT &Delta;: <span>3.21</span></div>
+            <div class="metric-pill">Peak A/B: <span>0.15 / 0.10</span></div>
+          </div>
+        </div>
+        <div class="player-row">
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-a"><span class="tag-dot a"></span> Original 32-bit VST (Source A)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.023</span>
+            </div>
+            <audio id="aud-a-bank09_032" controls preload="metadata" src="audio/patch_bank09_032_vst.wav"></audio>
+          </div>
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-b"><span class="tag-dot b"></span> Reconstructed Synth (Source B)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.011</span>
+            </div>
+            <audio id="aud-b-bank09_032" controls preload="metadata" src="audio/patch_bank09_032_reconstructed.wav"></audio>
+          </div>
+        </div>
+        <div class="viz-block">
+          <div class="viz-label">Waveform overlay <span class="tag-a"><span class="tag-dot a"></span>VST</span><span class="tag-b"><span class="tag-dot b"></span>Reconstructed</span><span class="viz-status" data-status-for="bank09_032">decoding audio for visualization...</span></div>
+          <canvas id="wave-bank09_032" class="wave-canvas"></canvas>
+          <div class="spec-grid">
+            <div class="spec-cell"><span class="tag-a"><span class="tag-dot a"></span> Spectrogram — VST</span><canvas id="spec-a-bank09_032" class="spec-canvas spec-a"></canvas></div>
+            <div class="spec-cell"><span class="tag-b"><span class="tag-dot b"></span> Spectrogram — Reconstructed</span><canvas id="spec-b-bank09_032" class="spec-canvas spec-b"></canvas></div>
+          </div>
+        </div>
+        <div class="switcher-row">
+          <button class="seamless-toggle" onclick="toggleAB('bank09_032')">
+            <span>&#8644; Seamless A/B Flip (Listen Mid-Playback)</span>
+          </button>
+          <div class="notes-tag">Test Phrase MIDI: [48,60,64,67,72]</div>
+        </div>
+      </div>
+
+      <div class="patch-card" id="card-bank09_034" data-ref="audio/patch_bank09_034_vst.wav" data-eng="audio/patch_bank09_034_reconstructed.wav">
+        <div class="patch-header">
+          <div class="patch-meta">
+            <span class="patch-id">#bank09_034</span>
+            <span class="patch-name">Timpani 2</span>
+            <span class="patch-cat">Percussion (bank09)</span>
+          </div>
+          <div class="metrics-pill-group">
+            <div class="metric-pill">Corr: <span>0.312</span></div>
+            <div class="metric-pill">Null: <span>3.31 dB</span></div>
+            <div class="metric-pill">STFT &Delta;: <span>1.70</span></div>
+            <div class="metric-pill">Peak A/B: <span>0.23 / 0.38</span></div>
+          </div>
+        </div>
+        <div class="player-row">
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-a"><span class="tag-dot a"></span> Original 32-bit VST (Source A)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.032</span>
+            </div>
+            <audio id="aud-a-bank09_034" controls preload="metadata" src="audio/patch_bank09_034_vst.wav"></audio>
+          </div>
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-b"><span class="tag-dot b"></span> Reconstructed Synth (Source B)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.045</span>
+            </div>
+            <audio id="aud-b-bank09_034" controls preload="metadata" src="audio/patch_bank09_034_reconstructed.wav"></audio>
+          </div>
+        </div>
+        <div class="viz-block">
+          <div class="viz-label">Waveform overlay <span class="tag-a"><span class="tag-dot a"></span>VST</span><span class="tag-b"><span class="tag-dot b"></span>Reconstructed</span><span class="viz-status" data-status-for="bank09_034">decoding audio for visualization...</span></div>
+          <canvas id="wave-bank09_034" class="wave-canvas"></canvas>
+          <div class="spec-grid">
+            <div class="spec-cell"><span class="tag-a"><span class="tag-dot a"></span> Spectrogram — VST</span><canvas id="spec-a-bank09_034" class="spec-canvas spec-a"></canvas></div>
+            <div class="spec-cell"><span class="tag-b"><span class="tag-dot b"></span> Spectrogram — Reconstructed</span><canvas id="spec-b-bank09_034" class="spec-canvas spec-b"></canvas></div>
+          </div>
+        </div>
+        <div class="switcher-row">
+          <button class="seamless-toggle" onclick="toggleAB('bank09_034')">
+            <span>&#8644; Seamless A/B Flip (Listen Mid-Playback)</span>
+          </button>
+          <div class="notes-tag">Test Phrase MIDI: [48,60,64,67,72]</div>
+        </div>
+      </div>
+
+      <div class="patch-card" id="card-bank09_079" data-ref="audio/patch_bank09_079_vst.wav" data-eng="audio/patch_bank09_079_reconstructed.wav">
+        <div class="patch-header">
+          <div class="patch-meta">
+            <span class="patch-id">#bank09_079</span>
+            <span class="patch-name">Guitar Acoustics II</span>
+            <span class="patch-cat">Guitar (bank09)</span>
+          </div>
+          <div class="metrics-pill-group">
+            <div class="metric-pill">Corr: <span>0.105</span></div>
+            <div class="metric-pill">Null: <span>1.19 dB</span></div>
+            <div class="metric-pill">STFT &Delta;: <span>2.14</span></div>
+            <div class="metric-pill">Peak A/B: <span>0.50 / 0.27</span></div>
+          </div>
+        </div>
+        <div class="player-row">
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-a"><span class="tag-dot a"></span> Original 32-bit VST (Source A)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.072</span>
+            </div>
+            <audio id="aud-a-bank09_079" controls preload="metadata" src="audio/patch_bank09_079_vst.wav"></audio>
+          </div>
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-b"><span class="tag-dot b"></span> Reconstructed Synth (Source B)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.047</span>
+            </div>
+            <audio id="aud-b-bank09_079" controls preload="metadata" src="audio/patch_bank09_079_reconstructed.wav"></audio>
+          </div>
+        </div>
+        <div class="viz-block">
+          <div class="viz-label">Waveform overlay <span class="tag-a"><span class="tag-dot a"></span>VST</span><span class="tag-b"><span class="tag-dot b"></span>Reconstructed</span><span class="viz-status" data-status-for="bank09_079">decoding audio for visualization...</span></div>
+          <canvas id="wave-bank09_079" class="wave-canvas"></canvas>
+          <div class="spec-grid">
+            <div class="spec-cell"><span class="tag-a"><span class="tag-dot a"></span> Spectrogram — VST</span><canvas id="spec-a-bank09_079" class="spec-canvas spec-a"></canvas></div>
+            <div class="spec-cell"><span class="tag-b"><span class="tag-dot b"></span> Spectrogram — Reconstructed</span><canvas id="spec-b-bank09_079" class="spec-canvas spec-b"></canvas></div>
+          </div>
+        </div>
+        <div class="switcher-row">
+          <button class="seamless-toggle" onclick="toggleAB('bank09_079')">
+            <span>&#8644; Seamless A/B Flip (Listen Mid-Playback)</span>
+          </button>
+          <div class="notes-tag">Test Phrase MIDI: [48,60,64,67,72]</div>
+        </div>
+      </div>
+
+      <div class="patch-card" id="card-bank10_019" data-ref="audio/patch_bank10_019_vst.wav" data-eng="audio/patch_bank10_019_reconstructed.wav">
+        <div class="patch-header">
+          <div class="patch-meta">
+            <span class="patch-id">#bank10_019</span>
+            <span class="patch-name">Terminator Drums</span>
+            <span class="patch-cat">Drums (bank10)</span>
+          </div>
+          <div class="metrics-pill-group">
+            <div class="metric-pill">Corr: <span>0.029</span></div>
+            <div class="metric-pill">Null: <span>5.64 dB</span></div>
+            <div class="metric-pill">STFT &Delta;: <span>1.86</span></div>
+            <div class="metric-pill">Peak A/B: <span>0.24 / 0.39</span></div>
+          </div>
+        </div>
+        <div class="player-row">
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-a"><span class="tag-dot a"></span> Original 32-bit VST (Source A)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.022</span>
+            </div>
+            <audio id="aud-a-bank10_019" controls preload="metadata" src="audio/patch_bank10_019_vst.wav"></audio>
+          </div>
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-b"><span class="tag-dot b"></span> Reconstructed Synth (Source B)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.036</span>
+            </div>
+            <audio id="aud-b-bank10_019" controls preload="metadata" src="audio/patch_bank10_019_reconstructed.wav"></audio>
+          </div>
+        </div>
+        <div class="viz-block">
+          <div class="viz-label">Waveform overlay <span class="tag-a"><span class="tag-dot a"></span>VST</span><span class="tag-b"><span class="tag-dot b"></span>Reconstructed</span><span class="viz-status" data-status-for="bank10_019">decoding audio for visualization...</span></div>
+          <canvas id="wave-bank10_019" class="wave-canvas"></canvas>
+          <div class="spec-grid">
+            <div class="spec-cell"><span class="tag-a"><span class="tag-dot a"></span> Spectrogram — VST</span><canvas id="spec-a-bank10_019" class="spec-canvas spec-a"></canvas></div>
+            <div class="spec-cell"><span class="tag-b"><span class="tag-dot b"></span> Spectrogram — Reconstructed</span><canvas id="spec-b-bank10_019" class="spec-canvas spec-b"></canvas></div>
+          </div>
+        </div>
+        <div class="switcher-row">
+          <button class="seamless-toggle" onclick="toggleAB('bank10_019')">
+            <span>&#8644; Seamless A/B Flip (Listen Mid-Playback)</span>
+          </button>
+          <div class="notes-tag">Test Phrase MIDI: [48,60,64,67,72]</div>
+        </div>
+      </div>
+
+      <div class="patch-card" id="card-bank10_024" data-ref="audio/patch_bank10_024_vst.wav" data-eng="audio/patch_bank10_024_reconstructed.wav">
+        <div class="patch-header">
+          <div class="patch-meta">
+            <span class="patch-id">#bank10_024</span>
+            <span class="patch-name">Batman Runner</span>
+            <span class="patch-cat">Ticker (bank10)</span>
+          </div>
+          <div class="metrics-pill-group">
+            <div class="metric-pill">Corr: <span>0.003</span></div>
+            <div class="metric-pill">Null: <span>13.94 dB</span></div>
+            <div class="metric-pill">STFT &Delta;: <span>2.23</span></div>
+            <div class="metric-pill">Peak A/B: <span>0.08 / 0.98</span></div>
+          </div>
+        </div>
+        <div class="player-row">
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-a"><span class="tag-dot a"></span> Original 32-bit VST (Source A)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.010</span>
+            </div>
+            <audio id="aud-a-bank10_024" controls preload="metadata" src="audio/patch_bank10_024_vst.wav"></audio>
+          </div>
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-b"><span class="tag-dot b"></span> Reconstructed Synth (Source B)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.050</span>
+            </div>
+            <audio id="aud-b-bank10_024" controls preload="metadata" src="audio/patch_bank10_024_reconstructed.wav"></audio>
+          </div>
+        </div>
+        <div class="viz-block">
+          <div class="viz-label">Waveform overlay <span class="tag-a"><span class="tag-dot a"></span>VST</span><span class="tag-b"><span class="tag-dot b"></span>Reconstructed</span><span class="viz-status" data-status-for="bank10_024">decoding audio for visualization...</span></div>
+          <canvas id="wave-bank10_024" class="wave-canvas"></canvas>
+          <div class="spec-grid">
+            <div class="spec-cell"><span class="tag-a"><span class="tag-dot a"></span> Spectrogram — VST</span><canvas id="spec-a-bank10_024" class="spec-canvas spec-a"></canvas></div>
+            <div class="spec-cell"><span class="tag-b"><span class="tag-dot b"></span> Spectrogram — Reconstructed</span><canvas id="spec-b-bank10_024" class="spec-canvas spec-b"></canvas></div>
+          </div>
+        </div>
+        <div class="switcher-row">
+          <button class="seamless-toggle" onclick="toggleAB('bank10_024')">
+            <span>&#8644; Seamless A/B Flip (Listen Mid-Playback)</span>
+          </button>
+          <div class="notes-tag">Test Phrase MIDI: [48,60,64,67,72]</div>
+        </div>
+      </div>
+
+      <div class="patch-card" id="card-bank10_026" data-ref="audio/patch_bank10_026_vst.wav" data-eng="audio/patch_bank10_026_reconstructed.wav">
+        <div class="patch-header">
+          <div class="patch-meta">
+            <span class="patch-id">#bank10_026</span>
+            <span class="patch-name">Big Toms</span>
+            <span class="patch-cat">Percussion (bank10)</span>
+          </div>
+          <div class="metrics-pill-group">
+            <div class="metric-pill">Corr: <span>0.025</span></div>
+            <div class="metric-pill">Null: <span>10.88 dB</span></div>
+            <div class="metric-pill">STFT &Delta;: <span>1.57</span></div>
+            <div class="metric-pill">Peak A/B: <span>0.11 / 0.77</span></div>
+          </div>
+        </div>
+        <div class="player-row">
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-a"><span class="tag-dot a"></span> Original 32-bit VST (Source A)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.022</span>
+            </div>
+            <audio id="aud-a-bank10_026" controls preload="metadata" src="audio/patch_bank10_026_vst.wav"></audio>
+          </div>
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-b"><span class="tag-dot b"></span> Reconstructed Synth (Source B)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.072</span>
+            </div>
+            <audio id="aud-b-bank10_026" controls preload="metadata" src="audio/patch_bank10_026_reconstructed.wav"></audio>
+          </div>
+        </div>
+        <div class="viz-block">
+          <div class="viz-label">Waveform overlay <span class="tag-a"><span class="tag-dot a"></span>VST</span><span class="tag-b"><span class="tag-dot b"></span>Reconstructed</span><span class="viz-status" data-status-for="bank10_026">decoding audio for visualization...</span></div>
+          <canvas id="wave-bank10_026" class="wave-canvas"></canvas>
+          <div class="spec-grid">
+            <div class="spec-cell"><span class="tag-a"><span class="tag-dot a"></span> Spectrogram — VST</span><canvas id="spec-a-bank10_026" class="spec-canvas spec-a"></canvas></div>
+            <div class="spec-cell"><span class="tag-b"><span class="tag-dot b"></span> Spectrogram — Reconstructed</span><canvas id="spec-b-bank10_026" class="spec-canvas spec-b"></canvas></div>
+          </div>
+        </div>
+        <div class="switcher-row">
+          <button class="seamless-toggle" onclick="toggleAB('bank10_026')">
+            <span>&#8644; Seamless A/B Flip (Listen Mid-Playback)</span>
+          </button>
+          <div class="notes-tag">Test Phrase MIDI: [48,60,64,67,72]</div>
+        </div>
+      </div>
+
+      <div class="patch-card" id="card-bank10_031" data-ref="audio/patch_bank10_031_vst.wav" data-eng="audio/patch_bank10_031_reconstructed.wav">
+        <div class="patch-header">
+          <div class="patch-meta">
+            <span class="patch-id">#bank10_031</span>
+            <span class="patch-name">JGuitar Rythm</span>
+            <span class="patch-cat">Arp / Guitar (bank10)</span>
+          </div>
+          <div class="metrics-pill-group">
+            <div class="metric-pill">Corr: <span>0.039</span></div>
+            <div class="metric-pill">Null: <span>7.47 dB</span></div>
+            <div class="metric-pill">STFT &Delta;: <span>2.83</span></div>
+            <div class="metric-pill">Peak A/B: <span>0.16 / 0.42</span></div>
+          </div>
+        </div>
+        <div class="player-row">
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-a"><span class="tag-dot a"></span> Original 32-bit VST (Source A)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.022</span>
+            </div>
+            <audio id="aud-a-bank10_031" controls preload="metadata" src="audio/patch_bank10_031_vst.wav"></audio>
+          </div>
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-b"><span class="tag-dot b"></span> Reconstructed Synth (Source B)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.046</span>
+            </div>
+            <audio id="aud-b-bank10_031" controls preload="metadata" src="audio/patch_bank10_031_reconstructed.wav"></audio>
+          </div>
+        </div>
+        <div class="viz-block">
+          <div class="viz-label">Waveform overlay <span class="tag-a"><span class="tag-dot a"></span>VST</span><span class="tag-b"><span class="tag-dot b"></span>Reconstructed</span><span class="viz-status" data-status-for="bank10_031">decoding audio for visualization...</span></div>
+          <canvas id="wave-bank10_031" class="wave-canvas"></canvas>
+          <div class="spec-grid">
+            <div class="spec-cell"><span class="tag-a"><span class="tag-dot a"></span> Spectrogram — VST</span><canvas id="spec-a-bank10_031" class="spec-canvas spec-a"></canvas></div>
+            <div class="spec-cell"><span class="tag-b"><span class="tag-dot b"></span> Spectrogram — Reconstructed</span><canvas id="spec-b-bank10_031" class="spec-canvas spec-b"></canvas></div>
+          </div>
+        </div>
+        <div class="switcher-row">
+          <button class="seamless-toggle" onclick="toggleAB('bank10_031')">
+            <span>&#8644; Seamless A/B Flip (Listen Mid-Playback)</span>
+          </button>
+          <div class="notes-tag">Test Phrase MIDI: [48,60,64,67,72]</div>
+        </div>
+      </div>
+
+      <div class="patch-card" id="card-bank10_032" data-ref="audio/patch_bank10_032_vst.wav" data-eng="audio/patch_bank10_032_reconstructed.wav">
+        <div class="patch-header">
+          <div class="patch-meta">
+            <span class="patch-id">#bank10_032</span>
+            <span class="patch-name">Synthetic Pluck 2</span>
+            <span class="patch-cat">Plucked (bank10)</span>
+          </div>
+          <div class="metrics-pill-group">
+            <div class="metric-pill">Corr: <span>0.008</span></div>
+            <div class="metric-pill">Null: <span>0.14 dB</span></div>
+            <div class="metric-pill">STFT &Delta;: <span>2.35</span></div>
+            <div class="metric-pill">Peak A/B: <span>0.15 / 0.12</span></div>
+          </div>
+        </div>
+        <div class="player-row">
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-a"><span class="tag-dot a"></span> Original 32-bit VST (Source A)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.023</span>
+            </div>
+            <audio id="aud-a-bank10_032" controls preload="metadata" src="audio/patch_bank10_032_vst.wav"></audio>
+          </div>
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-b"><span class="tag-dot b"></span> Reconstructed Synth (Source B)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.004</span>
+            </div>
+            <audio id="aud-b-bank10_032" controls preload="metadata" src="audio/patch_bank10_032_reconstructed.wav"></audio>
+          </div>
+        </div>
+        <div class="viz-block">
+          <div class="viz-label">Waveform overlay <span class="tag-a"><span class="tag-dot a"></span>VST</span><span class="tag-b"><span class="tag-dot b"></span>Reconstructed</span><span class="viz-status" data-status-for="bank10_032">decoding audio for visualization...</span></div>
+          <canvas id="wave-bank10_032" class="wave-canvas"></canvas>
+          <div class="spec-grid">
+            <div class="spec-cell"><span class="tag-a"><span class="tag-dot a"></span> Spectrogram — VST</span><canvas id="spec-a-bank10_032" class="spec-canvas spec-a"></canvas></div>
+            <div class="spec-cell"><span class="tag-b"><span class="tag-dot b"></span> Spectrogram — Reconstructed</span><canvas id="spec-b-bank10_032" class="spec-canvas spec-b"></canvas></div>
+          </div>
+        </div>
+        <div class="switcher-row">
+          <button class="seamless-toggle" onclick="toggleAB('bank10_032')">
+            <span>&#8644; Seamless A/B Flip (Listen Mid-Playback)</span>
+          </button>
+          <div class="notes-tag">Test Phrase MIDI: [48,60,64,67,72]</div>
+        </div>
+      </div>
+
+      <div class="patch-card" id="card-bank10_038" data-ref="audio/patch_bank10_038_vst.wav" data-eng="audio/patch_bank10_038_reconstructed.wav">
+        <div class="patch-header">
+          <div class="patch-meta">
+            <span class="patch-id">#bank10_038</span>
+            <span class="patch-name">Big Box Drum</span>
+            <span class="patch-cat">Drums (bank10)</span>
+          </div>
+          <div class="metrics-pill-group">
+            <div class="metric-pill">Corr: <span>0.020</span></div>
+            <div class="metric-pill">Null: <span>6.13 dB</span></div>
+            <div class="metric-pill">STFT &Delta;: <span>1.80</span></div>
+            <div class="metric-pill">Peak A/B: <span>0.25 / 0.74</span></div>
+          </div>
+        </div>
+        <div class="player-row">
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-a"><span class="tag-dot a"></span> Original 32-bit VST (Source A)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.035</span>
+            </div>
+            <audio id="aud-a-bank10_038" controls preload="metadata" src="audio/patch_bank10_038_vst.wav"></audio>
+          </div>
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-b"><span class="tag-dot b"></span> Reconstructed Synth (Source B)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.060</span>
+            </div>
+            <audio id="aud-b-bank10_038" controls preload="metadata" src="audio/patch_bank10_038_reconstructed.wav"></audio>
+          </div>
+        </div>
+        <div class="viz-block">
+          <div class="viz-label">Waveform overlay <span class="tag-a"><span class="tag-dot a"></span>VST</span><span class="tag-b"><span class="tag-dot b"></span>Reconstructed</span><span class="viz-status" data-status-for="bank10_038">decoding audio for visualization...</span></div>
+          <canvas id="wave-bank10_038" class="wave-canvas"></canvas>
+          <div class="spec-grid">
+            <div class="spec-cell"><span class="tag-a"><span class="tag-dot a"></span> Spectrogram — VST</span><canvas id="spec-a-bank10_038" class="spec-canvas spec-a"></canvas></div>
+            <div class="spec-cell"><span class="tag-b"><span class="tag-dot b"></span> Spectrogram — Reconstructed</span><canvas id="spec-b-bank10_038" class="spec-canvas spec-b"></canvas></div>
+          </div>
+        </div>
+        <div class="switcher-row">
+          <button class="seamless-toggle" onclick="toggleAB('bank10_038')">
+            <span>&#8644; Seamless A/B Flip (Listen Mid-Playback)</span>
+          </button>
+          <div class="notes-tag">Test Phrase MIDI: [48,60,64,67,72]</div>
+        </div>
+      </div>
+
+      <div class="patch-card" id="card-bank10_039" data-ref="audio/patch_bank10_039_vst.wav" data-eng="audio/patch_bank10_039_reconstructed.wav">
+        <div class="patch-header">
+          <div class="patch-meta">
+            <span class="patch-id">#bank10_039</span>
+            <span class="patch-name">Synthetic Pluck II</span>
+            <span class="patch-cat">Drum Pluck (bank10)</span>
+          </div>
+          <div class="metrics-pill-group">
+            <div class="metric-pill">Corr: <span>0.011</span></div>
+            <div class="metric-pill">Null: <span>0.11 dB</span></div>
+            <div class="metric-pill">STFT &Delta;: <span>1.69</span></div>
+            <div class="metric-pill">Peak A/B: <span>0.39 / 0.16</span></div>
+          </div>
+        </div>
+        <div class="player-row">
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-a"><span class="tag-dot a"></span> Original 32-bit VST (Source A)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.057</span>
+            </div>
+            <audio id="aud-a-bank10_039" controls preload="metadata" src="audio/patch_bank10_039_vst.wav"></audio>
+          </div>
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-b"><span class="tag-dot b"></span> Reconstructed Synth (Source B)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.009</span>
+            </div>
+            <audio id="aud-b-bank10_039" controls preload="metadata" src="audio/patch_bank10_039_reconstructed.wav"></audio>
+          </div>
+        </div>
+        <div class="viz-block">
+          <div class="viz-label">Waveform overlay <span class="tag-a"><span class="tag-dot a"></span>VST</span><span class="tag-b"><span class="tag-dot b"></span>Reconstructed</span><span class="viz-status" data-status-for="bank10_039">decoding audio for visualization...</span></div>
+          <canvas id="wave-bank10_039" class="wave-canvas"></canvas>
+          <div class="spec-grid">
+            <div class="spec-cell"><span class="tag-a"><span class="tag-dot a"></span> Spectrogram — VST</span><canvas id="spec-a-bank10_039" class="spec-canvas spec-a"></canvas></div>
+            <div class="spec-cell"><span class="tag-b"><span class="tag-dot b"></span> Spectrogram — Reconstructed</span><canvas id="spec-b-bank10_039" class="spec-canvas spec-b"></canvas></div>
+          </div>
+        </div>
+        <div class="switcher-row">
+          <button class="seamless-toggle" onclick="toggleAB('bank10_039')">
+            <span>&#8644; Seamless A/B Flip (Listen Mid-Playback)</span>
+          </button>
+          <div class="notes-tag">Test Phrase MIDI: [48,60,64,67,72]</div>
+        </div>
+      </div>
+
+      <div class="patch-card" id="card-bank10_061" data-ref="audio/patch_bank10_061_vst.wav" data-eng="audio/patch_bank10_061_reconstructed.wav">
+        <div class="patch-header">
+          <div class="patch-meta">
+            <span class="patch-id">#bank10_061</span>
+            <span class="patch-name">FrenchHorn Dev</span>
+            <span class="patch-cat">Brass (bank10)</span>
+          </div>
+          <div class="metrics-pill-group">
+            <div class="metric-pill">Corr: <span>0.159</span></div>
+            <div class="metric-pill">Null: <span>5.39 dB</span></div>
+            <div class="metric-pill">STFT &Delta;: <span>1.92</span></div>
+            <div class="metric-pill">Peak A/B: <span>0.14 / 0.28</span></div>
+          </div>
+        </div>
+        <div class="player-row">
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-a"><span class="tag-dot a"></span> Original 32-bit VST (Source A)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.024</span>
+            </div>
+            <audio id="aud-a-bank10_061" controls preload="metadata" src="audio/patch_bank10_061_vst.wav"></audio>
+          </div>
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-b"><span class="tag-dot b"></span> Reconstructed Synth (Source B)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.041</span>
+            </div>
+            <audio id="aud-b-bank10_061" controls preload="metadata" src="audio/patch_bank10_061_reconstructed.wav"></audio>
+          </div>
+        </div>
+        <div class="viz-block">
+          <div class="viz-label">Waveform overlay <span class="tag-a"><span class="tag-dot a"></span>VST</span><span class="tag-b"><span class="tag-dot b"></span>Reconstructed</span><span class="viz-status" data-status-for="bank10_061">decoding audio for visualization...</span></div>
+          <canvas id="wave-bank10_061" class="wave-canvas"></canvas>
+          <div class="spec-grid">
+            <div class="spec-cell"><span class="tag-a"><span class="tag-dot a"></span> Spectrogram — VST</span><canvas id="spec-a-bank10_061" class="spec-canvas spec-a"></canvas></div>
+            <div class="spec-cell"><span class="tag-b"><span class="tag-dot b"></span> Spectrogram — Reconstructed</span><canvas id="spec-b-bank10_061" class="spec-canvas spec-b"></canvas></div>
+          </div>
+        </div>
+        <div class="switcher-row">
+          <button class="seamless-toggle" onclick="toggleAB('bank10_061')">
+            <span>&#8644; Seamless A/B Flip (Listen Mid-Playback)</span>
+          </button>
+          <div class="notes-tag">Test Phrase MIDI: [48,60,64,67,72]</div>
+        </div>
+      </div>
+
+      <div class="patch-card" id="card-bank10_109" data-ref="audio/patch_bank10_109_vst.wav" data-eng="audio/patch_bank10_109_reconstructed.wav">
+        <div class="patch-header">
+          <div class="patch-meta">
+            <span class="patch-id">#bank10_109</span>
+            <span class="patch-name">Solo Fanfare Trumpet</span>
+            <span class="patch-cat">Brass (bank10)</span>
+          </div>
+          <div class="metrics-pill-group">
+            <div class="metric-pill">Corr: <span>0.095</span></div>
+            <div class="metric-pill">Null: <span>0.83 dB</span></div>
+            <div class="metric-pill">STFT &Delta;: <span>1.83</span></div>
+            <div class="metric-pill">Peak A/B: <span>0.28 / 0.35</span></div>
+          </div>
+        </div>
+        <div class="player-row">
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-a"><span class="tag-dot a"></span> Original 32-bit VST (Source A)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.078</span>
+            </div>
+            <audio id="aud-a-bank10_109" controls preload="metadata" src="audio/patch_bank10_109_vst.wav"></audio>
+          </div>
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-b"><span class="tag-dot b"></span> Reconstructed Synth (Source B)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.040</span>
+            </div>
+            <audio id="aud-b-bank10_109" controls preload="metadata" src="audio/patch_bank10_109_reconstructed.wav"></audio>
+          </div>
+        </div>
+        <div class="viz-block">
+          <div class="viz-label">Waveform overlay <span class="tag-a"><span class="tag-dot a"></span>VST</span><span class="tag-b"><span class="tag-dot b"></span>Reconstructed</span><span class="viz-status" data-status-for="bank10_109">decoding audio for visualization...</span></div>
+          <canvas id="wave-bank10_109" class="wave-canvas"></canvas>
+          <div class="spec-grid">
+            <div class="spec-cell"><span class="tag-a"><span class="tag-dot a"></span> Spectrogram — VST</span><canvas id="spec-a-bank10_109" class="spec-canvas spec-a"></canvas></div>
+            <div class="spec-cell"><span class="tag-b"><span class="tag-dot b"></span> Spectrogram — Reconstructed</span><canvas id="spec-b-bank10_109" class="spec-canvas spec-b"></canvas></div>
+          </div>
+        </div>
+        <div class="switcher-row">
+          <button class="seamless-toggle" onclick="toggleAB('bank10_109')">
+            <span>&#8644; Seamless A/B Flip (Listen Mid-Playback)</span>
+          </button>
+          <div class="notes-tag">Test Phrase MIDI: [48,60,64,67,72]</div>
+        </div>
+      </div>
+
+      <div class="patch-card" id="card-bank10_110" data-ref="audio/patch_bank10_110_vst.wav" data-eng="audio/patch_bank10_110_reconstructed.wav">
+        <div class="patch-header">
+          <div class="patch-meta">
+            <span class="patch-id">#bank10_110</span>
+            <span class="patch-name">Jazzy Trumpet Best</span>
+            <span class="patch-cat">Brass (bank10)</span>
+          </div>
+          <div class="metrics-pill-group">
+            <div class="metric-pill">Corr: <span>0.238</span></div>
+            <div class="metric-pill">Null: <span>0.34 dB</span></div>
+            <div class="metric-pill">STFT &Delta;: <span>1.64</span></div>
+            <div class="metric-pill">Peak A/B: <span>0.69 / 0.35</span></div>
+          </div>
+        </div>
+        <div class="player-row">
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-a"><span class="tag-dot a"></span> Original 32-bit VST (Source A)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.063</span>
+            </div>
+            <audio id="aud-a-bank10_110" controls preload="metadata" src="audio/patch_bank10_110_vst.wav"></audio>
+          </div>
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-b"><span class="tag-dot b"></span> Reconstructed Synth (Source B)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.036</span>
+            </div>
+            <audio id="aud-b-bank10_110" controls preload="metadata" src="audio/patch_bank10_110_reconstructed.wav"></audio>
+          </div>
+        </div>
+        <div class="viz-block">
+          <div class="viz-label">Waveform overlay <span class="tag-a"><span class="tag-dot a"></span>VST</span><span class="tag-b"><span class="tag-dot b"></span>Reconstructed</span><span class="viz-status" data-status-for="bank10_110">decoding audio for visualization...</span></div>
+          <canvas id="wave-bank10_110" class="wave-canvas"></canvas>
+          <div class="spec-grid">
+            <div class="spec-cell"><span class="tag-a"><span class="tag-dot a"></span> Spectrogram — VST</span><canvas id="spec-a-bank10_110" class="spec-canvas spec-a"></canvas></div>
+            <div class="spec-cell"><span class="tag-b"><span class="tag-dot b"></span> Spectrogram — Reconstructed</span><canvas id="spec-b-bank10_110" class="spec-canvas spec-b"></canvas></div>
+          </div>
+        </div>
+        <div class="switcher-row">
+          <button class="seamless-toggle" onclick="toggleAB('bank10_110')">
+            <span>&#8644; Seamless A/B Flip (Listen Mid-Playback)</span>
+          </button>
+          <div class="notes-tag">Test Phrase MIDI: [48,60,64,67,72]</div>
+        </div>
+      </div>
+
+      <div class="patch-card" id="card-bank10_115" data-ref="audio/patch_bank10_115_vst.wav" data-eng="audio/patch_bank10_115_reconstructed.wav">
+        <div class="patch-header">
+          <div class="patch-meta">
+            <span class="patch-id">#bank10_115</span>
+            <span class="patch-name">Orchestral Flute</span>
+            <span class="patch-cat">Woodwind (bank10)</span>
+          </div>
+          <div class="metrics-pill-group">
+            <div class="metric-pill">Corr: <span>0.008</span></div>
+            <div class="metric-pill">Null: <span>6.09 dB</span></div>
+            <div class="metric-pill">STFT &Delta;: <span>1.57</span></div>
+            <div class="metric-pill">Peak A/B: <span>0.97 / 0.81</span></div>
+          </div>
+        </div>
+        <div class="player-row">
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-a"><span class="tag-dot a"></span> Original 32-bit VST (Source A)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.041</span>
+            </div>
+            <audio id="aud-a-bank10_115" controls preload="metadata" src="audio/patch_bank10_115_vst.wav"></audio>
+          </div>
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-b"><span class="tag-dot b"></span> Reconstructed Synth (Source B)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.072</span>
+            </div>
+            <audio id="aud-b-bank10_115" controls preload="metadata" src="audio/patch_bank10_115_reconstructed.wav"></audio>
+          </div>
+        </div>
+        <div class="viz-block">
+          <div class="viz-label">Waveform overlay <span class="tag-a"><span class="tag-dot a"></span>VST</span><span class="tag-b"><span class="tag-dot b"></span>Reconstructed</span><span class="viz-status" data-status-for="bank10_115">decoding audio for visualization...</span></div>
+          <canvas id="wave-bank10_115" class="wave-canvas"></canvas>
+          <div class="spec-grid">
+            <div class="spec-cell"><span class="tag-a"><span class="tag-dot a"></span> Spectrogram — VST</span><canvas id="spec-a-bank10_115" class="spec-canvas spec-a"></canvas></div>
+            <div class="spec-cell"><span class="tag-b"><span class="tag-dot b"></span> Spectrogram — Reconstructed</span><canvas id="spec-b-bank10_115" class="spec-canvas spec-b"></canvas></div>
+          </div>
+        </div>
+        <div class="switcher-row">
+          <button class="seamless-toggle" onclick="toggleAB('bank10_115')">
+            <span>&#8644; Seamless A/B Flip (Listen Mid-Playback)</span>
+          </button>
+          <div class="notes-tag">Test Phrase MIDI: [48,60,64,67,72]</div>
+        </div>
+      </div>
+
+      <div class="patch-card" id="card-bank11_018" data-ref="audio/patch_bank11_018_vst.wav" data-eng="audio/patch_bank11_018_reconstructed.wav">
+        <div class="patch-header">
+          <div class="patch-meta">
+            <span class="patch-id">#bank11_018</span>
+            <span class="patch-name">Tinker Runner</span>
+            <span class="patch-cat">Ticker (bank11)</span>
+          </div>
+          <div class="metrics-pill-group">
+            <div class="metric-pill">Corr: <span>0.011</span></div>
+            <div class="metric-pill">Null: <span>0.77 dB</span></div>
+            <div class="metric-pill">STFT &Delta;: <span>2.31</span></div>
+            <div class="metric-pill">Peak A/B: <span>0.20 / 0.19</span></div>
+          </div>
+        </div>
+        <div class="player-row">
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-a"><span class="tag-dot a"></span> Original 32-bit VST (Source A)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.024</span>
+            </div>
+            <audio id="aud-a-bank11_018" controls preload="metadata" src="audio/patch_bank11_018_vst.wav"></audio>
+          </div>
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-b"><span class="tag-dot b"></span> Reconstructed Synth (Source B)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.011</span>
+            </div>
+            <audio id="aud-b-bank11_018" controls preload="metadata" src="audio/patch_bank11_018_reconstructed.wav"></audio>
+          </div>
+        </div>
+        <div class="viz-block">
+          <div class="viz-label">Waveform overlay <span class="tag-a"><span class="tag-dot a"></span>VST</span><span class="tag-b"><span class="tag-dot b"></span>Reconstructed</span><span class="viz-status" data-status-for="bank11_018">decoding audio for visualization...</span></div>
+          <canvas id="wave-bank11_018" class="wave-canvas"></canvas>
+          <div class="spec-grid">
+            <div class="spec-cell"><span class="tag-a"><span class="tag-dot a"></span> Spectrogram — VST</span><canvas id="spec-a-bank11_018" class="spec-canvas spec-a"></canvas></div>
+            <div class="spec-cell"><span class="tag-b"><span class="tag-dot b"></span> Spectrogram — Reconstructed</span><canvas id="spec-b-bank11_018" class="spec-canvas spec-b"></canvas></div>
+          </div>
+        </div>
+        <div class="switcher-row">
+          <button class="seamless-toggle" onclick="toggleAB('bank11_018')">
+            <span>&#8644; Seamless A/B Flip (Listen Mid-Playback)</span>
+          </button>
+          <div class="notes-tag">Test Phrase MIDI: [48,60,64,67,72]</div>
+        </div>
+      </div>
+
+      <div class="patch-card" id="card-bank11_019" data-ref="audio/patch_bank11_019_vst.wav" data-eng="audio/patch_bank11_019_reconstructed.wav">
+        <div class="patch-header">
+          <div class="patch-meta">
+            <span class="patch-id">#bank11_019</span>
+            <span class="patch-name">Kaiyoti Music Box</span>
+            <span class="patch-cat">Mallet Keys (bank11)</span>
+          </div>
+          <div class="metrics-pill-group">
+            <div class="metric-pill">Corr: <span>0.235</span></div>
+            <div class="metric-pill">Null: <span>6.15 dB</span></div>
+            <div class="metric-pill">STFT &Delta;: <span>1.64</span></div>
+            <div class="metric-pill">Peak A/B: <span>0.24 / 0.38</span></div>
+          </div>
+        </div>
+        <div class="player-row">
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-a"><span class="tag-dot a"></span> Original 32-bit VST (Source A)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.022</span>
+            </div>
+            <audio id="aud-a-bank11_019" controls preload="metadata" src="audio/patch_bank11_019_vst.wav"></audio>
+          </div>
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-b"><span class="tag-dot b"></span> Reconstructed Synth (Source B)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.044</span>
+            </div>
+            <audio id="aud-b-bank11_019" controls preload="metadata" src="audio/patch_bank11_019_reconstructed.wav"></audio>
+          </div>
+        </div>
+        <div class="viz-block">
+          <div class="viz-label">Waveform overlay <span class="tag-a"><span class="tag-dot a"></span>VST</span><span class="tag-b"><span class="tag-dot b"></span>Reconstructed</span><span class="viz-status" data-status-for="bank11_019">decoding audio for visualization...</span></div>
+          <canvas id="wave-bank11_019" class="wave-canvas"></canvas>
+          <div class="spec-grid">
+            <div class="spec-cell"><span class="tag-a"><span class="tag-dot a"></span> Spectrogram — VST</span><canvas id="spec-a-bank11_019" class="spec-canvas spec-a"></canvas></div>
+            <div class="spec-cell"><span class="tag-b"><span class="tag-dot b"></span> Spectrogram — Reconstructed</span><canvas id="spec-b-bank11_019" class="spec-canvas spec-b"></canvas></div>
+          </div>
+        </div>
+        <div class="switcher-row">
+          <button class="seamless-toggle" onclick="toggleAB('bank11_019')">
+            <span>&#8644; Seamless A/B Flip (Listen Mid-Playback)</span>
+          </button>
+          <div class="notes-tag">Test Phrase MIDI: [48,60,64,67,72]</div>
+        </div>
+      </div>
+
+      <div class="patch-card" id="card-bank11_021" data-ref="audio/patch_bank11_021_vst.wav" data-eng="audio/patch_bank11_021_reconstructed.wav">
+        <div class="patch-header">
+          <div class="patch-meta">
+            <span class="patch-id">#bank11_021</span>
+            <span class="patch-name">Geetar</span>
+            <span class="patch-cat">Guitar (bank11)</span>
+          </div>
+          <div class="metrics-pill-group">
+            <div class="metric-pill">Corr: <span>0.257</span></div>
+            <div class="metric-pill">Null: <span>24.29 dB</span></div>
+            <div class="metric-pill">STFT &Delta;: <span>1.12</span></div>
+            <div class="metric-pill">Peak A/B: <span>0.10 / 1.61</span></div>
+          </div>
+        </div>
+        <div class="player-row">
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-a"><span class="tag-dot a"></span> Original 32-bit VST (Source A)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.013</span>
+            </div>
+            <audio id="aud-a-bank11_021" controls preload="metadata" src="audio/patch_bank11_021_vst.wav"></audio>
+          </div>
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-b"><span class="tag-dot b"></span> Reconstructed Synth (Source B)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.212</span>
+            </div>
+            <audio id="aud-b-bank11_021" controls preload="metadata" src="audio/patch_bank11_021_reconstructed.wav"></audio>
+          </div>
+        </div>
+        <div class="viz-block">
+          <div class="viz-label">Waveform overlay <span class="tag-a"><span class="tag-dot a"></span>VST</span><span class="tag-b"><span class="tag-dot b"></span>Reconstructed</span><span class="viz-status" data-status-for="bank11_021">decoding audio for visualization...</span></div>
+          <canvas id="wave-bank11_021" class="wave-canvas"></canvas>
+          <div class="spec-grid">
+            <div class="spec-cell"><span class="tag-a"><span class="tag-dot a"></span> Spectrogram — VST</span><canvas id="spec-a-bank11_021" class="spec-canvas spec-a"></canvas></div>
+            <div class="spec-cell"><span class="tag-b"><span class="tag-dot b"></span> Spectrogram — Reconstructed</span><canvas id="spec-b-bank11_021" class="spec-canvas spec-b"></canvas></div>
+          </div>
+        </div>
+        <div class="switcher-row">
+          <button class="seamless-toggle" onclick="toggleAB('bank11_021')">
+            <span>&#8644; Seamless A/B Flip (Listen Mid-Playback)</span>
+          </button>
+          <div class="notes-tag">Test Phrase MIDI: [48,60,64,67,72]</div>
+        </div>
+      </div>
+
+      <div class="patch-card" id="card-bank11_038" data-ref="audio/patch_bank11_038_vst.wav" data-eng="audio/patch_bank11_038_reconstructed.wav">
+        <div class="patch-header">
+          <div class="patch-meta">
+            <span class="patch-id">#bank11_038</span>
+            <span class="patch-name">Big Toms D</span>
+            <span class="patch-cat">Percussion (bank11)</span>
+          </div>
+          <div class="metrics-pill-group">
+            <div class="metric-pill">Corr: <span>0.015</span></div>
+            <div class="metric-pill">Null: <span>3.20 dB</span></div>
+            <div class="metric-pill">STFT &Delta;: <span>2.65</span></div>
+            <div class="metric-pill">Peak A/B: <span>0.25 / 0.34</span></div>
+          </div>
+        </div>
+        <div class="player-row">
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-a"><span class="tag-dot a"></span> Original 32-bit VST (Source A)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.035</span>
+            </div>
+            <audio id="aud-a-bank11_038" controls preload="metadata" src="audio/patch_bank11_038_vst.wav"></audio>
+          </div>
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-b"><span class="tag-dot b"></span> Reconstructed Synth (Source B)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.036</span>
+            </div>
+            <audio id="aud-b-bank11_038" controls preload="metadata" src="audio/patch_bank11_038_reconstructed.wav"></audio>
+          </div>
+        </div>
+        <div class="viz-block">
+          <div class="viz-label">Waveform overlay <span class="tag-a"><span class="tag-dot a"></span>VST</span><span class="tag-b"><span class="tag-dot b"></span>Reconstructed</span><span class="viz-status" data-status-for="bank11_038">decoding audio for visualization...</span></div>
+          <canvas id="wave-bank11_038" class="wave-canvas"></canvas>
+          <div class="spec-grid">
+            <div class="spec-cell"><span class="tag-a"><span class="tag-dot a"></span> Spectrogram — VST</span><canvas id="spec-a-bank11_038" class="spec-canvas spec-a"></canvas></div>
+            <div class="spec-cell"><span class="tag-b"><span class="tag-dot b"></span> Spectrogram — Reconstructed</span><canvas id="spec-b-bank11_038" class="spec-canvas spec-b"></canvas></div>
+          </div>
+        </div>
+        <div class="switcher-row">
+          <button class="seamless-toggle" onclick="toggleAB('bank11_038')">
+            <span>&#8644; Seamless A/B Flip (Listen Mid-Playback)</span>
+          </button>
+          <div class="notes-tag">Test Phrase MIDI: [48,60,64,67,72]</div>
+        </div>
+      </div>
+
+      <div class="patch-card" id="card-bank11_040" data-ref="audio/patch_bank11_040_vst.wav" data-eng="audio/patch_bank11_040_reconstructed.wav">
+        <div class="patch-header">
+          <div class="patch-meta">
+            <span class="patch-id">#bank11_040</span>
+            <span class="patch-name">Synth Bass 1</span>
+            <span class="patch-cat">Synth Bass (bank11)</span>
+          </div>
+          <div class="metrics-pill-group">
+            <div class="metric-pill">Corr: <span>0.033</span></div>
+            <div class="metric-pill">Null: <span>1.70 dB</span></div>
+            <div class="metric-pill">STFT &Delta;: <span>4.11</span></div>
+            <div class="metric-pill">Peak A/B: <span>0.18 / 0.17</span></div>
+          </div>
+        </div>
+        <div class="player-row">
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-a"><span class="tag-dot a"></span> Original 32-bit VST (Source A)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.063</span>
+            </div>
+            <audio id="aud-a-bank11_040" controls preload="metadata" src="audio/patch_bank11_040_vst.wav"></audio>
+          </div>
+          <div class="source-col">
+            <div class="source-label">
+              <span class="tag-b"><span class="tag-dot b"></span> Reconstructed Synth (Source B)</span>
+              <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">RMS: 0.042</span>
+            </div>
+            <audio id="aud-b-bank11_040" controls preload="metadata" src="audio/patch_bank11_040_reconstructed.wav"></audio>
+          </div>
+        </div>
+        <div class="viz-block">
+          <div class="viz-label">Waveform overlay <span class="tag-a"><span class="tag-dot a"></span>VST</span><span class="tag-b"><span class="tag-dot b"></span>Reconstructed</span><span class="viz-status" data-status-for="bank11_040">decoding audio for visualization...</span></div>
+          <canvas id="wave-bank11_040" class="wave-canvas"></canvas>
+          <div class="spec-grid">
+            <div class="spec-cell"><span class="tag-a"><span class="tag-dot a"></span> Spectrogram — VST</span><canvas id="spec-a-bank11_040" class="spec-canvas spec-a"></canvas></div>
+            <div class="spec-cell"><span class="tag-b"><span class="tag-dot b"></span> Spectrogram — Reconstructed</span><canvas id="spec-b-bank11_040" class="spec-canvas spec-b"></canvas></div>
+          </div>
+        </div>
+        <div class="switcher-row">
+          <button class="seamless-toggle" onclick="toggleAB('bank11_040')">
             <span>&#8644; Seamless A/B Flip (Listen Mid-Playback)</span>
           </button>
           <div class="notes-tag">Test Phrase MIDI: [48,60,64,67,72]</div>
