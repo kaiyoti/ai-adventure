@@ -1,5 +1,5 @@
 {
- "deployed": "2026-10-09 18:23 UTC",
+ "deployed": "2026-10-09 19:02 UTC",
  "scoring_primary": "v2",
  "dry_run": false,
  "gate": {
@@ -11,8 +11,8 @@
  "stamps": {
   "core_binary": {
    "path": "/home/kaiyoti/projects/decompiling/synth1/portable-synth/build/offline_render",
-   "mtime": "2026-10-09 18:24 UTC",
-   "sha256_16": "bf1875aa843bddcb"
+   "mtime": "2026-10-09 19:04 UTC",
+   "sha256_16": "ee15c213d73de0f3"
   },
   "web_worklet": {
    "path": "/home/kaiyoti/projects/decompiling/synth1/web/synth1_worklet.js",
@@ -28,7 +28,7 @@
  "contents": {
   "index.html": "61-card A/B suite (nav links to scoring pages + deploy stamp)",
   "data.json": "suite data (patch ids, names, notes, ref/eng file paths)",
-  "audio": "122 wav (device refs + engine renders)",
+  "audio": "172 wav (device refs + engine renders)",
   "scoring_v2.html": "v2 scoring report (ab_suite_rerun.md)",
   "self_floor.html": "self-floor report",
   "scoring_methods.html": "both-methods per-patch verdicts; primary = v2",
@@ -38,14 +38,14 @@
  },
  "verdict_counts": {
   "v2": {
-   "IDENTICAL": 1,
-   "CLOSE": 1,
-   "DIFFERENT": 59
+   "IDENTICAL": 0,
+   "CLOSE": 0,
+   "DIFFERENT": 61
   },
   "peak": {
    "IDENTICAL": 0,
-   "CLOSE": 6,
-   "DIFFERENT": 55
+   "CLOSE": 0,
+   "DIFFERENT": 61
   }
  }
 }
