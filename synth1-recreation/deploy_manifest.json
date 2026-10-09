@@ -1,0 +1,51 @@
+{
+ "deployed": "2026-10-09 18:23 UTC",
+ "scoring_primary": "v2",
+ "dry_run": false,
+ "gate": {
+  "golden_gate": "50-patch bank-00 xcorr suite vs -prog refs (reports/fifty_xcorr_gate.md)",
+  "metric": "xcorr only (v2/null-tiers/verdict-classes retired)",
+  "web_golden_newest": "web_20261009_1821",
+  "skipped": true
+ },
+ "stamps": {
+  "core_binary": {
+   "path": "/home/kaiyoti/projects/decompiling/synth1/portable-synth/build/offline_render",
+   "mtime": "2026-10-09 18:24 UTC",
+   "sha256_16": "bf1875aa843bddcb"
+  },
+  "web_worklet": {
+   "path": "/home/kaiyoti/projects/decompiling/synth1/web/synth1_worklet.js",
+   "mtime": "2026-10-09 18:15 UTC",
+   "sha256_16": "c31d5f1f45c4df2b"
+  },
+  "render_offline": {
+   "path": "/home/kaiyoti/projects/decompiling/synth1/web/render_offline.js",
+   "mtime": "2026-10-09 18:15 UTC",
+   "sha256_16": "284697ab5be69ea6"
+  }
+ },
+ "contents": {
+  "index.html": "61-card A/B suite (nav links to scoring pages + deploy stamp)",
+  "data.json": "suite data (patch ids, names, notes, ref/eng file paths)",
+  "audio": "122 wav (device refs + engine renders)",
+  "scoring_v2.html": "v2 scoring report (ab_suite_rerun.md)",
+  "self_floor.html": "self-floor report",
+  "scoring_methods.html": "both-methods per-patch verdicts; primary = v2",
+  "param_bands.js": "param quantization/bands module (live web engine import)",
+  "synth1_worklet.js": "live web engine worklet",
+  "deploy_manifest.json": "this file (stamp fields, gate record, contents list)"
+ },
+ "verdict_counts": {
+  "v2": {
+   "IDENTICAL": 1,
+   "CLOSE": 1,
+   "DIFFERENT": 59
+  },
+  "peak": {
+   "IDENTICAL": 0,
+   "CLOSE": 6,
+   "DIFFERENT": 55
+  }
+ }
+}

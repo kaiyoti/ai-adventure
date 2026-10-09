@@ -1,0 +1,81 @@
+<!DOCTYPE html><html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>Synth1 scoring — both methods</title><style>
+body{font-family:system-ui,sans-serif;background:#1a1b26;color:#c0caf5;margin:2rem auto;max-width:1100px;padding:0 1rem}
+a{color:#7aa2f7}h1,h2,h3{color:#7dcfff}table{border-collapse:collapse;width:100%;font-size:.82rem}
+th,td{border:1px solid #3b4261;padding:4px 8px;text-align:left}th{background:#24283b}
+tr:nth-child(even){background:#20222e}code{background:#24283b;padding:1px 4px;border-radius:3px}
+pre{background:#24283b;padding:1rem;overflow-x:auto;border-radius:6px}
+.primary{background:#161927;border-left:3px solid #7aa2f7;padding:.6rem 1rem;margin:1rem 0}
+</style></head><body>
+<p><a href='index.html'>&larr; A/B suite</a></p>
+<h1>Synth1 A/B suite — scoring (both methods)</h1>
+<div class='primary'>Deploy-time scoring method (primary): <b>v2</b> — set by <code>deploy_pages.py --scoring v2</code>. Flipping the v100 scoring decision is a flag flip; this template renders both methods.</div>
+<p>Methods: <b>v2</b> = <code>tools/score_v2.py --selffloor --tail-m1-only</code> (verdicts from <code>tmp/score_v2.json</code>); <b>peak</b> = whole-file xcorr peak + null, v1 gates (IDENTICAL &ge;0.99 &amp; |null|&le;1 dB; CLOSE &ge;0.95 &amp; |null|&le;3 dB). 61 bank0 pairs, device refs.</p>
+<h2>Summary</h2><table><tr><th>method</th><th>IDENTICAL</th><th>CLOSE</th><th>DIFFERENT</th></tr>
+<tr><td>v2 (primary)</td><td>1</td><td>1</td><td>59</td></tr>
+<tr><td>peak</td><td>0</td><td>6</td><td>55</td></tr>
+</table>
+<h2>Per-patch verdicts</h2><table><tr><th>Patch</th><th>Name</th><th>v2 verdict</th><th>peak verdict</th></tr>
+<tr><td>001</td><td>Synth1 brastring</td><td><b>DIFFERENT</b></td><td>DIFFERENT</td></tr>
+<tr><td>002</td><td>Piano</td><td><b>CLOSE</b></td><td>CLOSE</td></tr>
+<tr><td>003</td><td>E.Piano</td><td><b>DIFFERENT</b></td><td>DIFFERENT</td></tr>
+<tr><td>005</td><td>Rhodes Piano</td><td><b>DIFFERENT</b></td><td>DIFFERENT</td></tr>
+<tr><td>006</td><td>Chorus Piano</td><td><b>DIFFERENT</b></td><td>DIFFERENT</td></tr>
+<tr><td>008</td><td>Clavinet</td><td><b>DIFFERENT</b></td><td>CLOSE</td></tr>
+<tr><td>009</td><td>Celesta</td><td><b>DIFFERENT</b></td><td>DIFFERENT</td></tr>
+<tr><td>011</td><td>MusicBox</td><td><b>DIFFERENT</b></td><td>DIFFERENT</td></tr>
+<tr><td>012</td><td>Vibraphone</td><td><b>DIFFERENT</b></td><td>DIFFERENT</td></tr>
+<tr><td>013</td><td>Marimba</td><td><b>DIFFERENT</b></td><td>CLOSE</td></tr>
+<tr><td>017</td><td>Hammond organ</td><td><b>DIFFERENT</b></td><td>DIFFERENT</td></tr>
+<tr><td>019</td><td>Rock Organ</td><td><b>DIFFERENT</b></td><td>DIFFERENT</td></tr>
+<tr><td>020</td><td>Church Organ</td><td><b>DIFFERENT</b></td><td>DIFFERENT</td></tr>
+<tr><td>021</td><td>Reed Organ</td><td><b>DIFFERENT</b></td><td>DIFFERENT</td></tr>
+<tr><td>025</td><td>Accoustic Guitar</td><td><b>DIFFERENT</b></td><td>DIFFERENT</td></tr>
+<tr><td>027</td><td>E Guitar</td><td><b>DIFFERENT</b></td><td>DIFFERENT</td></tr>
+<tr><td>031</td><td>Dist. Guitar</td><td><b>DIFFERENT</b></td><td>DIFFERENT</td></tr>
+<tr><td>033</td><td>Acoustic Bass</td><td><b>DIFFERENT</b></td><td>DIFFERENT</td></tr>
+<tr><td>034</td><td>E Bass 1</td><td><b>DIFFERENT</b></td><td>DIFFERENT</td></tr>
+<tr><td>037</td><td>Slap Bass</td><td><b>DIFFERENT</b></td><td>DIFFERENT</td></tr>
+<tr><td>039</td><td>Synth Bass 1</td><td><b>DIFFERENT</b></td><td>DIFFERENT</td></tr>
+<tr><td>040</td><td>Synth Bass 2</td><td><b>DIFFERENT</b></td><td>DIFFERENT</td></tr>
+<tr><td>041</td><td>Violin</td><td><b>DIFFERENT</b></td><td>DIFFERENT</td></tr>
+<tr><td>042</td><td>Viola</td><td><b>DIFFERENT</b></td><td>CLOSE</td></tr>
+<tr><td>043</td><td>Cello</td><td><b>DIFFERENT</b></td><td>DIFFERENT</td></tr>
+<tr><td>048</td><td>Timpani</td><td><b>DIFFERENT</b></td><td>DIFFERENT</td></tr>
+<tr><td>050</td><td>SlowStrings</td><td><b>DIFFERENT</b></td><td>DIFFERENT</td></tr>
+<tr><td>053</td><td>Choir</td><td><b>DIFFERENT</b></td><td>DIFFERENT</td></tr>
+<tr><td>055</td><td>SynVox</td><td><b>DIFFERENT</b></td><td>DIFFERENT</td></tr>
+<tr><td>057</td><td>Trumpet</td><td><b>DIFFERENT</b></td><td>DIFFERENT</td></tr>
+<tr><td>058</td><td>Trombone</td><td><b>DIFFERENT</b></td><td>DIFFERENT</td></tr>
+<tr><td>060</td><td>MuteTrumpet</td><td><b>DIFFERENT</b></td><td>DIFFERENT</td></tr>
+<tr><td>062</td><td>Brass1</td><td><b>DIFFERENT</b></td><td>DIFFERENT</td></tr>
+<tr><td>063</td><td>SynBrass1</td><td><b>DIFFERENT</b></td><td>DIFFERENT</td></tr>
+<tr><td>069</td><td>Oboe</td><td><b>DIFFERENT</b></td><td>DIFFERENT</td></tr>
+<tr><td>074</td><td>Flute</td><td><b>DIFFERENT</b></td><td>DIFFERENT</td></tr>
+<tr><td>081</td><td>Square lead</td><td><b>DIFFERENT</b></td><td>DIFFERENT</td></tr>
+<tr><td>082</td><td>Saw lead</td><td><b>DIFFERENT</b></td><td>DIFFERENT</td></tr>
+<tr><td>083</td><td>Solo Lead</td><td><b>DIFFERENT</b></td><td>DIFFERENT</td></tr>
+<tr><td>084</td><td>Sync lead</td><td><b>DIFFERENT</b></td><td>DIFFERENT</td></tr>
+<tr><td>085</td><td>Sync lead 2</td><td><b>DIFFERENT</b></td><td>DIFFERENT</td></tr>
+<tr><td>086</td><td>Brass lead</td><td><b>DIFFERENT</b></td><td>DIFFERENT</td></tr>
+<tr><td>088</td><td>Sweep lead</td><td><b>DIFFERENT</b></td><td>DIFFERENT</td></tr>
+<tr><td>089</td><td>Warm pad</td><td><b>DIFFERENT</b></td><td>DIFFERENT</td></tr>
+<tr><td>090</td><td>String pad</td><td><b>DIFFERENT</b></td><td>CLOSE</td></tr>
+<tr><td>092</td><td>Sweep pad 1</td><td><b>DIFFERENT</b></td><td>CLOSE</td></tr>
+<tr><td>095</td><td>Cosmos</td><td><b>DIFFERENT</b></td><td>DIFFERENT</td></tr>
+<tr><td>098</td><td>Behind the mask</td><td><b>DIFFERENT</b></td><td>DIFFERENT</td></tr>
+<tr><td>101</td><td>Sequence2</td><td><b>DIFFERENT</b></td><td>DIFFERENT</td></tr>
+<tr><td>105</td><td>Sitar</td><td><b>DIFFERENT</b></td><td>DIFFERENT</td></tr>
+<tr><td>107</td><td>Shami</td><td><b>DIFFERENT</b></td><td>DIFFERENT</td></tr>
+<tr><td>111</td><td>Sequence 4</td><td><b>DIFFERENT</b></td><td>DIFFERENT</td></tr>
+<tr><td>112</td><td>Solo Synth</td><td><b>DIFFERENT</b></td><td>DIFFERENT</td></tr>
+<tr><td>117</td><td>Perc1</td><td><b>DIFFERENT</b></td><td>DIFFERENT</td></tr>
+<tr><td>121</td><td>Computer</td><td><b>DIFFERENT</b></td><td>DIFFERENT</td></tr>
+<tr><td>122</td><td>Wind</td><td><b>DIFFERENT</b></td><td>DIFFERENT</td></tr>
+<tr><td>123</td><td>SpaceShip</td><td><b>DIFFERENT</b></td><td>DIFFERENT</td></tr>
+<tr><td>124</td><td>Alien</td><td><b>DIFFERENT</b></td><td>DIFFERENT</td></tr>
+<tr><td>125</td><td>Telephone</td><td><b>IDENTICAL</b></td><td>DIFFERENT</td></tr>
+<tr><td>126</td><td>Machine Gun</td><td><b>DIFFERENT</b></td><td>DIFFERENT</td></tr>
+<tr><td>127</td><td>LaserGun</td><td><b>DIFFERENT</b></td><td>DIFFERENT</td></tr>
+</table>
+<p class='deploy-stamp' style='color:#8b8f9e;font-size:.85rem'>Deployed: 2026-10-09 18:23 UTC</p>
+</body></html>
